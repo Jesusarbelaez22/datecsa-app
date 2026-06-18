@@ -247,53 +247,64 @@ let ticketFilter = {search:'', estado:'', prioridad:'', responsable:''};
 async function renderTickets(){
   showLoading();
   try {
-    const { data } = await sb.from('tickets').select('*').order('id', {ascending:false});
-    let all = data||[];
-    let filtered = all.filter(t=>{
-      const s = ticketFilter.search.toLowerCase();
-      const match = !s ||
-        (t.usuario||'').toLowerCase().includes(s) ||
-        (t.ubicacion||'').toLowerCase().includes(s) ||
-        (t.tipo_solicitud||'').toLowerCase().includes(s) ||
-        (t.observaciones||'').toLowerCase().includes(s);
+    const {data, error} = await sb.from('tickets').select('*').order('id',{ascending:false});
+    if(error) throw error;
+    const all = data||[];
+
+    const filtered = all.filter(t=>{
+      const s = (ticketFilter.search||'').toLowerCase();
+      const match = !s || (t.usuario||'').toLowerCase().includes(s)
+                       || (t.tipo_solicitud||'').toLowerCase().includes(s)
+                       || (t.ubicacion||'').toLowerCase().includes(s);
       const est  = !ticketFilter.estado     || t.estado===ticketFilter.estado;
       const pri  = !ticketFilter.prioridad  || t.prioridad===ticketFilter.prioridad;
-      const resp = !ticketFilter.responsable|| t.helpdesk===ticketFilter.responsable;
+      const resp = !ticketFilter.responsable || t.helpdesk===ticketFilter.responsable;
       return match && est && pri && resp;
     });
+
     const countEl = document.getElementById('count-tickets');
     if(countEl) countEl.textContent = filtered.length < all.length
       ? `Mostrando ${filtered.length} de ${all.length} registros`
       : `${all.length} registro${all.length!==1?'s':''}`;
+
     const tbody = document.getElementById('tickets-body');
-    tbody.innerHTML = filtered.length ? filtered.map(t=>{
-      const usuarioRaw = t.usuario||'–';
-      const partes = usuarioRaw.match(/^(.+?)\s+([\w.\-]+@[\w.\-]+)$/);
+
+    if(!filtered.length){
+      tbody.innerHTML = `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>Sin registros</p></div></td></tr>`;
+      lucide.createIcons();
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(t=>{
+      const usuario = t.usuario||'–';
+      const partes = usuario.match(/^(.+?)\s+([\w.\-]+@[\w.\-]+)$/);
       const usuarioHTML = partes
-        ? `<span style="display:block;font-weight:500;color:#e0e0e0">${partes[1]}</span><span style="display:block;font-size:11px;color:#666;margin-top:2px">${partes[2]}</span>`
-        : `<span>${usuarioRaw}</span>`;
+        ? `<div style="font-weight:500;color:#e0e0e0">${partes[1]}</div><div style="font-size:11px;color:#666;margin-top:2px">${partes[2]}</div>`
+        : usuario;
       return `<tr>
         <td><span class="badge ${badgeLlegada(t.llegada)}">${t.llegada||'–'}</span></td>
         <td>${t.modelo||'–'}</td>
         <td>${t.serial||'–'}</td>
         <td>${fmtDate(t.fecha_inicial)}</td>
         <td>${t.hora_inicio||'–'}</td>
-        <td>${usuarioHTML}</td>
-        <td>${t.ubicacion||'–'}</td>
-        <td><strong>${t.tipo_solicitud||'–'}</strong></td>
+        <td class="col-wrap">${usuarioHTML}</td>
+        <td class="col-wrap">${t.ubicacion||'–'}</td>
+        <td class="col-wrap"><strong>${t.tipo_solicitud||'–'}</strong></td>
         <td>${fmtDate(t.fecha_final)}</td>
         <td>${t.hora_fin||'–'}</td>
-        <td>${t.observaciones||'–'}</td>
+        <td class="col-obs">${t.observaciones||'–'}</td>
         <td><strong>${t.helpdesk||'–'}</strong></td>
         <td><span class="badge ${badgePrio(t.prioridad)}">${t.prioridad||'–'}</span></td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
-        <td><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
+        <td style="white-space:nowrap"><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
       </tr>`;
-    }).join('') :
-      `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
+    }).join('');
     lucide.createIcons();
-  } catch(e){ toast('Error cargando tickets','error'); }
-  hideLoading();
+  } catch(e){
+    toast('Error cargando casos: '+e.message,'error');
+  } finally {
+    hideLoading();
+  }
 }
 
 function openNewTicket(){
