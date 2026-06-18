@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Cargador de Datos – DATECSA</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#0d0d0d;color:#e0e0e0;
+         display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;}
+    .card{background:#161616;border:1px solid #2a2a2a;border-radius:12px;
+          padding:40px;max-width:500px;width:100%;text-align:center;}
+    h2{color:#fff;margin-bottom:8px;}
+    p{color:#777;font-size:13px;margin-bottom:24px;}
+    .btn{background:#b40000;color:#fff;border:none;padding:12px 28px;
+         border-radius:6px;font-size:15px;cursor:pointer;margin:8px;}
+    .btn:hover{opacity:.88;}
+    .btn-secondary{background:#1a1a1a;border:1px solid #333;color:#ccc;}
+    #log{background:#111;border:1px solid #222;border-radius:8px;
+         padding:16px;margin-top:20px;font-size:12px;color:#aaa;
+         text-align:left;max-height:200px;overflow-y:auto;display:none;}
+    .ok{color:#44dd88;} .err{color:#ff5555;} .info{color:#88aaff;}
+  </style>
+</head>
+<body>
+<div class="card">
+  <h2>🖨 Cargador de Datos DATECSA</h2>
+  <p>Este script carga el CSV de toner instalados directamente al aplicativo</p>
+  <input type="file" id="csvFile" accept=".csv" style="display:none"/>
+  <button class="btn" onclick="document.getElementById('csvFile').click()">
+    📂 Seleccionar toner_instalados.csv
+  </button>
+  <button class="btn btn-secondary" onclick="irAlApp()">
+    → Ir al Aplicativo
+  </button>
+  <div id="log"></div>
+</div>
+<script>
+function log(msg, tipo='info'){
+  const d = document.getElementById('log');
+  d.style.display='block';
+  d.innerHTML += `<div class="${tipo}">${msg}</div>`;
+  d.scrollTop = d.scrollHeight;
+}
+
+function parseCSVLine(line){
+  const result=[];let cur='';let inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(c==='"'){inQ=!inQ;}
+    else if((c===','||c===';')&&!inQ){result.push(cur.trim());cur='';}
+    else{cur+=c;}
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+function parseDate(d){
+  if(!d)return '';
+  d=d.trim();
+  // DD/MM/YYYY o DD-MM-YYYY
+  const m=d.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  return d;
+}
+
+function detectMarca(ref){
+  if(!ref)return '';
+  ref=ref.toUpperCase();
+  if(ref.startsWith('TK'))return 'Kyocera';
+  if(ref.startsWith('CE')||ref.startsWith('CF'))return 'HP';
+  if(ref.includes('EXV'))return 'Canon';
+  return 'Kyocera';
+}
+
+document.getElementById('csvFile').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file){return;}
+  log(`📄 Leyendo: ${file.name}...`);
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const text = ev.target.result;
+    const lines = text.split('\n').filter(l=>l.trim()!=='');
+
+    // detectar delimitador
+    const delim = lines[0].includes(';') ? ';' : ',';
+    log(`🔍 Delimitador detectado: "${delim}"`, 'info');
+
+    // saltar encabezado
+    const dataLines = lines.slice(1);
+    const registros = [];
+    let id = 1;
+
+    dataLines.forEach((line, idx)=>{
+      const cols = parseCSVLine(line);
+      const modelo = cols[0]||'';
+      if(!modelo.trim()) return; // saltar vacíos
+
+      const obj = {
+        id: id++,
+        equipo:      cols[0]||'',   // MODELO
+        serial:      cols[1]||'',   // SERIE
+        sede:        cols[2]||'',   // AREA
+        referencia:  cols[3]||'',   // TONER
+        contador:    cols[4]||'',   // CONTADOR
+        fecha:       parseDate(cols[5]||''), // FECHA
+        tecnico:     cols[6]||'',   // RESPONSABLE
+        observacion: cols[7]||'',   // OBSERVACION
+        cliente:     'Universidad Santiago de Cali',
+        marca:       detectMarca(cols[3]||''),
+        cantidad:    1
+      };
+      registros.push(obj);
+    });
+
+    log(`✅ Registros encontrados: ${registros.length}`, 'ok');
+
+    if(registros.length === 0){
+      log('⚠ No se encontraron registros válidos. Verificar formato del CSV.', 'err');
+      return;
+    }
+
+    // Preguntar modo
+    const modo = confirm(
+      `Se encontraron ${registros.length} registros.\n\n` +
+      `¿Desea REEMPLAZAR todos los datos existentes?\n` +
+      `(Cancelar = Agregar a los existentes)`
+    );
+
+    if(modo){
+      localStorage.setItem('dtc_toners_instalados', JSON.stringify(registros));
+      log(`🔄 Modo: Reemplazar todo`, 'info');
+    } else {
+      let existentes = [];
+      try{ existentes = JSON.parse(localStorage.getItem('dtc_toners_instalados'))||[]; }catch(e){}
+      const maxId = existentes.length ? Math.max(...existentes.map(x=>x.id||0)) : 0;
+      registros.forEach((r,i)=>r.id=maxId+i+1);
+      const todos = [...existentes, ...registros];
+      localStorage.setItem('dtc_toners_instalados', JSON.stringify(todos));
+      log(`➕ Modo: Agregar a existentes`, 'info');
+    }
+
+    // Limpiar seed para que no sobrescriba
+    localStorage.setItem('dtc_seeded','1');
+
+    log(`🎉 ¡${registros.length} registros cargados exitosamente!`, 'ok');
+    log(`→ Haz clic en "Ir al Aplicativo" para ver los datos`, 'info');
+  };
+  reader.readAsText(file, 'UTF-8');
+});
+
+function irAlApp(){
+  window.location.href='../pages/dashboard.html';
+}
+</script>
+</body>
+</html>

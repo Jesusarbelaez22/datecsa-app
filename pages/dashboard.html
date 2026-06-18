@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>DATECSA – Sistema de Gestión</title>
+  <link rel="icon" href="../assets/favicon.png" type="image/png"/>
+  <link rel="shortcut icon" href="../assets/favicon.png"/>
+  <link rel="stylesheet" href="../css/app.css"/>
+  <style>
+  .toner-summary-wrap{max-width:600px;margin:0 auto;background:var(--color-card);border:1px solid var(--color-border);border-radius:10px;overflow:hidden}
+  .toner-summary-wrap table{width:100%;border-collapse:collapse}
+  .toner-summary-wrap thead th{background:#131313;color:#666;text-transform:uppercase;font-size:11px;letter-spacing:.08em;padding:12px 16px;text-align:left;font-weight:600}
+  .toner-summary-wrap thead th:not(:first-child){text-align:center}
+  .toner-summary-wrap tbody td{padding:11px 16px;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .toner-summary-wrap tbody tr:last-child td{border-bottom:none}
+  .summary-total td{background:#1a1a1a!important;color:#fff!important;font-weight:700!important;border-top:2px solid var(--color-accent)!important;border-bottom:none!important;text-align:center}
+  .summary-total td:first-child{text-align:left}
+  .toner-summary-empty{padding:40px 20px;text-align:center;color:#555;font-size:13px;max-width:600px;margin:0 auto}
+  /* ─── CIERRE ─── */
+  .cierre-section-header{margin-bottom:20px;}
+  .cierre-section-title{font-size:18px;font-weight:700;color:#fff;border-left:4px solid var(--color-accent);padding-left:16px;margin-bottom:6px;line-height:1.3;}
+  .cierre-section-sub{font-size:13px;color:#555;padding-left:20px;margin-bottom:0;}
+  .steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+  .step-card{background:var(--color-bg);border:1px solid var(--color-border);border-left:3px solid transparent;border-radius:10px;padding:18px 20px;transition:border-left-color .15s,box-shadow .15s;}
+  .step-card:hover{border-left-color:var(--color-accent);box-shadow:0 4px 18px rgba(0,0,0,0.3);}
+  .step-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
+  .step-num{width:44px;height:44px;border-radius:50%;background:var(--color-accent);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body{flex:1;min-width:0;}
+  .step-icon-title{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+  .step-icon-title svg{width:15px;height:15px;color:var(--color-accent);flex-shrink:0;}
+  .step-title{font-size:14.5px;font-weight:600;color:#fff;line-height:1.35;}
+  .step-list{list-style:none;display:flex;flex-direction:column;gap:7px;padding-left:4px;}
+  .step-list>li{font-size:13.5px;color:#aaa;line-height:1.5;padding-left:16px;position:relative;}
+  .step-list>li::before{content:'›';position:absolute;left:0;color:var(--color-accent);font-weight:700;font-size:16px;line-height:1.3;}
+  .step-sublist{list-style:none;margin-top:7px;display:flex;flex-direction:column;gap:5px;padding-left:4px;}
+  .step-sublist li{font-size:13px;color:#888;padding-left:14px;position:relative;line-height:1.45;}
+  .step-sublist li::before{content:'–';position:absolute;left:0;color:#555;}
+  .step-alert{background:rgba(180,0,0,0.08);border:1px solid rgba(180,0,0,0.3);color:#ff9999;border-radius:6px;padding:10px 14px;font-size:13px;margin-top:12px;line-height:1.5;}
+  .step-email{background:rgba(0,100,255,0.08);border:1px solid rgba(0,100,255,0.2);color:#88aaff;font-weight:500;border-radius:6px;padding:8px 14px;font-size:13px;margin-top:6px;}
+  @media(max-width:900px){.steps-grid{grid-template-columns:1fr;}}
+  /* ─── CLIENTE ─── */
+  .cli-field{display:flex;flex-direction:column;gap:4px;}
+  .cli-label{font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.5px;}
+  .cli-value{font-size:15px;font-weight:700;color:#fff;}
+  .cli-sede-row{display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--color-bg);border:1px solid var(--color-border);border-radius:8px;transition:border-color .15s;}
+  .cli-sede-row:hover{border-color:var(--color-accent);}
+  .cli-sede-num{width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cli-sede-info{flex:1;display:flex;flex-direction:column;gap:3px;}
+  .cli-sede-nombre{font-size:14px;font-weight:600;color:#fff;}
+  .cli-sede-dir{font-size:12px;color:#555;display:flex;align-items:center;gap:5px;}
+  .cli-sede-dir svg{width:11px;height:11px;flex-shrink:0;}
+  .cli-sede-equip{font-size:13px;color:#555;white-space:nowrap;}
+  .cli-sede-equip span{color:var(--color-accent);font-weight:700;}
+  /* ─── INFORMES ─── */
+  .informes-header{margin-bottom:28px;}
+  .informes-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .informes-sub{font-size:13px;color:#555;}
+  .informes-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .inf-card{background:var(--color-card);border:1px solid var(--color-border);border-left:4px solid var(--color-accent);border-radius:10px;padding:22px;transition:border-color .15s,box-shadow .15s;}
+  .inf-card:hover{border-color:var(--color-accent);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+  .inf-card-icon{width:40px;height:40px;border-radius:8px;background:rgba(180,0,0,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .inf-card-icon svg{width:20px;height:20px;color:var(--color-accent);}
+  .inf-card-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .inf-card-desc{font-size:12px;color:#777;margin-bottom:16px;line-height:1.5;}
+  .inf-date-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .inf-date-row label{font-size:12px;color:#555;white-space:nowrap;}
+  .inf-date-row input[type="date"]{background:#111;border:1px solid #2a2a2a;color:#e0e0e0;border-radius:6px;padding:6px 10px;font-size:12px;outline:none;}
+  .inf-date-row input[type="date"]:focus{border-color:var(--color-accent);}
+  .inf-no-date{font-size:12px;color:#444;font-style:italic;margin-bottom:16px;}
+  .inf-btn-row{display:flex;gap:8px;}
+  .inf-btn-excel{background:var(--color-accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;}
+  .inf-btn-excel:hover{opacity:.85;}
+  .inf-btn-pdf{background:#1a1a1a;color:#ccc;border:1px solid #333;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:border-color .15s,color .15s;}
+  .inf-btn-pdf:hover{border-color:var(--color-accent);color:#fff;}
+  .inf-all-btn{background:var(--color-accent);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+  .inf-all-btn:hover{opacity:.85;}
+  @media(max-width:900px){.informes-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<!-- ─── LOADING BAR ─── -->
+<div id="loading-bar" style="position:fixed;top:0;left:0;width:0;height:3px;background:var(--color-accent,#b40000);z-index:9999;transition:width .3s ease,opacity .4s ease;opacity:0;pointer-events:none;"></div>
+
+<!-- ─── SIDEBAR ─── -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <img src="../assets/logo.png" alt="DATECSA"/>
+    <button class="toggle-sidebar" onclick="toggleSidebar()"><i data-lucide="menu"></i></button>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Principal</div>
+    <a class="nav-item" data-page="dashboard" data-tooltip="Inicio" onclick="navigate('dashboard')">
+      <span class="nav-icon"><i data-lucide="home"></i></span><span class="nav-text">Inicio</span>
+    </a>
+    <a class="nav-item" data-page="cliente" data-tooltip="Cliente" onclick="navigate('cliente')">
+      <span class="nav-icon"><i data-lucide="building-2"></i></span><span class="nav-text">Cliente</span>
+    </a>
+    <a class="nav-item" data-page="tickets" data-tooltip="Casos y Solicitudes" onclick="navigate('tickets')">
+      <span class="nav-icon"><i data-lucide="ticket"></i></span><span class="nav-text">Casos y Solicitudes</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Toner</div>
+    <a class="nav-item" data-page="toners" data-tooltip="Toner Disponibles" onclick="navigate('toners')">
+      <span class="nav-icon"><i data-lucide="printer"></i></span><span class="nav-text">Toner Disponibles</span>
+    </a>
+    <a class="nav-item" data-page="entradas" data-tooltip="Registro de Llegada" onclick="navigate('entradas')">
+      <span class="nav-icon"><i data-lucide="package"></i></span><span class="nav-text">Registro de Llegada</span>
+    </a>
+    <a class="nav-item" data-page="instalados" data-tooltip="Toner Instalados" onclick="navigate('instalados')">
+      <span class="nav-icon"><i data-lucide="check-circle-2"></i></span><span class="nav-text">Toner Instalados</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Servicios</div>
+    <a class="nav-item" data-page="ordenes" data-tooltip="Órdenes de Servicio" onclick="navigate('ordenes')">
+      <span class="nav-icon"><i data-lucide="clipboard-list"></i></span><span class="nav-text">Órdenes de Servicio</span>
+    </a>
+    <a class="nav-item" data-page="notificaciones" data-tooltip="Notificaciones KFS" onclick="navigate('notificaciones')">
+      <span class="nav-icon"><i data-lucide="bell"></i></span>
+      <span class="nav-text">Notificaciones KFS</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Sistema</div>
+    <a class="nav-item" data-page="informes" data-tooltip="Informes" onclick="navigate('informes')">
+      <span class="nav-icon"><i data-lucide="bar-chart-2"></i></span>
+      <span class="nav-text">Informes</span>
+    </a>
+    <a class="nav-item" data-page="cierre" data-tooltip="Cierre Facturación" onclick="navigate('cierre')">
+      <span class="nav-icon"><i data-lucide="file-text"></i></span>
+      <span class="nav-text">Cierre Facturación</span>
+    </a>
+    <a class="nav-item" data-page="configuracion" data-tooltip="Configuración" onclick="navigate('configuracion')">
+      <span class="nav-icon"><i data-lucide="settings"></i></span>
+      <span class="nav-text">Configuración</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <span>DATECSA © 2026</span>
+  </div>
+</nav>
+
+<!-- ─── TOPBAR ─── -->
+<div id="main">
+  <header class="topbar">
+    <img src="../assets/favicon.png" id="topbar-logo" style="height:32px;width:32px;object-fit:contain;display:none;margin-right:8px;order:-1;" alt="DATECSA"/>
+    <span class="topbar-title" id="topbar-title">Inicio</span>
+    <span class="topbar-badge">Soporte de Impresión</span>
+    <div class="topbar-user">
+      <div class="avatar">A</div>
+      <span id="topbar-user">Admin</span>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- ══════════════ DASHBOARD ══════════════ -->
+    <div class="page" id="page-dashboard">
+
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i data-lucide="ticket"></i></div>
+          <div><div class="stat-num" id="dash-abiertos">0</div><div class="stat-label">Tickets Abiertos</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow"><i data-lucide="clock"></i></div>
+          <div><div class="stat-num" id="dash-progreso">0</div><div class="stat-label">En Progreso</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i data-lucide="check-circle-2"></i></div>
+          <div><div class="stat-num" id="dash-cerrados">0</div><div class="stat-label">Tickets Cerrados</div></div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-card">
+        <div class="section-header" style="margin-bottom:16px"><span class="section-title">Resumen de Tickets</span></div>
+        <div class="chart-inner">
+          <div class="chart-canvas-wrap"><canvas id="tickets-chart"></canvas></div>
+          <div class="chart-legend" id="chart-legend"></div>
+        </div>
+      </div>
+
+      <div class="section-header"><span class="section-title">Tickets Recientes</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>FECHA INICIAL</th><th>TIPO</th><th>USUARIO</th><th>UBICACIÓN</th><th>ESTADO</th></tr></thead>
+          <tbody id="dash-tickets-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ CLIENTE ══════════════ -->
+    <div class="page" id="page-cliente">
+
+      <!-- A) HERO -->
+      <div class="hero-section" style="background-image:url('../assets/Cliente.png');margin-bottom:24px">
+        <div class="hero-overlay"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <h1 class="hero-title" id="cli-hero-nombre">Universidad Santiago de Cali</h1>
+          <p class="hero-subtitle" id="cli-hero-contrato">Contrato de Soporte de Impresión – DATECSA</p>
+          <div class="hero-metrics">
+            <div class="hero-metric">
+              <i data-lucide="printer"></i>
+              <div>
+                <span class="hero-metric-num" id="cli-hero-imp">130</span>
+                <span class="hero-metric-label">Total de Impresoras</span>
+              </div>
+            </div>
+            <div class="hero-metric">
+              <i data-lucide="scan-line"></i>
+              <div>
+                <span class="hero-metric-num" id="cli-hero-scan">5</span>
+                <span class="hero-metric-label">Total de Scanners</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B) DISTRIBUCIÓN POR SEDES -->
+      <div class="sedes-section">
+        <div class="section-header"><span class="section-title">Distribución por Sedes</span></div>
+        <div class="sedes-grid">
+
+          <div class="sede-card">
+            <div class="sede-header">
+              <div class="sede-icon"><i data-lucide="landmark"></i></div>
+              <span class="sede-name">Pampalinda</span>
+            </div>
+            <div class="sede-metrics">
+              <div class="sede-metric"><span class="sede-metric-num">99</span><span class="sede-metric-lbl">Impresoras</span></div>
+              <div class="sede-metric"><span class="sede-metric-num">5</span><span class="sede-metric-lbl">Scanners</span></div>
+            </div>
+            <div class="sede-address"><i data-lucide="map-pin"></i><span>Calle 5 # 62-00</span></div>
+          </div>
+
+          <div class="sede-card">
+            <div class="sede-header">
+              <div class="sede-icon"><i data-lucide="building-2"></i></div>
+              <span class="sede-name">Centro</span>
+            </div>
+            <div class="sede-metrics">
+              <div class="sede-metric"><span class="sede-metric-num">7</span><span class="sede-metric-lbl">Impresoras</span></div>
+            </div>
+            <div class="sede-address"><i data-lucide="map-pin"></i><span>Carrera 8 # 8-17, Barrio Santa Rosa</span></div>
+          </div>
+
+          <div class="sede-card">
+            <div class="sede-header">
+              <div class="sede-icon"><i data-lucide="building-2"></i></div>
+              <span class="sede-name">Palmira</span>
+            </div>
+            <div class="sede-metrics">
+              <div class="sede-metric"><span class="sede-metric-num">20</span><span class="sede-metric-lbl">Impresoras</span></div>
+            </div>
+            <div class="sede-address"><i data-lucide="map-pin"></i><span>Carrera 29 # 38-47, Barrio Alfonso López</span></div>
+          </div>
+
+          <div class="sede-card">
+            <div class="sede-header">
+              <div class="sede-icon"><i data-lucide="cross"></i></div>
+              <span class="sede-name">Clínica Veterinaria</span>
+            </div>
+            <div class="sede-metrics">
+              <div class="sede-metric"><span class="sede-metric-num">3</span><span class="sede-metric-lbl">Impresoras</span></div>
+            </div>
+            <div class="sede-address"><i data-lucide="map-pin"></i><span>Cl. 18 #35-53, Cristóbal Colón, Cali</span></div>
+          </div>
+
+          <div class="sede-card">
+            <div class="sede-header">
+              <div class="sede-icon"><i data-lucide="utensils"></i></div>
+              <span class="sede-name">Restaurante San Carlo</span>
+            </div>
+            <div class="sede-metrics">
+              <div class="sede-metric"><span class="sede-metric-num">1</span><span class="sede-metric-lbl">Impresoras</span></div>
+            </div>
+            <div class="sede-address"><i data-lucide="map-pin"></i><span>Cra. 4 #4-63, Barrio El Peñón, Cali</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- C) INFORMACIÓN DEL CONTRATO -->
+      <div style="background:var(--color-card);border:1px solid var(--color-border);border-radius:12px;padding:24px 28px;margin-bottom:24px">
+        <div class="section-header" style="margin-bottom:20px"><span class="section-title">Información del Contrato</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px" id="cli-contrato-grid">
+          <div class="cli-field"><span class="cli-label">Cliente</span><span class="cli-value" id="cli-nombre">Universidad Santiago de Cali</span></div>
+          <div class="cli-field"><span class="cli-label">Tipo de contrato</span><span class="cli-value" id="cli-tipo">Soporte de Impresión</span></div>
+          <div class="cli-field"><span class="cli-label">Proveedor</span><span class="cli-value">DATECSA – Más que Tecnología</span></div>
+          <div class="cli-field"><span class="cli-label">Helpdesk 1</span><span class="cli-value" id="cli-resp1">JESÚS ARBELAEZ</span></div>
+          <div class="cli-field"><span class="cli-label">Helpdesk 2</span><span class="cli-value" id="cli-resp2">JHON CAMACHO</span></div>
+          <div class="cli-field"><span class="cli-label">Total equipos</span><span class="cli-value" id="cli-total">135</span></div>
+          <div class="cli-field"><span class="cli-label">Correo</span><span class="cli-value" id="cliente-correo">soporteimpresion@usc.edu.co</span></div>
+          <div class="cli-field"><span class="cli-label">Extensión</span><span class="cli-value" id="cliente-extension">6725</span></div>
+        </div>
+      </div>
+
+      <!-- D) MAPA DE SEDES -->
+      <div style="background:var(--color-card);border:1px solid var(--color-border);border-radius:12px;padding:24px 28px">
+        <div class="section-header" style="margin-bottom:20px"><span class="section-title">Mapa de Sedes</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+
+          <div class="cli-sede-row">
+            <div class="cli-sede-num">1</div>
+            <div class="cli-sede-info">
+              <span class="cli-sede-nombre">Pampalinda</span>
+              <span class="cli-sede-dir"><i data-lucide="map-pin"></i> Calle 5 # 62-00</span>
+            </div>
+            <div class="cli-sede-equip"><span>99</span> imp · <span>5</span> scan</div>
+          </div>
+
+          <div class="cli-sede-row">
+            <div class="cli-sede-num">2</div>
+            <div class="cli-sede-info">
+              <span class="cli-sede-nombre">Centro</span>
+              <span class="cli-sede-dir"><i data-lucide="map-pin"></i> Carrera 8 # 8-17, Barrio Santa Rosa</span>
+            </div>
+            <div class="cli-sede-equip"><span>7</span> imp</div>
+          </div>
+
+          <div class="cli-sede-row">
+            <div class="cli-sede-num">3</div>
+            <div class="cli-sede-info">
+              <span class="cli-sede-nombre">Palmira</span>
+              <span class="cli-sede-dir"><i data-lucide="map-pin"></i> Carrera 29 # 38-47, Barrio Alfonso López</span>
+            </div>
+            <div class="cli-sede-equip"><span>20</span> imp</div>
+          </div>
+
+          <div class="cli-sede-row">
+            <div class="cli-sede-num">4</div>
+            <div class="cli-sede-info">
+              <span class="cli-sede-nombre">Clínica Veterinaria</span>
+              <span class="cli-sede-dir"><i data-lucide="map-pin"></i> Cl. 18 #35-53, Cristóbal Colón, Cali</span>
+            </div>
+            <div class="cli-sede-equip"><span>3</span> imp</div>
+          </div>
+
+          <div class="cli-sede-row">
+            <div class="cli-sede-num">5</div>
+            <div class="cli-sede-info">
+              <span class="cli-sede-nombre">Restaurante San Carlo</span>
+              <span class="cli-sede-dir"><i data-lucide="map-pin"></i> Cra. 4 #4-63, Barrio El Peñón, Cali</span>
+            </div>
+            <div class="cli-sede-equip"><span>1</span> imp</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ TICKETS ══════════════ -->
+    <div class="page" id="page-tickets">
+      <div class="section-header">
+        <span class="section-title">Casos y Solicitudes</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" onclick="openNewTicket()"><i data-lucide="plus"></i> Nuevo Ticket</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input class="search-input" placeholder="Buscar por usuario, ubicación, tipo..." oninput="ticketFilter.search=this.value;renderTickets()"/>
+          <select class="filter-select" onchange="ticketFilter.estado=this.value;renderTickets()">
+            <option value="">Todos los estados</option>
+            <option>Abierto</option><option>En Progreso</option><option>Cerrado</option>
+          </select>
+          <select class="filter-select" onchange="ticketFilter.prioridad=this.value;renderTickets()">
+            <option value="">Todas las prioridades</option>
+            <option>Alta</option><option>Normal</option><option>Baja</option>
+          </select>
+          <select class="filter-select" onchange="ticketFilter.responsable=this.value;renderTickets()">
+            <option value="">Todos los Helpdesk</option>
+            <option value="JESÚS ARBELAEZ">JESÚS ARBELAEZ</option>
+            <option value="JHON CAMACHO">JHON CAMACHO</option>
+          </select>
+        </div>
+        <div class="records-info" id="count-tickets"></div>
+        <table>
+          <thead><tr><th>LLEGADA</th><th>MODELO</th><th>SERIE</th><th>FECHA INICIAL</th><th>HORA INICIO</th><th>USUARIO / SOLICITANTE</th><th>UBICACIÓN</th><th>TIPO DE SOLICITUD</th><th>FECHA FINAL</th><th>HORA FINAL</th><th>OBSERVACIONES</th><th>HELPDESK</th><th>PRIORIDAD</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
+          <tbody id="tickets-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ TONERS ══════════════ -->
+    <div class="page" id="page-toners">
+      <div class="section-header">
+        <span class="section-title">Registro de Toner</span>
+      </div>
+      <div id="toners-summary"></div>
+    </div>
+
+    <!-- ══════════════ ENTRADAS ══════════════ -->
+    <div class="page" id="page-entradas">
+      <div class="section-header">
+        <span class="section-title">Registro de Llegada de Toner</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" onclick="openNewEntrada()"><i data-lucide="plus"></i> Registrar Entrada</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="records-info" id="count-entradas"></div>
+        <table>
+          <thead><tr><th>MODELO</th><th>SERIE</th><th>REFERENCIA</th><th>REMISIÓN</th><th>UBICACIÓN</th><th>ÁREA</th><th>RECIBE</th><th>OS</th><th>FECHA</th><th>SOLICITUD</th><th>OBSERVACIÓN</th><th>ACCIÓN</th></tr></thead>
+          <tbody id="entradas-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ INSTALADOS ══════════════ -->
+    <div class="page" id="page-instalados">
+      <div class="section-header">
+        <span class="section-title">Toner Instalados</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" onclick="openNewInstalado()"><i data-lucide="plus"></i> Registrar Instalación</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="records-info" id="count-instalados"></div>
+        <table>
+          <thead><tr><th>MODELO</th><th>SERIE</th><th>ÁREA</th><th>TONER</th><th>CONTADOR</th><th>FECHA</th><th>RESPONSABLE</th><th>OBSERVACIÓN</th><th>ACCIÓN</th></tr></thead>
+          <tbody id="instalados-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ ORDENES ══════════════ -->
+    <div class="page" id="page-ordenes">
+      <div class="section-header">
+        <span class="section-title">Órdenes de Servicio</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" onclick="openNewOrden()"><i data-lucide="plus"></i> Nueva Orden</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="records-info" id="count-ordenes"></div>
+        <table>
+          <thead><tr><th>MODELO</th><th>SERIAL</th><th>UBICACIÓN</th><th>INCIDENTE</th><th>FECHA SOLICITUD</th><th>O.S</th><th>FECHA SERVICIO</th><th>TRABAJO REALIZADO</th><th>SEDE</th><th>RESPONSABLE</th><th>ACCIÓN</th></tr></thead>
+          <tbody id="ordenes-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ CIERRE FACTURACIÓN ══════════════ -->
+    <div class="page" id="page-cierre">
+
+      <!-- SECCIÓN 1: CIERRE DE FACTURACIÓN -->
+      <div class="config-section" style="margin-bottom:32px">
+        <div class="cierre-section-header">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <i data-lucide="file-text" style="width:20px;height:20px;color:var(--color-accent);flex-shrink:0"></i>
+            <h2 class="cierre-section-title">Cierre de Facturación</h2>
+          </div>
+          <p class="cierre-section-sub">Guía paso a paso para el informe mensual de facturación</p>
+        </div>
+        <div class="steps-grid">
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="monitor"></i><span class="step-title">Exportar Contadores desde el Servidor</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Ingresar al servidor y abrir el programa <strong>KYOCERA NET VIEWER</strong></li>
+              <li>Ir a la pestaña: <strong>CIERRE › ARCHIVO › EXPORTAR › VISTA</strong></li>
+              <li>Guardar el archivo en Documentos con la fecha del cierre (fecha del día que se toma la lectura)</li>
+              <li>Buscar el archivo creado en Descargas en el servidor</li>
+              <li>Copiar el archivo y pasarlo al equipo donde se realiza el cierre</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="table-2"></i><span class="step-title">Preparar el Archivo de Contadores</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Abrir el archivo copiado</li>
+              <li>Quitar las comas en los contadores usando: <strong>Ctrl+B › pestaña Reemplazar</strong></li>
+              <li>Copiar el archivo de cierre del mes <strong>ANTERIOR</strong> y cambiarle el nombre</li>
+              <li>Pegar en la nueva carpeta del cierre actual</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="pencil"></i><span class="step-title">Actualizar el Archivo de Cierre</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Abrir el archivo y modificar con los datos del cierre actual:
+                <ul class="step-sublist">
+                  <li><strong>Pestaña 1:</strong> cambiar el mes actual y el título</li>
+                  <li><strong>Pestaña ANEXO FACTURA:</strong> modificar el mes</li>
+                  <li><strong>Pestaña PRE FACTURA DATECSA:</strong> modificar el mes y el consecutivo de la factura en Canon de Arrendamiento</li>
+                  <li><strong>Pestaña CIERRE EQUIPO ACTUAL:</strong> modificar las fechas</li>
+                  <li><strong>Pestaña ACTIVO FIJO:</strong> NO realizar modificaciones</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="copy"></i><span class="step-title">Copiar Contadores Anteriores y Actuales</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Copiar los contadores de la pestaña <strong>"CONTADOR ACTUAL"</strong> y pegarla al contador anterior</li>
+              <li>Pegar los contadores actuales en su lugar</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="calculator"></i><span class="step-title">Aplicar Fórmula BUSCARV para Contadores</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Con los dos archivos abiertos (cierre actual + archivo del servidor), ir a la primera casilla</li>
+              <li>Seleccionar: <strong>Fx › BUSCAR V › ACEPTAR</strong></li>
+              <li><strong>VALOR BUSCADO:</strong> hacer clic en el SERIAL</li>
+              <li><strong>MATRIZ DE TABLA:</strong> seleccionar toda la información de las 2 columnas de los nuevos contadores</li>
+              <li><strong>INDICADOR DE COLUMNA:</strong> 2 &nbsp;|&nbsp; <strong>RANGO:</strong> FALSO</li>
+              <li>Aceptar → trae la información a la pestaña de contadores actuales</li>
+              <li>Desplegar la fórmula hacia abajo arrastrando desde la esquina inferior derecha</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="clipboard-check"></i><span class="step-title">Pegar como Valores y Corregir Errores</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Seleccionar toda la información y hacer <strong>Ctrl+C → Ctrl+V</strong></li>
+              <li>En la pestaña <strong>(Ctrl)</strong> elegir la opción <strong>"Pegar Valores (123)"</strong></li>
+              <li>Reemplazar todas las casillas que tengan <strong>#N/D</strong></li>
+              <li>Completar manualmente la información de los contadores que falten</li>
+            </ul>
+            <div class="step-alert">⚠ IMPORTANTE: Ningún contador de las máquinas puede quedar en negativo</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">7</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="check-circle"></i><span class="step-title">Verificar Pestañas y Cierre Equipo Actual</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Verificar en las demás pestañas que la información sea correcta</li>
+              <li>En la pestaña <strong>CIERRE EQUIPO ACTUAL</strong> copiar la información de los nuevos contadores</li>
+              <li>Repetir el proceso de BUSCARV (pasos 5 y 6) para esta pestaña</li>
+            </ul>
+            <div class="step-alert">⚠ La información de esta pestaña DEBE coincidir con la primera en el TOTAL DE IMPRESIONES</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">8</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="mail"></i><span class="step-title">Enviar Factura a DATECSA</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Enviar el archivo al área de facturación de Datecsa:</li>
+            </ul>
+            <div class="step-email">📧 auxiliaroutsourcing5@datecsa.com</div>
+            <div class="step-email">📧 CC: danielherrera@datecsa.com</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: CIERRE POR CENTRO DE COSTOS -->
+      <div class="config-section">
+        <div class="cierre-section-header">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <i data-lucide="landmark" style="width:20px;height:20px;color:var(--color-accent);flex-shrink:0"></i>
+            <h2 class="cierre-section-title">Cierre por Centro de Costos</h2>
+          </div>
+          <p class="cierre-section-sub">Realizar después de que Datecsa confirme que la facturación está correcta</p>
+        </div>
+        <div class="steps-grid">
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="download"></i><span class="step-title">Descargar Informe desde el Servidor MYQ</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Ingresar al servidor: <strong>172.16.130.250</strong></li>
+              <li>Abrir el navegador e ir al programa <strong>MYQ</strong></li>
+              <li>Hacer clic en el ícono <strong>MYQ › INFORMES</strong></li>
+              <li>Seleccionar la última opción: <strong>"Proyectos – Resumen total de los grupos de proyecto"</strong></li>
+              <li>Hacer clic en <strong>EDITAR</strong></li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="calendar"></i><span class="step-title">Configurar Período del Informe</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Dentro de Editar, seleccionar la opción <strong>DISEÑO</strong></li>
+              <li>En la pestaña <strong>PERÍODO</strong> ingresar las fechas de los 2 contadores (inicio y fin del mes)</li>
+              <li>Los archivos con las fechas están en la carpeta <strong>Documentos del servidor</strong></li>
+              <li>Dar clic en <strong>GUARDAR</strong></li>
+              <li>Regresar a <strong>INFORMES</strong> y seleccionar <strong>EJECUTAR CSV</strong></li>
+              <li>Guardar el archivo (queda en Descargas) → copiar y pegar en el equipo de cierre</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="folder-open"></i><span class="step-title">Preparar el Archivo de Centro de Costos</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Abrir el archivo de Centro de Costos</li>
+              <li>Crear una carpeta con el nombre: <strong>"CIERRE CENTRO DE COSTOS"</strong></li>
+              <li>Abrir el archivo de cierre del mes <strong>ANTERIOR</strong> (tiene 2 pestañas al final: Centro de Costos y Conciliación)</li>
+              <li>Copiar ambas pestañas al nuevo archivo:
+                <ul class="step-sublist">
+                  <li>Clic derecho en pestaña <strong>"Centro de Costos"</strong> › Mover o Copiar › seleccionar libro nuevo › Mover al final › ✓ Crear una copia › Aceptar</li>
+                  <li>Repetir el mismo proceso con la pestaña <strong>"Conciliación"</strong></li>
+                </ul>
+              </li>
+              <li>Cerrar el archivo anterior</li>
+            </ul>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="refresh-cw"></i><span class="step-title">Actualizar Pestaña Conciliación</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>En la pestaña <strong>CONCILIACIÓN</strong> actualizar los contadores actuales (usar los mismos pasos de BUSCARV: pasos 5-6-7 del Cierre de Facturación)</li>
+              <li>En la columna <strong>H:</strong> borrar la información desactualizada y actualizar con los datos del mes actual</li>
+            </ul>
+            <div class="step-alert">⚠ El valor TOTAL de la pestaña Conciliación DEBE ser igual a las impresiones de la Sede Pampalinda</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="table-2"></i><span class="step-title">Actualizar Pestaña Centro de Costos</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Modificar el mes en la pestaña <strong>Centro de Costos</strong></li>
+              <li>Copiar la información descargada desde el servidor usando la fórmula <strong>BUSCARV</strong> (mismos pasos anteriores)</li>
+              <li>Si los valores no coinciden: ajustar manualmente sumando o restando para que cuadren</li>
+              <li>Verificar y aplicar la fórmula de suma en Centro de Costos</li>
+            </ul>
+            <div class="step-alert">⚠ El valor TOTAL de Centro de Costos DEBE ser igual al total de la pestaña Conciliación</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <div class="step-icon-title"><i data-lucide="printer"></i><span class="step-title">Imprimir y Firmar</span></div>
+              </div>
+            </div>
+            <ul class="step-list">
+              <li>Imprimir la pestaña <strong>CENTRO DE COSTOS</strong></li>
+              <li>Imprimir junto con la pestaña <strong>ANEXO FACTURA</strong> (con los aportes)</li>
+              <li>Llevar al ingeniero para que firme</li>
+              <li>Entregar a <strong>COMPRAS</strong> con la documentación firmada</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ CONFIGURACIÓN ══════════════ -->
+    <div class="page" id="page-configuracion">
+
+      <!-- A: TEMA Y APARIENCIA -->
+      <div class="config-section">
+        <h2 class="config-section-title">Tema y Apariencia</h2>
+        <p class="config-section-sub">Personaliza los colores del aplicativo</p>
+        <div class="theme-grid" id="theme-grid"></div>
+      </div>
+
+      <!-- B: INFORMACIÓN DEL CLIENTE -->
+      <div class="config-section">
+        <h2 class="config-section-title">Información del Cliente</h2>
+        <p class="config-section-sub">Datos del contrato y configuración general</p>
+        <div class="form-grid" style="max-width:640px">
+          <div class="form-group"><label>Nombre del cliente</label><input id="cfg-cliente" placeholder="Ej: Universidad Santiago de Cali"/></div>
+          <div class="form-group"><label>Contrato</label><input id="cfg-contrato" placeholder="Ej: Soporte de Impresión"/></div>
+          <div class="form-group"><label>Total impresoras</label><input type="number" id="cfg-impresoras" min="0"/></div>
+          <div class="form-group"><label>Total scanners</label><input type="number" id="cfg-scanners" min="0"/></div>
+          <div class="form-group"><label>Helpdesk 1</label><input id="cfg-resp1" placeholder="JESÚS ARBELAEZ"/></div>
+          <div class="form-group"><label>Helpdesk 2</label><input id="cfg-resp2" placeholder="JHON CAMACHO"/></div>
+          <div class="form-group"><label>Correo de soporte</label><input id="cfg-correo" placeholder="Ej: soporteimpresion@usc.edu.co"/></div>
+          <div class="form-group"><label>Extensión</label><input id="cfg-extension" placeholder="Ej: 6725"/></div>
+        </div>
+        <div style="margin-top:20px">
+          <button class="btn-primary" onclick="saveClienteConfig()"><i data-lucide="save"></i> Guardar cambios</button>
+        </div>
+      </div>
+
+      <!-- C: GESTIÓN DE CUENTA -->
+      <div class="config-section">
+        <h2 class="config-section-title">Gestión de Cuenta</h2>
+        <p class="config-section-sub">Seguridad y acceso al aplicativo</p>
+        <p style="font-size:13px;color:#666;margin-bottom:20px">Usuario actual: <strong style="color:#fff">Admin</strong></p>
+        <div class="form-grid" style="max-width:500px">
+          <div class="form-group span2"><label>Contraseña actual</label><input type="password" id="cfg-pass-actual" placeholder="Ingresa tu contraseña actual"/></div>
+          <div class="form-group"><label>Nueva contraseña</label><input type="password" id="cfg-pass-new" placeholder="Nueva contraseña"/></div>
+          <div class="form-group"><label>Confirmar nueva</label><input type="password" id="cfg-pass-confirm" placeholder="Confirmar contraseña"/></div>
+        </div>
+        <div style="margin-top:20px">
+          <button class="btn-primary" onclick="changePassword()"><i data-lucide="lock"></i> Cambiar contraseña</button>
+        </div>
+      </div>
+
+      <!-- D: DATOS DEL SISTEMA -->
+      <div class="config-section">
+        <h2 class="config-section-title">Datos del Sistema</h2>
+        <p class="config-section-sub">Resumen de registros almacenados y gestión de datos</p>
+        <div class="config-stats-grid" id="cfg-stats"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid #1e1e1e">
+          <button class="btn-secondary" onclick="exportBackup()"><i data-lucide="download"></i> Exportar todo (backup)</button>
+          <button class="btn-secondary" onclick="document.getElementById('backup-import-input').click()"><i data-lucide="upload"></i> Importar backup</button>
+          <input type="file" id="backup-import-input" accept=".json" style="display:none" onchange="importBackup(this)"/>
+        </div>
+        <div style="margin-top:20px;padding:18px 20px;border:1px solid rgba(180,0,0,0.35);border-radius:10px;background:rgba(180,0,0,0.06)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <i data-lucide="triangle-alert" style="color:#ff6666;width:16px;height:16px;flex-shrink:0"></i>
+            <span style="font-size:13px;font-weight:600;color:#ff6666">Zona de peligro</span>
+          </div>
+          <p style="font-size:12px;color:#888;margin-bottom:14px;line-height:1.5">Esta acción eliminará <strong style="color:#ccc">todos los registros</strong> del sistema (tickets, toners, órdenes y notificaciones). Esta acción no se puede deshacer.</p>
+          <button onclick="limpiarTodosDatos()"
+            style="display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:6px;border:1px solid rgba(180,0,0,0.4);background:rgba(180,0,0,0.12);color:#ff6666;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s"
+            onmouseover="this.style.background='rgba(180,0,0,0.25)';this.style.borderColor='rgba(180,0,0,0.7)'"
+            onmouseout="this.style.background='rgba(180,0,0,0.12)';this.style.borderColor='rgba(180,0,0,0.4)'">
+            <i data-lucide="trash-2"></i> Limpiar todos los datos
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ NOTIFICACIONES ══════════════ -->
+    <div class="page" id="page-notificaciones">
+      <div class="section-header">
+        <span class="section-title">Notificaciones KFS <span class="topbar-badge" id="notif-count"></span></span>
+        <div style="display:flex;gap:8px">
+          <button class="btn-secondary" onclick="markAllRead()"><i data-lucide="check"></i> Marcar todas leídas</button>
+          <button class="btn-primary" onclick="openNewNotif()"><i data-lucide="plus"></i> Nueva Notificación</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="records-info" id="count-notif"></div>
+        <table>
+          <thead><tr>
+            <th style="width:20px"></th>
+            <th>FECHA NOTIF. KFS</th>
+            <th>IMPRESORA/SERIE</th>
+            <th>O.S DE APROB.</th>
+            <th>OBSERVACIONES</th>
+            <th>ACCIÓN</th>
+          </tr></thead>
+          <tbody id="notif-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ INFORMES ══════════════ -->
+    <div class="page" id="page-informes">
+
+      <div class="informes-header">
+        <h1 class="informes-title">Centro de Informes</h1>
+        <p class="informes-sub">Exporta la información del sistema en Excel (CSV) o PDF por rango de fechas</p>
+      </div>
+
+      <div class="informes-grid">
+
+        <!-- Casos y Solicitudes -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="ticket"></i></div>
+          <div class="inf-card-title">Casos y Solicitudes</div>
+          <div class="inf-card-desc">Exporta todos los casos y solicitudes registrados</div>
+          <div class="inf-date-row">
+            <label>Desde</label><input type="date" id="inf-tickets-from"/>
+            <label>Hasta</label><input type="date" id="inf-tickets-to"/>
+          </div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('tickets','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('tickets','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+        <!-- Toner Disponibles -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="printer"></i></div>
+          <div class="inf-card-title">Toner Disponibles</div>
+          <div class="inf-card-desc">Exporta el resumen de toner disponibles (TK-3182, TK-3162, TK-3432, TK-3462)</div>
+          <div class="inf-no-date">Resumen calculado automáticamente</div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('toners','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('toners','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+        <!-- Registro de Llegada de Toner -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="package"></i></div>
+          <div class="inf-card-title">Registro de Llegada de Toner</div>
+          <div class="inf-card-desc">Exporta los registros de llegada de toner por rango de fechas</div>
+          <div class="inf-date-row">
+            <label>Desde</label><input type="date" id="inf-llegada-from"/>
+            <label>Hasta</label><input type="date" id="inf-llegada-to"/>
+          </div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('entradas','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('entradas','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+        <!-- Toner Instalados -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="check-circle"></i></div>
+          <div class="inf-card-title">Toner Instalados</div>
+          <div class="inf-card-desc">Exporta el historial de instalaciones de toner por rango de fechas</div>
+          <div class="inf-date-row">
+            <label>Desde</label><input type="date" id="inf-instalados-from"/>
+            <label>Hasta</label><input type="date" id="inf-instalados-to"/>
+          </div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('instalados','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('instalados','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+        <!-- Órdenes de Servicio -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="clipboard-list"></i></div>
+          <div class="inf-card-title">Órdenes de Servicio</div>
+          <div class="inf-card-desc">Exporta las órdenes de servicio registradas por rango de fechas</div>
+          <div class="inf-date-row">
+            <label>Desde</label><input type="date" id="inf-ordenes-from"/>
+            <label>Hasta</label><input type="date" id="inf-ordenes-to"/>
+          </div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('ordenes','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('ordenes','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+        <!-- Notificaciones KFS -->
+        <div class="inf-card">
+          <div class="inf-card-icon"><i data-lucide="bell"></i></div>
+          <div class="inf-card-title">Notificaciones KFS</div>
+          <div class="inf-card-desc">Exporta el registro de notificaciones KFS por rango de fechas</div>
+          <div class="inf-date-row">
+            <label>Desde</label><input type="date" id="inf-notif-from"/>
+            <label>Hasta</label><input type="date" id="inf-notif-to"/>
+          </div>
+          <div class="inf-btn-row">
+            <button class="inf-btn-excel" onclick="exportInforme('notif','csv')">📊 Exportar Excel</button>
+            <button class="inf-btn-pdf"   onclick="exportInforme('notif','pdf')">📄 Exportar PDF</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:28px;text-align:center">
+        <button class="inf-all-btn" onclick="exportarTodoCSV()">📦 Exportar TODO en Excel</button>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Modal Ticket -->
+<div class="modal-overlay" id="modal-ticket">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-header">
+      <span class="modal-title">Nuevo Ticket / Caso</span>
+      <button class="modal-close" onclick="closeModal('modal-ticket')">×</button>
+    </div>
+    <form id="ticket-form" onsubmit="event.preventDefault()">
+    <input type="hidden" id="ticket-id" value="">
+    <div class="form-grid">
+      <div class="form-group"><label>FECHA INICIAL *</label><input type="date" id="ticket-fechaInicial"/></div>
+      <div class="form-group"><label>TIPO DE SOLICITUD</label>
+        <select id="ticket-tipoSolicitud">
+          <option value="">-- Seleccionar tipo --</option>
+          <option>CONFIGURACION E INSTALACION</option>
+          <option>CAMBIO DE TONER</option>
+          <option>CREACION DE USUARIO</option>
+          <option>CODIGO DE IMPRESION</option>
+          <option>MANCHAS EN IMPRESION</option>
+          <option>RAYAS EN IMPRESION</option>
+          <option>ATASCO</option>
+          <option>RUIDO</option>
+          <option>INSTALACION POR RED</option>
+          <option>ATASCO CONTINUO</option>
+          <option>LIMPIEZA Y MANTENIMIENTO</option>
+          <option>PROBLEMAS DE RED</option>
+          <option>CAMBIO DE CILINDRO</option>
+          <option>CAMBIO UNIDAD FUSORA</option>
+          <option>SENSOR SUELTO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="ticket-otro-wrap" style="display:none;margin-top:8px;">
+          <input type="text" id="ticket-tipo-otro"
+                 placeholder="Describe el tipo de solicitud..."
+                 style="width:100%;background:#111;border:1px solid #2a2a2a;
+                        color:#e0e0e0;padding:10px 14px;border-radius:6px;
+                        font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
+      <div class="form-group"><label>LLEGADA SOLICITUD</label>
+        <select id="ticket-llegada">
+          <option>CORREO</option><option>TELEFONO</option><option>TEAMS</option>
+        </select>
+      </div>
+      <div class="form-group"><label>USUARIO / SOLICITANTE</label><input id="ticket-usuario" placeholder="Nombre y correo del solicitante"/></div>
+      <div class="form-group"><label>MODELO IMPRESORA</label><input id="ticket-modelo" placeholder="Ej: M3145idn, P3155dn, MA5500ifx..."/></div>
+      <div class="form-group"><label>N° SERIE</label><input id="ticket-serial" placeholder="Ej: R4V8802447"/></div>
+      <div class="form-group"><label>UBICACIÓN SOLICITANTE</label><input id="ticket-ubicacion" placeholder="Ej: PAGADURIA, BIBLIOTECA..."/></div>
+      <div class="form-group"><label>FECHA FINAL</label><input type="date" id="ticket-fechaFinal"/></div>
+      <div class="form-group"><label>HORA INICIO</label><input type="time" id="ticket-hora-inicio"/></div>
+      <div class="form-group"><label>HORA FINAL</label><input type="time" id="ticket-hora-fin"/></div>
+      <div class="form-group"><label>HELPDESK</label>
+        <select id="ticket-responsable">
+          <option value="JESÚS ARBELAEZ">JESÚS ARBELAEZ</option>
+          <option value="JHON CAMACHO">JHON CAMACHO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="ticket-helpdesk-otro-wrap" style="display:none;margin-top:8px;">
+          <input type="text" id="ticket-helpdesk-otro"
+                 placeholder="Nombre del helpdesk..."
+                 style="width:100%;background:#111;border:1px solid #2a2a2a;
+                        color:#e0e0e0;padding:10px 14px;border-radius:6px;
+                        font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
+      <div class="form-group"><label>PRIORIDAD</label>
+        <select id="ticket-prioridad"><option>Alta</option><option selected>Normal</option><option>Baja</option></select>
+      </div>
+      <div class="form-group"><label>ESTADO</label>
+        <select id="ticket-estado"><option>Abierto</option><option>En Progreso</option><option>Cerrado</option></select>
+      </div>
+      <div class="form-group"><label></label></div>
+      <div class="form-group span2"><label>OBSERVACIONES</label>
+        <textarea id="ticket-observaciones" placeholder="Observaciones..."></textarea>
+      </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ticket')">Cancelar</button>
+      <button class="btn-primary" onclick="saveTicket()">Guardar Ticket</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Entrada Toner -->
+<div class="modal-overlay" id="modal-entrada">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Registrar Llegada de Toner</span>
+      <button class="modal-close" onclick="closeModal('modal-entrada')">×</button>
+    </div>
+    <form id="entrada-form" onsubmit="event.preventDefault()">
+    <input type="hidden" id="entrada-id" value="">
+    <div class="form-grid">
+      <div class="form-group"><label>MODELO *</label><input id="entrada-modelo" placeholder="Ej: P3155dn, MA5500ifx..."/></div>
+      <div class="form-group"><label>SERIE</label><input id="entrada-serie" placeholder="Número de serie"/></div>
+      <div class="form-group"><label>REFERENCIA *</label><input id="entrada-referencia" placeholder="Ej: TK-3182, TK-3462..."/></div>
+      <div class="form-group"><label>REMISIÓN</label><input id="entrada-remision" placeholder="Número de remisión"/></div>
+      <div class="form-group"><label>UBICACIÓN</label><input id="entrada-ubicacion" placeholder="Ej: PAMPALINDA, CENTRO..."/></div>
+      <div class="form-group"><label>ÁREA</label><input id="entrada-area" placeholder="Ej: BIBLIOTECA, DGI..."/></div>
+      <div class="form-group"><label>RECIBE</label><input id="entrada-recibe" placeholder="Nombre quien recibe" value="JESÚS"/></div>
+      <div class="form-group"><label>OS</label><input id="entrada-os" placeholder="Número de OS"/></div>
+      <div class="form-group"><label>FECHA</label><input type="date" id="entrada-fecha"/></div>
+      <div class="form-group"><label>SOLICITUD</label><input id="entrada-solicitud" placeholder="Ej: KFS"/></div>
+      <div class="form-group span2"><label>OBSERVACIÓN</label><textarea id="entrada-observacion" placeholder="Observaciones..."></textarea></div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-entrada')">Cancelar</button>
+      <button class="btn-primary" onclick="saveEntrada()">Registrar Entrada</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Toner Instalado -->
+<div class="modal-overlay" id="modal-instalado">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Registrar Toner Instalado</span>
+      <button class="modal-close" onclick="closeModal('modal-instalado')">×</button>
+    </div>
+    <form id="instalado-form" onsubmit="event.preventDefault()">
+    <input type="hidden" id="instalado-id" value="">
+    <div class="form-grid">
+      <div class="form-group"><label>MODELO *</label><input id="instalado-equipo" placeholder="Ej: Kyocera ECOSYS M2040dn"/></div>
+      <div class="form-group"><label>SERIE</label><input id="instalado-serial" placeholder="Número de serie"/></div>
+      <div class="form-group"><label>ÁREA</label><input id="instalado-area" placeholder="Ej: BIBLIOTECA, PAGADURIA..."/></div>
+      <div class="form-group"><label>TONER *</label><input id="instalado-referencia" placeholder="Ej: TK-1170, TK-3462..."/></div>
+      <div class="form-group"><label>CONTADOR</label><input id="instalado-contador" placeholder="Lectura del contador"/></div>
+      <div class="form-group"><label>FECHA</label><input type="date" id="instalado-fecha"/></div>
+      <div class="form-group"><label>RESPONSABLE</label><input id="instalado-tecnico" value="JESÚS"/></div>
+      <div class="form-group"><label></label></div>
+      <div class="form-group span2"><label>OBSERVACIÓN</label><textarea id="instalado-observacion" placeholder="Observaciones adicionales..."></textarea></div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-instalado')">Cancelar</button>
+      <button class="btn-primary" onclick="saveInstalado()">Registrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Orden de Servicio -->
+<div class="modal-overlay" id="modal-orden">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-header">
+      <span class="modal-title">Nueva Orden de Servicio</span>
+      <button class="modal-close" onclick="closeModal('modal-orden')">×</button>
+    </div>
+    <form id="orden-form" onsubmit="event.preventDefault()">
+    <input type="hidden" id="orden-id" value="">
+    <div class="form-grid">
+      <div class="form-group"><label>MODELO *</label><input id="orden-modelo" placeholder="Ej: P3155dn, M3145idn..."/></div>
+      <div class="form-group"><label>SERIAL *</label><input id="orden-serial" placeholder="Número de serie"/></div>
+      <div class="form-group"><label>UBICACIÓN</label><input id="orden-ubicacion" placeholder="Ej: BIBLIOTECA B1-P1, PAGADURÍA..."/></div>
+      <div class="form-group"><label>INCIDENTE</label>
+        <select id="orden-incidente">
+          <option value="">-- Seleccionar incidente --</option>
+          <option>CONFIGURACION E INSTALACION</option>
+          <option>CAMBIO DE TONER</option>
+          <option>CREACION DE USUARIO</option>
+          <option>CODIGO DE IMPRESION</option>
+          <option>MANCHAS EN IMPRESION</option>
+          <option>RAYAS EN IMPRESION</option>
+          <option>ATASCO</option>
+          <option>RUIDO</option>
+          <option>INSTALACION POR RED</option>
+          <option>ATASCO CONTINUO</option>
+          <option>LIMPIEZA Y MANTENIMIENTO</option>
+          <option>PROBLEMAS DE RED</option>
+          <option>CAMBIO DE CILINDRO</option>
+          <option>CAMBIO UNIDAD FUSORA</option>
+          <option>SENSOR SUELTO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="orden-otro-wrap" style="display:none;margin-top:8px;">
+          <input type="text" id="orden-incidente-otro"
+                 placeholder="Describe el incidente..."
+                 style="width:100%;background:#111;border:1px solid #2a2a2a;
+                        color:#e0e0e0;padding:10px 14px;border-radius:6px;
+                        font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
+      <div class="form-group"><label>FECHA SOLICITUD</label><input type="date" id="orden-fechaSolicitud"/></div>
+      <div class="form-group"><label>O.S *</label><input id="orden-os" placeholder="Ej: OS 4102308"/></div>
+      <div class="form-group"><label>FECHA SERVICIO</label><input type="date" id="orden-fechaServicio"/></div>
+      <div class="form-group"><label>SEDE</label>
+        <select id="orden-sede">
+          <option>PAMPALINDA</option>
+          <option>USC CENTRO</option>
+          <option>USC PALMIRA</option>
+          <option>CLÍNICA VETERINARIA</option>
+          <option>RESTAURANTE SAN CARLO</option>
+        </select>
+      </div>
+      <div class="form-group span2"><label>TRABAJO REALIZADO</label><textarea id="orden-trabajo" placeholder="Trabajo realizado u observaciones..."></textarea></div>
+      <div class="form-group"><label>HELPDESK</label>
+        <select id="orden-responsable">
+          <option value="JESÚS ARBELAEZ">JESÚS ARBELAEZ</option>
+          <option value="JHON CAMACHO">JHON CAMACHO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="orden-helpdesk-otro-wrap" style="display:none;margin-top:8px;">
+          <input type="text" id="orden-helpdesk-otro"
+                 placeholder="Nombre del helpdesk..."
+                 style="width:100%;background:#111;border:1px solid #2a2a2a;
+                        color:#e0e0e0;padding:10px 14px;border-radius:6px;
+                        font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
+      <div class="form-group"><label></label></div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-orden')">Cancelar</button>
+      <button class="btn-primary" onclick="saveOrden()">Guardar Orden</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Notificación -->
+<div class="modal-overlay" id="modal-notif">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nueva Notificación KFS</span>
+      <button class="modal-close" onclick="closeModal('modal-notif')">×</button>
+    </div>
+    <form id="notif-form" onsubmit="event.preventDefault()">
+    <input type="hidden" id="notif-id" value="">
+    <div class="form-grid">
+      <div class="form-group"><label>FECHA NOTIF. KFS *</label><input type="date" id="notif-fecha"/></div>
+      <div class="form-group"><label>IMPRESORA/SERIE *</label><input id="notif-impresora" placeholder="Ej: R4A2X53349"/></div>
+      <div class="form-group"><label>O.S DE APROB. *</label><input id="notif-os" placeholder="Ej: OS 4276660"/></div>
+      <div class="form-group"><label></label></div>
+      <div class="form-group span2"><label>OBSERVACIONES</label><textarea id="notif-observacion" placeholder="Observaciones adicionales..."></textarea></div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-notif')">Cancelar</button>
+      <button class="btn-primary" onclick="saveNotif()">Crear Notificación</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="toast-container"></div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/app.js"></script>
+<script>
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', function() {
+  history.pushState(null, null, location.href);
+});
+document.getElementById('ticket-tipoSolicitud').addEventListener('change', function(){
+  document.getElementById('ticket-otro-wrap').style.display = this.value === 'OTRO' ? 'block' : 'none';
+});
+document.getElementById('orden-incidente').addEventListener('change', function(){
+  document.getElementById('orden-otro-wrap').style.display = this.value === 'OTRO' ? 'block' : 'none';
+});
+document.getElementById('ticket-responsable').addEventListener('change', function(){
+  const wrap = document.getElementById('ticket-helpdesk-otro-wrap');
+  if(wrap) wrap.style.display = this.value === 'OTRO' ? 'block' : 'none';
+});
+document.getElementById('orden-responsable').addEventListener('change', function(){
+  const wrap = document.getElementById('orden-helpdesk-otro-wrap');
+  if(wrap) wrap.style.display = this.value === 'OTRO' ? 'block' : 'none';
+});
+</script>
+<!-- Modal Confirmación Custom -->
+<div id="modal-confirm">
+  <div class="confirm-box">
+    <div class="confirm-icon danger" id="confirm-icon">🗑</div>
+    <div class="confirm-title" id="confirm-title">¿Eliminar registro?</div>
+    <div class="confirm-msg" id="confirm-msg">Esta acción no se puede deshacer.</div>
+    <div class="confirm-btns">
+      <button class="confirm-btn-yes danger" id="confirm-btn-yes">Sí, eliminar</button>
+      <button class="confirm-btn-no" id="confirm-btn-no">No, cancelar</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

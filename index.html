@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DATECSA – Iniciar Sesión</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png"/>
+  <link rel="shortcut icon" href="assets/favicon.png"/>
+  <link rel="stylesheet" href="css/login.css"/>
+</head>
+<body>
+  <div class="login-bg">
+    <span class="login-orb login-orb-1"></span>
+    <span class="login-orb login-orb-2"></span>
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="assets/logo.png" alt="DATECSA" />
+      </div>
+      <h2>Sistema de Gestión de Servicios</h2>
+      <form id="loginForm">
+        <div class="field">
+          <label>Usuario</label>
+          <input type="text" id="username" placeholder="Ingrese usuario" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <div class="pass-wrap">
+            <input type="password" id="password" placeholder="Ingrese contraseña" />
+            <button type="button" class="toggle-pass" onclick="togglePass()"><i data-lucide="eye"></i></button>
+          </div>
+        </div>
+        <div id="loginError" class="error-msg" style="display:none">Usuario o contraseña incorrectos</div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <p class="version">v1.0.0 &nbsp;·&nbsp; DATECSA © 2026</p>
+    </div>
+  </div>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    if(sessionStorage.getItem('dtcAuth') === '1') {
+      window.location.replace('pages/dashboard.html');
+    }
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', function() {
+      history.pushState(null, null, location.href);
+    });
+    lucide.createIcons();
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+      const passGuardada = localStorage.getItem('dtc_pass') || 'DATECSA2026';
+      if(u === 'Admin' && p === passGuardada){
+        sessionStorage.setItem('dtcAuth', '1');
+        sessionStorage.setItem('dtcUser', u);
+        window.location.href = 'pages/dashboard.html';
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('password').value = '';
+      }
+    });
+    function togglePass(){
+      const f = document.getElementById('password');
+      f.type = f.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Cargador Masivo – DATECSA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:#0d0d0d;color:#e0e0e0;
+         min-height:100vh;padding:40px 20px;}
+    h1{color:#fff;font-size:20px;margin-bottom:4px;}
+    .sub{color:#666;font-size:13px;margin-bottom:32px;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;max-width:1100px;margin:0 auto;}
+    .card{background:#161616;border:1px solid #222;border-radius:10px;padding:20px;}
+    .card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;}
+    .card-sub{font-size:11px;color:#555;margin-bottom:14px;}
+    .btn-upload{width:100%;background:#1a1a1a;border:1px dashed #333;color:#888;
+                padding:10px;border-radius:6px;cursor:pointer;font-size:13px;
+                transition:all .15s;}
+    .btn-upload:hover{border-color:#b40000;color:#fff;}
+    .btn-upload.loaded{border-color:#44dd88;color:#44dd88;border-style:solid;}
+    input[type=file]{display:none;}
+    .log{background:#111;border:1px solid #1a1a1a;border-radius:6px;
+         padding:10px;margin-top:10px;font-size:11px;max-height:80px;
+         overflow-y:auto;display:none;}
+    .log .ok{color:#44dd88;} .log .err{color:#ff5555;} .log .info{color:#88aaff;}
+    .footer{max-width:1100px;margin:24px auto 0;display:flex;gap:12px;}
+    .btn-primary{background:#b40000;color:#fff;border:none;padding:12px 28px;
+                 border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;}
+    .btn-primary:hover{opacity:.88;}
+    .header{max-width:1100px;margin:0 auto 28px;}
+    .logo{width:160px;margin-bottom:16px;}
+  </style>
+</head>
+<body>
+<div class="header">
+  <img src="favicon.png" class="logo" onerror="this.style.display='none'"/>
+  <h1>Cargador Masivo de Datos</h1>
+  <p class="sub">Selecciona cada archivo CSV y cárgalo al aplicativo DATECSA</p>
+</div>
+
+<div class="grid">
+
+  <!-- TONER INSTALADOS -->
+  <div class="card">
+    <div class="card-title">🖨 Toner Instalados</div>
+    <div class="card-sub">Columnas: MODELO, SERIE, AREA, TONER, CONTADOR, FECHA, RESPONSABLE, OBSERVACION</div>
+    <input type="file" id="file_instalados" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_instalados').click()" id="btn_instalados">
+      📂 Seleccionar toner_instalados.csv
+    </button>
+    <div class="log" id="log_instalados"></div>
+  </div>
+
+  <!-- REGISTRO LLEGADA TONER -->
+  <div class="card">
+    <div class="card-title">📦 Registro de Llegada de Toner</div>
+    <div class="card-sub">Columnas: MODELO, SERIE, REFERENCIA, REMISION, UBICACION, AREA, RECIBE, OS, FECHA, SOLICITUD, OBSERVACION</div>
+    <input type="file" id="file_llegada" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_llegada').click()" id="btn_llegada">
+      📂 Seleccionar REGISTRO DE LLEGADA TONER.csv
+    </button>
+    <div class="log" id="log_llegada"></div>
+  </div>
+
+  <!-- ORDENES DE SERVICIO -->
+  <div class="card">
+    <div class="card-title">📋 Órdenes de Servicio</div>
+    <div class="card-sub">Columnas: MODELO, SERIAL, UBICACION, INCIDENTE, FECHA SOLICITUD, O.S, FECHA SERVICIO, TRABAJO, SEDE, RESPONSABLE</div>
+    <input type="file" id="file_ordenes" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_ordenes').click()" id="btn_ordenes">
+      📂 Seleccionar ORDENES DE SERVICIO.csv
+    </button>
+    <div class="log" id="log_ordenes"></div>
+  </div>
+
+  <!-- CASOS Y SOLICITUDES -->
+  <div class="card">
+    <div class="card-title">🎫 Casos y Solicitudes</div>
+    <div class="card-sub">Columnas: LLEGADA, MODELO, SERIE, FECHA INICIAL, HORA INICIO, USUARIO, UBICACION, TIPO SOLICITUD, FECHA FINAL, HORA FIN, OBSERVACIONES, HELPDESK, PRIORIDAD, ESTADO</div>
+    <input type="file" id="file_tickets" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_tickets').click()" id="btn_tickets">
+      📂 Seleccionar CASOS Y SOLICITUDES.csv
+    </button>
+    <div class="log" id="log_tickets"></div>
+  </div>
+
+  <!-- NOTIFICACIONES KFS -->
+  <div class="card">
+    <div class="card-title">🔔 Notificaciones KFS</div>
+    <div class="card-sub">Columnas: FECHA NOTIF. KFS, IMPRESORA/SERIE, O.S DE APROB., OBSERVACIONES</div>
+    <input type="file" id="file_notif" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_notif').click()" id="btn_notif">
+      📂 Seleccionar NOTIFICACIONES KFS.csv
+    </button>
+    <div class="log" id="log_notif"></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <button class="btn-primary" onclick="irAlApp()">→ Ir al Aplicativo</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://znvbjrrkndmytjwikzno.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudmJqcnJrbmRteXRqd2lrem5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTA0MzMsImV4cCI6MjA5NzM2NjQzM30.YjnYkuMTdo3S7yIX-zjmy-FCNEMaw1NZaQNoPYEvzbg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ─── UTILIDADES ───
+function parseCSVLine(line, delim){
+  const result=[];let cur='';let inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(c==='"'){inQ=!inQ;}
+    else if(c===delim&&!inQ){result.push(cur.trim());cur='';}
+    else{cur+=c;}
+  }
+  result.push(cur.trim());
+  return result;
+}
+function detectDelim(line){ return line.includes(';')?';':','; }
+function parseDate(d){
+  if(!d) return null;
+  d=d.trim().replace(/"/g,'');
+  const m=d.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  return d||null;
+}
+function log(id, msg, tipo='info'){
+  const d=document.getElementById('log_'+id);
+  d.style.display='block';
+  d.innerHTML+=`<div class="${tipo}">${msg}</div>`;
+  d.scrollTop=d.scrollHeight;
+}
+function setLoaded(btnId, count){
+  const b=document.getElementById('btn_'+btnId);
+  b.classList.add('loaded');
+  b.textContent=`✓ ${count} registros cargados`;
+}
+
+// ─── PARSERS POR MÓDULO ───
+
+// 1. TONER INSTALADOS → toners_instalados
+document.getElementById('file_instalados').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'instalados',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[0]||!c[0].trim()) return;
+      registros.push({
+        equipo:      c[0]||'',
+        serial:      c[1]||'',
+        sede:        c[2]||'',
+        referencia:  c[3]||'',
+        contador:    c[4]||'',
+        fecha:       parseDate(c[5]),
+        tecnico:     c[6]||'',
+        observacion: c[7]||'',
+      });
+    });
+    guardar('toners_instalados', registros, 'instalados');
+  });
+});
+
+// 2. REGISTRO LLEGADA TONER → entradas_toner
+document.getElementById('file_llegada').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'llegada',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[0]||!c[0].trim()) return;
+      registros.push({
+        modelo:      c[0]||'',
+        serie:       c[1]||'',
+        referencia:  c[2]||'',
+        remision:    c[3]||'',
+        ubicacion:   c[4]||'',
+        area:        c[5]||'',
+        recibe:      c[6]||'',
+        os:          c[7]||'',
+        fecha:       parseDate(c[8]),
+        solicitud:   c[9]||'',
+        observacion: c[10]||'',
+      });
+    });
+    guardar('entradas_toner', registros, 'llegada');
+  });
+});
+
+// 3. ORDENES DE SERVICIO → ordenes
+document.getElementById('file_ordenes').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'ordenes',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[0]||!c[0].trim()) return;
+      registros.push({
+        modelo:          c[0]||'',
+        serial:          c[1]||'',
+        ubicacion:       c[2]||'',
+        incidente:       c[3]||'',
+        fecha_solicitud: parseDate(c[4]),
+        os:              c[5]||'',
+        fecha_servicio:  parseDate(c[6]),
+        trabajo:         c[7]||'',
+        sede:            c[8]||'',
+        responsable:     c[9]||'',
+      });
+    });
+    guardar('ordenes', registros, 'ordenes');
+  });
+});
+
+// 4. CASOS Y SOLICITUDES → tickets
+document.getElementById('file_tickets').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'tickets',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[0]||!c[0].trim()) return;
+      registros.push({
+        llegada:        c[0]||'',
+        modelo:         c[1]||'',
+        serial:         c[2]||'',
+        fecha_inicial:  parseDate(c[3]),
+        hora_inicio:    c[4]||'',
+        usuario:        c[5]||'',
+        ubicacion:      c[6]||'',
+        tipo_solicitud: c[7]||'',
+        fecha_final:    parseDate(c[8]),
+        hora_fin:       c[9]||'',
+        observaciones:  c[10]||'',
+        helpdesk:       c[11]||'',
+        prioridad:      c[12]||'Normal',
+        estado:         c[13]||'Cerrado',
+      });
+    });
+    guardar('tickets', registros, 'tickets');
+  });
+});
+
+// 5. NOTIFICACIONES KFS → notificaciones
+document.getElementById('file_notif').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'notif',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[0]||!c[0].trim()) return;
+      registros.push({
+        fecha:       parseDate(c[0]),
+        impresora:   c[1]||'',
+        os:          c[2]||'',
+        observacion: c[3]||'',
+        leido:       false,
+      });
+    });
+    guardar('notificaciones', registros, 'notif');
+  });
+});
+
+// ─── FUNCIONES COMUNES ───
+function readCSV(file, logId, callback){
+  if(!file) return;
+  log(logId,`📄 Leyendo: ${file.name}...`);
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const text=ev.target.result;
+    const lines=text.split('\n').filter(l=>l.trim()!=='');
+    const delim=detectDelim(lines[0]);
+    log(logId,`🔍 Delimitador: "${delim}" | ${lines.length-1} filas`,'info');
+    callback(lines, delim);
+  };
+  reader.readAsText(file,'UTF-8');
+}
+
+async function guardar(tabla, registros, logId){
+  if(!registros.length){ log(logId,'⚠ Sin registros válidos','err'); return; }
+  const modo=confirm(`${registros.length} registros encontrados.\n\n¿REEMPLAZAR todo?\n(Cancelar = Agregar a existentes)`);
+  log(logId,`⏳ Guardando ${registros.length} registros en Supabase...`,'info');
+  try {
+    if(modo){
+      const { error: delErr } = await sb.from(tabla).delete().neq('id',0);
+      if(delErr) throw delErr;
+    }
+    const chunkSize=200;
+    for(let i=0;i<registros.length;i+=chunkSize){
+      const chunk=registros.slice(i,i+chunkSize);
+      const { error } = await sb.from(tabla).insert(chunk);
+      if(error) throw error;
+    }
+    log(logId,`✅ ${registros.length} registros guardados correctamente`,'ok');
+    setLoaded(logId, registros.length);
+  } catch(e){
+    log(logId,`❌ Error: ${e.message||JSON.stringify(e)}`,'err');
+  }
+}
+
+function irAlApp(){ window.location.href='../pages/dashboard.html'; }
+</script>
+</body>
+</html>
