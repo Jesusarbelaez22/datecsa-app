@@ -178,25 +178,65 @@ function badgeIncidente(inc){
 async function renderDashboard(){
   showLoading();
   try {
-    const { data: tickets } = await sb.from('tickets').select('estado,tipo_solicitud,usuario,ubicacion,fecha_inicial').order('id', {ascending:false});
-    const all = tickets||[];
-    const abiertos = all.filter(t=>t.estado==='Abierto').length;
-    const progreso  = all.filter(t=>t.estado==='En Progreso').length;
-    const cerrados  = all.filter(t=>t.estado==='Cerrado').length;
+    const [{data:ticketsData},{data:ordenesData},{data:notifData},{data:recentData}] = await Promise.all([
+      sb.from('tickets').select('estado'),
+      sb.from('ordenes').select('id'),
+      sb.from('notificaciones').select('leido'),
+      sb.from('tickets').select('*').order('id',{ascending:false}).limit(5),
+    ]);
+    const tickets   = ticketsData||[];
+    const abiertos  = tickets.filter(t=>t.estado==='Abierto').length;
+    const progreso  = tickets.filter(t=>t.estado==='En Progreso').length;
+    const cerrados  = tickets.filter(t=>t.estado==='Cerrado').length;
+    const totalOS   = (ordenesData||[]).length;
+    const notifPend = (notifData||[]).filter(n=>!n.leido).length;
     document.getElementById('dash-abiertos').textContent = abiertos;
     document.getElementById('dash-progreso').textContent = progreso;
     document.getElementById('dash-cerrados').textContent = cerrados;
+    const osEl = document.getElementById('dash-ordenes');
+    if(osEl) osEl.textContent = totalOS;
+    const notifEl = document.getElementById('dash-notif');
+    if(notifEl) notifEl.textContent = notifPend;
     renderChart(abiertos, progreso, cerrados);
-    const tbody = document.getElementById('dash-tickets-body');
-    const recent = all.slice(0,5);
-    tbody.innerHTML = recent.length ? recent.map(t=>`
-      <tr>
-        <td>${fmtDate(t.fecha_inicial)}</td>
-        <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.tipo_solicitud||'–'}</td>
-        <td>${t.usuario||'–'}</td>
-        <td>${t.ubicacion||'–'}</td>
-        <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
-      </tr>`).join('') : `<tr><td colspan="5" class="empty-state"><p>Sin tickets</p></td></tr>`;
+    const cont = document.getElementById('dash-tickets-container');
+    const recent = recentData||[];
+    if(!recent.length){
+      cont.innerHTML = `<div style="text-align:center;padding:32px;color:#444;background:#161616;border:1px solid #222;border-radius:10px">
+        <div style="font-size:32px;margin-bottom:8px">🎫</div>
+        <p style="font-size:13px">Sin actividad reciente</p>
+      </div>`;
+    } else {
+      cont.innerHTML = recent.map(t=>{
+        const borderColor = t.estado==='Abierto'?'#0066cc':t.estado==='En Progreso'?'#cc8800':'#00a854';
+        return `<div style="background:#161616;border:1px solid #1e1e1e;border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;border-left:3px solid ${borderColor};transition:all .15s;cursor:pointer;"
+          onmouseover="this.style.borderColor='var(--color-accent)';this.style.background='#1a1a1a'"
+          onmouseout="this.style.borderColor='${borderColor}';this.style.background='#161616'"
+          onclick="navigate('tickets')">
+          <div style="flex-shrink:0">
+            <span class="badge ${badgeLlegada(t.llegada)}" style="font-size:10px">${t.llegada||'–'}</span>
+          </div>
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+              <span style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${t.tipo_solicitud||'Sin tipo'}</span>
+              <span style="font-size:11px;color:#555">•</span>
+              <span style="font-size:12px;color:#777">${t.usuario||'–'}</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <span style="font-size:11px;color:#555">📍 ${t.ubicacion||'–'}</span>
+              ${t.modelo?`<span style="font-size:11px;color:#555">🖨 ${t.modelo}</span>`:''}
+              <span style="font-size:11px;color:#555">📅 ${fmtDate(t.fecha_inicial)}${t.hora_inicio?` · ⏰ ${t.hora_inicio}`:''}</span>
+            </div>
+          </div>
+          <div style="flex-shrink:0;text-align:right">
+            <div style="font-size:11px;color:#666;margin-bottom:4px">Helpdesk</div>
+            <div style="font-size:12px;font-weight:600;color:#ccc">${t.helpdesk||'–'}</div>
+          </div>
+          <div style="flex-shrink:0">
+            <span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
   } catch(e){ toast('Error cargando dashboard','error'); }
   hideLoading();
 }
@@ -235,16 +275,17 @@ async function renderTickets(){
         <td>${t.hora_inicio||'–'}</td>
         <td>${t.usuario||'–'}</td>
         <td>${t.ubicacion||'–'}</td>
-        <td style="color:#fff;font-weight:700">${t.tipo_solicitud||'–'}</td>
+        <td><strong>${t.tipo_solicitud||'–'}</strong></td>
         <td>${fmtDate(t.fecha_final)}</td>
+        <td>${t.hora_inicio||'–'}</td>
         <td>${t.hora_fin||'–'}</td>
         <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(t.observaciones||'').replace(/"/g,'&quot;')}">${t.observaciones||'–'}</td>
-        <td style="color:#fff">${t.helpdesk||'–'}</td>
+        <td>${t.helpdesk||'–'}</td>
         <td><span class="badge ${badgePrio(t.prioridad)}">${t.prioridad||'–'}</span></td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
         <td><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
       </tr>`).join('') :
-      `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
+      `<tr><td colspan="16"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando tickets','error'); }
   hideLoading();

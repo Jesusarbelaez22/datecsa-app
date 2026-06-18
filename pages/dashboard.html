@@ -166,7 +166,7 @@
     <!-- ══════════════ DASHBOARD ══════════════ -->
     <div class="page" id="page-dashboard">
 
-      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stats-grid" style="grid-template-columns:repeat(5,1fr)">
         <div class="stat-card">
           <div class="stat-icon blue"><i data-lucide="ticket"></i></div>
           <div><div class="stat-num" id="dash-abiertos">0</div><div class="stat-label">Tickets Abiertos</div></div>
@@ -179,6 +179,14 @@
           <div class="stat-icon green"><i data-lucide="check-circle-2"></i></div>
           <div><div class="stat-num" id="dash-cerrados">0</div><div class="stat-label">Tickets Cerrados</div></div>
         </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(100,60,200,0.12);width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">📋</div>
+          <div><div class="stat-num" id="dash-ordenes">0</div><div class="stat-label">Órdenes de Servicio</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(200,140,0,0.12);width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">🔔</div>
+          <div><div class="stat-num" id="dash-notif">0</div><div class="stat-label">Notif. KFS Pendientes</div></div>
+        </div>
       </div>
 
       <!-- Chart -->
@@ -190,12 +198,12 @@
         </div>
       </div>
 
-      <div class="section-header"><span class="section-title">Tickets Recientes</span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>FECHA INICIAL</th><th>TIPO</th><th>USUARIO</th><th>UBICACIÓN</th><th>ESTADO</th></tr></thead>
-          <tbody id="dash-tickets-body"></tbody>
-        </table>
+      <div style="margin-top:24px">
+        <div class="section-header" style="margin-bottom:14px">
+          <span class="section-title">Actividad Reciente</span>
+          <button class="btn-secondary" onclick="navigate('tickets')" style="font-size:12px;padding:6px 14px">Ver todos →</button>
+        </div>
+        <div id="dash-tickets-container"></div>
       </div>
     </div>
 
@@ -390,7 +398,7 @@
         </div>
         <div class="records-info" id="count-tickets"></div>
         <table>
-          <thead><tr><th>LLEGADA</th><th>MODELO</th><th>SERIE</th><th>FECHA INICIAL</th><th>HORA INICIO</th><th>USUARIO / SOLICITANTE</th><th>UBICACIÓN</th><th>TIPO DE SOLICITUD</th><th>FECHA FINAL</th><th>HORA FINAL</th><th>OBSERVACIONES</th><th>HELPDESK</th><th>PRIORIDAD</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
+          <thead><tr><th>LLEGADA</th><th>MODELO</th><th>SERIE</th><th>FECHA INICIAL</th><th>HORA INICIO</th><th>USUARIO / SOLICITANTE</th><th>UBICACIÓN</th><th>TIPO DE SOLICITUD</th><th>FECHA FINAL</th><th>HORA INICIO</th><th>HORA FINAL</th><th>OBSERVACIONES</th><th>HELPDESK</th><th>PRIORIDAD</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
           <tbody id="tickets-body"></tbody>
         </table>
       </div>
