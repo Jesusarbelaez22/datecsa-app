@@ -266,24 +266,30 @@ async function renderTickets(){
       ? `Mostrando ${filtered.length} de ${all.length} registros`
       : `${all.length} registro${all.length!==1?'s':''}`;
     const tbody = document.getElementById('tickets-body');
-    tbody.innerHTML = filtered.length ? filtered.map(t=>`
-      <tr>
+    tbody.innerHTML = filtered.length ? filtered.map(t=>{
+      const usuarioRaw = t.usuario||'–';
+      const partes = usuarioRaw.match(/^(.+?)\s+([\w.\-]+@[\w.\-]+)$/);
+      const usuarioHTML = partes
+        ? `<span style="display:block;font-weight:500;color:#e0e0e0">${partes[1]}</span><span style="display:block;font-size:11px;color:#666;margin-top:2px">${partes[2]}</span>`
+        : `<span>${usuarioRaw}</span>`;
+      return `<tr>
         <td><span class="badge ${badgeLlegada(t.llegada)}">${t.llegada||'–'}</span></td>
         <td>${t.modelo||'–'}</td>
         <td>${t.serial||'–'}</td>
         <td>${fmtDate(t.fecha_inicial)}</td>
         <td>${t.hora_inicio||'–'}</td>
-        <td style="max-width:180px;white-space:normal">${t.usuario||'–'}</td>
+        <td>${usuarioHTML}</td>
         <td>${t.ubicacion||'–'}</td>
         <td><strong>${t.tipo_solicitud||'–'}</strong></td>
         <td>${fmtDate(t.fecha_final)}</td>
         <td>${t.hora_fin||'–'}</td>
-        <td style="max-width:150px;white-space:normal;font-size:12px;color:#888">${t.observaciones||'–'}</td>
+        <td>${t.observaciones||'–'}</td>
         <td><strong>${t.helpdesk||'–'}</strong></td>
         <td><span class="badge ${badgePrio(t.prioridad)}">${t.prioridad||'–'}</span></td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
         <td><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
-      </tr>`).join('') :
+      </tr>`;
+    }).join('') :
       `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando tickets','error'); }
