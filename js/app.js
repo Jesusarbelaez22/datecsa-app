@@ -1010,8 +1010,14 @@ function renderCliente(){
   set('cli-resp1',        cfg.resp1);
   set('cli-resp2',        cfg.resp2);
   set('cli-total',        (parseInt(cfg.impresoras)||0)+(parseInt(cfg.scanners)||0));
-  set('cliente-correo',   cfg.correo);
-  set('cliente-extension',cfg.extension);
+  const correoEl=document.getElementById('cliente-correo');
+  if(correoEl){
+    const correo=cfg.correo||'soporteimpresion@usc.edu.co';
+    correoEl.href='mailto:'+correo;
+    correoEl.textContent=correo;
+  }
+  const extEl=document.getElementById('cliente-extension');
+  if(extEl) extEl.textContent='📞 '+(cfg.extension||'6725');
   lucide.createIcons();
 }
 

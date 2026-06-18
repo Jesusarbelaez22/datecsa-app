@@ -303,15 +303,45 @@
       <!-- C) INFORMACIÓN DEL CONTRATO -->
       <div style="background:var(--color-card);border:1px solid var(--color-border);border-radius:12px;padding:24px 28px;margin-bottom:24px">
         <div class="section-header" style="margin-bottom:20px"><span class="section-title">Información del Contrato</span></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px" id="cli-contrato-grid">
-          <div class="cli-field"><span class="cli-label">Cliente</span><span class="cli-value" id="cli-nombre">Universidad Santiago de Cali</span></div>
-          <div class="cli-field"><span class="cli-label">Tipo de contrato</span><span class="cli-value" id="cli-tipo">Soporte de Impresión</span></div>
-          <div class="cli-field"><span class="cli-label">Proveedor</span><span class="cli-value">DATECSA – Más que Tecnología</span></div>
-          <div class="cli-field"><span class="cli-label">Helpdesk 1</span><span class="cli-value" id="cli-resp1">JESÚS ARBELAEZ</span></div>
-          <div class="cli-field"><span class="cli-label">Helpdesk 2</span><span class="cli-value" id="cli-resp2">JHON CAMACHO</span></div>
-          <div class="cli-field"><span class="cli-label">Total equipos</span><span class="cli-value" id="cli-total">135</span></div>
-          <div class="cli-field"><span class="cli-label">Correo</span><span class="cli-value" id="cliente-correo">soporteimpresion@usc.edu.co</span></div>
-          <div class="cli-field"><span class="cli-label">Extensión</span><span class="cli-value" id="cliente-extension">6725</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+          <!-- Fila 1 -->
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Cliente</span>
+            <span id="cli-nombre" style="font-size:15px;font-weight:600;color:#fff">Universidad Santiago de Cali</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Tipo de Contrato</span>
+            <span id="cli-tipo" style="font-size:15px;font-weight:600;color:#fff">Soporte de Impresión</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Proveedor</span>
+            <span style="font-size:15px;font-weight:600;color:#fff">DATECSA – Más que Tecnología</span>
+          </div>
+          <!-- Fila 2 -->
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Helpdesk 1</span>
+            <span id="cli-resp1" style="font-size:15px;font-weight:600;color:#fff">JESÚS ARBELAEZ</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Helpdesk 2</span>
+            <span id="cli-resp2" style="font-size:15px;font-weight:600;color:#fff">JHON CAMACHO</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Total Equipos</span>
+            <span id="cli-total" style="font-size:15px;font-weight:600;color:#fff">135</span>
+          </div>
+          <!-- Fila 3 -->
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Correo de Soporte</span>
+            <a id="cliente-correo" href="mailto:soporteimpresion@usc.edu.co"
+               style="font-size:14px;font-weight:600;color:var(--color-accent);text-decoration:none">
+              soporteimpresion@usc.edu.co
+            </a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px">Extensión Telefónica</span>
+            <span id="cliente-extension" style="font-size:15px;font-weight:600;color:#fff">📞 6725</span>
+          </div>
         </div>
       </div>
 
