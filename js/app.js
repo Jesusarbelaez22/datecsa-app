@@ -273,19 +273,18 @@ async function renderTickets(){
         <td>${t.serial||'–'}</td>
         <td>${fmtDate(t.fecha_inicial)}</td>
         <td>${t.hora_inicio||'–'}</td>
-        <td>${t.usuario||'–'}</td>
+        <td style="max-width:180px;white-space:normal">${t.usuario||'–'}</td>
         <td>${t.ubicacion||'–'}</td>
         <td><strong>${t.tipo_solicitud||'–'}</strong></td>
         <td>${fmtDate(t.fecha_final)}</td>
-        <td>${t.hora_inicio||'–'}</td>
         <td>${t.hora_fin||'–'}</td>
-        <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(t.observaciones||'').replace(/"/g,'&quot;')}">${t.observaciones||'–'}</td>
-        <td>${t.helpdesk||'–'}</td>
+        <td style="max-width:150px;white-space:normal;font-size:12px;color:#888">${t.observaciones||'–'}</td>
+        <td><strong>${t.helpdesk||'–'}</strong></td>
         <td><span class="badge ${badgePrio(t.prioridad)}">${t.prioridad||'–'}</span></td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
         <td><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
       </tr>`).join('') :
-      `<tr><td colspan="16"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
+      `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>No hay tickets que coincidan</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando tickets','error'); }
   hideLoading();
