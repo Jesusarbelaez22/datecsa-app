@@ -516,15 +516,31 @@ async function editEntrada(id){
   document.getElementById('entrada-id').value=data.id;
   document.getElementById('entrada-modelo').value=data.modelo||'';
   document.getElementById('entrada-serie').value=data.serie||'';
-  document.getElementById('entrada-referencia').value=data.referencia||'';
   document.getElementById('entrada-remision').value=data.remision||'';
   document.getElementById('entrada-ubicacion').value=data.ubicacion||'';
   document.getElementById('entrada-area').value=data.area||'';
-  document.getElementById('entrada-recibe').value=data.recibe||'';
   document.getElementById('entrada-os').value=data.os||'';
   document.getElementById('entrada-fecha').value=data.fecha||'';
-  document.getElementById('entrada-solicitud').value=data.solicitud||'';
   document.getElementById('entrada-observacion').value=data.observacion||'';
+  const refConocidas=['TK-3462','TK-3432','TK-3162','TK-3182'];
+  const selRef=document.getElementById('entrada-referencia');
+  const refOtroWrap=document.getElementById('entrada-referencia-otro-wrap');
+  const refOtroInp=document.getElementById('entrada-referencia-otro');
+  if(refConocidas.includes(data.referencia||'')){
+    selRef.value=data.referencia; if(refOtroWrap) refOtroWrap.style.display='none';
+  } else {
+    selRef.value='OTRO'; if(refOtroWrap) refOtroWrap.style.display='block'; if(refOtroInp) refOtroInp.value=data.referencia||'';
+  }
+  const recibeConocidos=['JESÚS ARBELAEZ','JHON CAMACHO'];
+  const selRecibe=document.getElementById('entrada-recibe');
+  const recibeOtroWrap=document.getElementById('entrada-recibe-otro-wrap');
+  const recibeOtroInp=document.getElementById('entrada-recibe-otro');
+  if(recibeConocidos.includes(data.recibe||'')){
+    selRecibe.value=data.recibe; if(recibeOtroWrap) recibeOtroWrap.style.display='none';
+  } else {
+    selRecibe.value='OTRO'; if(recibeOtroWrap) recibeOtroWrap.style.display='block'; if(recibeOtroInp) recibeOtroInp.value=data.recibe||'';
+  }
+  document.getElementById('entrada-solicitud').value=data.solicitud||'';
   document.querySelector('#modal-entrada .modal-title').textContent='Editar Entrada de Toner';
   openModal('modal-entrada');
 }
@@ -532,7 +548,13 @@ async function editEntrada(id){
 async function saveEntrada(){
   const id=parseInt(document.getElementById('entrada-id').value)||null;
   const modelo=document.getElementById('entrada-modelo').value.trim();
-  const referencia=document.getElementById('entrada-referencia').value.trim();
+  const refSelect   = document.getElementById('entrada-referencia')?.value || '';
+  const refOtro     = document.getElementById('entrada-referencia-otro')?.value.trim() || '';
+  const referencia  = (refSelect === 'OTRO' && refOtro) ? refOtro : refSelect;
+  const recibeSelect= document.getElementById('entrada-recibe')?.value || '';
+  const recibeOtro  = document.getElementById('entrada-recibe-otro')?.value.trim() || '';
+  const recibe      = (recibeSelect === 'OTRO' && recibeOtro) ? recibeOtro : recibeSelect;
+  const solicitud   = document.getElementById('entrada-solicitud')?.value || '';
   if(!modelo||!referencia){ toast('Complete los campos requeridos: MODELO y REFERENCIA','error'); return; }
   const obj={
     modelo,
@@ -541,10 +563,10 @@ async function saveEntrada(){
     remision:    document.getElementById('entrada-remision').value.trim(),
     ubicacion:   document.getElementById('entrada-ubicacion').value.trim(),
     area:        document.getElementById('entrada-area').value.trim(),
-    recibe:      document.getElementById('entrada-recibe').value.trim(),
+    recibe,
     os:          document.getElementById('entrada-os').value.trim(),
     fecha:       document.getElementById('entrada-fecha').value||null,
-    solicitud:   document.getElementById('entrada-solicitud').value.trim(),
+    solicitud,
     observacion: document.getElementById('entrada-observacion').value.trim(),
   };
   showLoading();
@@ -610,8 +632,8 @@ function openNewInstalado(){
   if(idField) idField.value='';
   const fechaField = document.getElementById('instalado-fecha');
   if(fechaField) fechaField.value=today();
-  const tecField = document.getElementById('instalado-tecnico');
-  if(tecField) tecField.value='JESÚS ARBELAEZ';
+  const respField = document.getElementById('instalado-responsable');
+  if(respField) respField.value='JESÚS ARBELAEZ';
   const titulo = document.querySelector('#modal-instalado .modal-title');
   if(titulo) titulo.textContent='Registrar Toner Instalado';
   openModal('modal-instalado');
@@ -624,11 +646,27 @@ async function editInstalado(id){
   document.getElementById('instalado-equipo').value=data.equipo||'';
   document.getElementById('instalado-serial').value=data.serial||'';
   document.getElementById('instalado-area').value=data.sede||'';
-  document.getElementById('instalado-referencia').value=data.referencia||'';
   document.getElementById('instalado-contador').value=data.contador||'';
   document.getElementById('instalado-fecha').value=data.fecha||'';
-  document.getElementById('instalado-tecnico').value=data.tecnico||'';
   document.getElementById('instalado-observacion').value=data.observacion||'';
+  const tonerConocidos=['TK-3462','TK-3432','TK-3162','TK-3182'];
+  const selToner=document.getElementById('instalado-toner');
+  const tonerOtroWrap=document.getElementById('instalado-toner-otro-wrap');
+  const tonerOtroInp=document.getElementById('instalado-toner-otro');
+  if(tonerConocidos.includes(data.referencia||'')){
+    selToner.value=data.referencia; if(tonerOtroWrap) tonerOtroWrap.style.display='none';
+  } else {
+    selToner.value='OTRO'; if(tonerOtroWrap) tonerOtroWrap.style.display='block'; if(tonerOtroInp) tonerOtroInp.value=data.referencia||'';
+  }
+  const respConocidos=['JESÚS ARBELAEZ','JHON CAMACHO'];
+  const selResp=document.getElementById('instalado-responsable');
+  const respOtroWrap=document.getElementById('instalado-responsable-otro-wrap');
+  const respOtroInp=document.getElementById('instalado-responsable-otro');
+  if(respConocidos.includes(data.tecnico||'')){
+    selResp.value=data.tecnico; if(respOtroWrap) respOtroWrap.style.display='none';
+  } else {
+    selResp.value='OTRO'; if(respOtroWrap) respOtroWrap.style.display='block'; if(respOtroInp) respOtroInp.value=data.tecnico||'';
+  }
   document.querySelector('#modal-instalado .modal-title').textContent='Editar Toner Instalado';
   openModal('modal-instalado');
 }
@@ -636,17 +674,22 @@ async function editInstalado(id){
 async function saveInstalado(){
   const id=parseInt(document.getElementById('instalado-id')?.value)||null;
   const equipo=document.getElementById('instalado-equipo')?.value.trim()||'';
-  const referencia=document.getElementById('instalado-referencia')?.value.trim()||'';
+  const tonerSelect  = document.getElementById('instalado-toner')?.value || '';
+  const tonerOtro    = document.getElementById('instalado-toner-otro')?.value.trim() || '';
+  const toner        = (tonerSelect === 'OTRO' && tonerOtro) ? tonerOtro : tonerSelect;
+  const respSelect   = document.getElementById('instalado-responsable')?.value || '';
+  const respOtro     = document.getElementById('instalado-responsable-otro')?.value.trim() || '';
+  const responsable  = (respSelect === 'OTRO' && respOtro) ? respOtro : respSelect;
   if(!equipo){ toast('El campo MODELO es requerido','error'); return; }
-  if(!referencia){ toast('El campo TONER es requerido','error'); return; }
+  if(!toner){  toast('El campo TONER es requerido','error'); return; }
   const obj={
     equipo,
     serial:      document.getElementById('instalado-serial')?.value.trim()||'',
     sede:        document.getElementById('instalado-area')?.value.trim()||'',
-    referencia,
+    referencia:  toner,
     contador:    document.getElementById('instalado-contador')?.value.trim()||'',
     fecha:       document.getElementById('instalado-fecha')?.value||null,
-    tecnico:     document.getElementById('instalado-tecnico')?.value.trim()||'',
+    tecnico:     responsable,
     observacion: document.getElementById('instalado-observacion')?.value.trim()||'',
   };
   showLoading();
@@ -1205,6 +1248,26 @@ document.addEventListener('input', function(e){
       ubicacion: 'entrada-area',
       sede:      'entrada-ubicacion',
     }), 500);
+  }
+});
+
+document.addEventListener('change', function(e){
+  const id = e.target.id;
+  if(id === 'entrada-referencia'){
+    const wrap = document.getElementById('entrada-referencia-otro-wrap');
+    if(wrap) wrap.style.display = e.target.value === 'OTRO' ? 'block' : 'none';
+  }
+  if(id === 'entrada-recibe'){
+    const wrap = document.getElementById('entrada-recibe-otro-wrap');
+    if(wrap) wrap.style.display = e.target.value === 'OTRO' ? 'block' : 'none';
+  }
+  if(id === 'instalado-toner'){
+    const wrap = document.getElementById('instalado-toner-otro-wrap');
+    if(wrap) wrap.style.display = e.target.value === 'OTRO' ? 'block' : 'none';
+  }
+  if(id === 'instalado-responsable'){
+    const wrap = document.getElementById('instalado-responsable-otro-wrap');
+    if(wrap) wrap.style.display = e.target.value === 'OTRO' ? 'block' : 'none';
   }
 });
 

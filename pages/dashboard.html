@@ -1075,14 +1075,42 @@
     <div class="form-grid">
       <div class="form-group"><label>MODELO *</label><input id="entrada-modelo" placeholder="Ej: P3155dn, MA5500ifx..."/></div>
       <div class="form-group"><label>SERIE</label><input id="entrada-serie" placeholder="Número de serie"/></div>
-      <div class="form-group"><label>REFERENCIA *</label><input id="entrada-referencia" placeholder="Ej: TK-3182, TK-3462..."/></div>
+      <div class="form-group"><label>REFERENCIA *</label>
+        <select id="entrada-referencia">
+          <option value="">-- Seleccionar --</option>
+          <option>TK-3462</option>
+          <option>TK-3432</option>
+          <option>TK-3162</option>
+          <option>TK-3182</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="entrada-referencia-otro-wrap" style="display:none;margin-top:8px">
+          <input type="text" id="entrada-referencia-otro" placeholder="Especifique el repuesto..." style="width:100%;background:#111;border:1px solid #2a2a2a;color:#e0e0e0;padding:10px 14px;border-radius:6px;font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
       <div class="form-group"><label>REMISIÓN</label><input id="entrada-remision" placeholder="Número de remisión"/></div>
       <div class="form-group"><label>UBICACIÓN</label><input id="entrada-ubicacion" placeholder="Ej: PAMPALINDA, CENTRO..."/></div>
       <div class="form-group"><label>ÁREA</label><input id="entrada-area" placeholder="Ej: BIBLIOTECA, DGI..."/></div>
-      <div class="form-group"><label>RECIBE</label><input id="entrada-recibe" placeholder="Nombre quien recibe" value="JESÚS"/></div>
+      <div class="form-group"><label>RECIBE</label>
+        <select id="entrada-recibe">
+          <option value="">-- Seleccionar --</option>
+          <option>JESÚS ARBELAEZ</option>
+          <option>JHON CAMACHO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="entrada-recibe-otro-wrap" style="display:none;margin-top:8px">
+          <input type="text" id="entrada-recibe-otro" placeholder="Nombre de quien recibe..." style="width:100%;background:#111;border:1px solid #2a2a2a;color:#e0e0e0;padding:10px 14px;border-radius:6px;font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
       <div class="form-group"><label>OS</label><input id="entrada-os" placeholder="Número de OS"/></div>
       <div class="form-group"><label>FECHA</label><input type="date" id="entrada-fecha"/></div>
-      <div class="form-group"><label>SOLICITUD</label><input id="entrada-solicitud" placeholder="Ej: KFS"/></div>
+      <div class="form-group"><label>SOLICITUD</label>
+        <select id="entrada-solicitud">
+          <option value="">-- Seleccionar --</option>
+          <option>KFS</option>
+          <option>CORREO</option>
+        </select>
+      </div>
       <div class="form-group span2"><label>OBSERVACIÓN</label><textarea id="entrada-observacion" placeholder="Observaciones..."></textarea></div>
     </div>
     </form>
@@ -1106,10 +1134,32 @@
       <div class="form-group"><label>MODELO *</label><input id="instalado-equipo" placeholder="Ej: Kyocera ECOSYS M2040dn"/></div>
       <div class="form-group"><label>SERIE</label><input id="instalado-serial" placeholder="Número de serie"/></div>
       <div class="form-group"><label>ÁREA</label><input id="instalado-area" placeholder="Ej: BIBLIOTECA, PAGADURIA..."/></div>
-      <div class="form-group"><label>TONER *</label><input id="instalado-referencia" placeholder="Ej: TK-1170, TK-3462..."/></div>
+      <div class="form-group"><label>TONER *</label>
+        <select id="instalado-toner">
+          <option value="">-- Seleccionar --</option>
+          <option>TK-3462</option>
+          <option>TK-3432</option>
+          <option>TK-3162</option>
+          <option>TK-3182</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="instalado-toner-otro-wrap" style="display:none;margin-top:8px">
+          <input type="text" id="instalado-toner-otro" placeholder="Especifique el toner..." style="width:100%;background:#111;border:1px solid #2a2a2a;color:#e0e0e0;padding:10px 14px;border-radius:6px;font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
       <div class="form-group"><label>CONTADOR</label><input id="instalado-contador" placeholder="Lectura del contador"/></div>
       <div class="form-group"><label>FECHA</label><input type="date" id="instalado-fecha"/></div>
-      <div class="form-group"><label>RESPONSABLE</label><input id="instalado-tecnico" value="JESÚS"/></div>
+      <div class="form-group"><label>RESPONSABLE</label>
+        <select id="instalado-responsable">
+          <option value="">-- Seleccionar --</option>
+          <option>JESÚS ARBELAEZ</option>
+          <option>JHON CAMACHO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div id="instalado-responsable-otro-wrap" style="display:none;margin-top:8px">
+          <input type="text" id="instalado-responsable-otro" placeholder="Nombre del responsable..." style="width:100%;background:#111;border:1px solid #2a2a2a;color:#e0e0e0;padding:10px 14px;border-radius:6px;font-size:13.5px;font-family:'Inter',sans-serif;"/>
+        </div>
+      </div>
       <div class="form-group"><label></label></div>
       <div class="form-group span2"><label>OBSERVACIÓN</label><textarea id="instalado-observacion" placeholder="Observaciones adicionales..."></textarea></div>
     </div>
