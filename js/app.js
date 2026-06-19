@@ -1010,38 +1010,49 @@ async function editOrden(id){
 }
 
 async function saveOrden(){
-  const id=parseInt(document.getElementById('orden-id').value)||null;
-  const modelo=document.getElementById('orden-modelo').value.trim();
-  const serial=document.getElementById('orden-serial').value.trim();
-  const ubicacion=document.getElementById('orden-ubicacion').value.trim();
-  const incSel=document.getElementById('orden-incidente').value;
-  const incOtro=document.getElementById('orden-incidente-otro')?.value.trim();
-  const incidente=(incSel==='OTRO'&&incOtro)?incOtro:incSel;
+  const id=parseInt(document.getElementById('orden-id')?.value)||null;
+  const incSelect=document.getElementById('orden-incidente')?.value||'';
+  const incOtro=document.getElementById('orden-incidente-otro')?.value.trim()||'';
+  const incidente=(incSelect==='OTRO'&&incOtro)?incOtro:incSelect;
+  const respSelect=document.getElementById('orden-responsable')?.value||'';
+  const respOtro=document.getElementById('orden-helpdesk-otro')?.value.trim()||'';
+  const responsable=(respSelect==='OTRO'&&respOtro)?respOtro:respSelect;
+  const modelo=document.getElementById('orden-modelo')?.value.trim()||'';
+  const serial=document.getElementById('orden-serial')?.value.trim()||'';
+  const ubicacion=document.getElementById('orden-ubicacion')?.value.trim()||'';
+  const sede=document.getElementById('orden-sede')?.value||'';
   if(!modelo){    toast('El campo MODELO es requerido','error');    return; }
   if(!serial){    toast('El campo SERIAL es requerido','error');    return; }
   if(!ubicacion){ toast('El campo UBICACIÓN es requerido','error'); return; }
   if(!incidente){ toast('El campo INCIDENTE es requerido','error'); return; }
-  const respSel=document.getElementById('orden-responsable')?.value||'';
-  const respOtro=document.getElementById('orden-helpdesk-otro')?.value.trim()||'';
-  const responsable=(respSel==='OTRO'&&respOtro)?respOtro:respSel;
+  if(!sede){      toast('El campo SEDE es requerido','error');      return; }
   const obj={
-    modelo, serial, ubicacion, incidente,
-    fecha_solicitud: document.getElementById('orden-fechaSolicitud').value||null,
-    os,
-    fecha_servicio:  document.getElementById('orden-fechaServicio').value||null,
-    trabajo:         document.getElementById('orden-trabajo').value.trim(),
-    sede:            document.getElementById('orden-sede').value,
+    modelo, serial, ubicacion, incidente, sede,
+    fecha_solicitud: document.getElementById('orden-fechaSolicitud')?.value||null,
+    os:              document.getElementById('orden-os')?.value.trim()||'',
+    fecha_servicio:  document.getElementById('orden-fechaServicio')?.value||null,
+    trabajo:         document.getElementById('orden-trabajo')?.value.trim()||'',
     responsable,
   };
   showLoading();
   try {
-    if(id){ await sb.from('ordenes').update(obj).eq('id',id); }
-    else   { await sb.from('ordenes').insert(obj); }
+    if(id){
+      const {error}=await sb.from('ordenes').update(obj).eq('id',id);
+      if(error) throw error;
+      toast('Orden actualizada');
+    } else {
+      const {error}=await sb.from('ordenes').insert(obj);
+      if(error) throw error;
+      toast('Orden creada');
+    }
     closeModal('modal-orden');
     await renderOrdenes();
-    toast(id?'Orden actualizada':'Orden creada');
-  } catch(e){ toast('Error guardando orden','error'); }
-  hideLoading();
+  } catch(e){
+    toast('Error: '+e.message,'error');
+    console.error('[saveOrden] Error completo:',e);
+  } finally {
+    hideLoading();
+  }
 }
 
 function deleteOrden(id){
