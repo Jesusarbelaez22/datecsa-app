@@ -936,17 +936,26 @@ function copiarParaCorreo(id){
   sb.from('ordenes').select('modelo,serial,ubicacion,incidente').eq('id',id).single()
     .then(({data, error})=>{
       if(error||!data){ toast('Error al obtener datos','error'); return; }
-      const texto=`${data.modelo||''}\t${data.serial||''}\t${data.ubicacion||''}\t${data.incidente||''}`;
-      navigator.clipboard.writeText(texto).then(()=>{
-        toast('✓ Copiado, pega en el correo o Excel');
-      }).catch(()=>{
-        const ta=document.createElement('textarea');
-        ta.value=texto; ta.style.position='fixed'; ta.style.opacity='0';
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); toast('✓ Copiado, pega en el correo o Excel'); }
-        catch(e){ toast('No se pudo copiar automáticamente','error'); }
-        document.body.removeChild(ta);
-      });
+      const modelo=data.modelo||'', serial=data.serial||'',
+            ubicacion=data.ubicacion||'', incidente=data.incidente||'';
+      const html=`<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px"><tr style="background:#f2f2f2;font-weight:bold"><td>MODELO</td><td>SERIAL</td><td>UBICACIÓN</td><td>INCIDENTE</td></tr><tr><td>${modelo}</td><td>${serial}</td><td>${ubicacion}</td><td>${incidente}</td></tr></table>`;
+      const textoPlano=`MODELO\tSERIAL\tUBICACIÓN\tINCIDENTE\n${modelo}\t${serial}\t${ubicacion}\t${incidente}`;
+      try {
+        const item=new ClipboardItem({
+          'text/html':  new Blob([html],        {type:'text/html'}),
+          'text/plain': new Blob([textoPlano],  {type:'text/plain'}),
+        });
+        navigator.clipboard.write([item]).then(()=>{
+          toast('✓ Copiado en formato tabla, pega en el correo');
+        }).catch(err=>{
+          console.error('Error clipboard avanzado:',err);
+          navigator.clipboard.writeText(textoPlano).then(()=>toast('✓ Copiado (texto), pega en Excel o correo'));
+        });
+      } catch(e){
+        navigator.clipboard.writeText(textoPlano)
+          .then(()=>toast('✓ Copiado (texto), pega en Excel o correo'))
+          .catch(()=>toast('No se pudo copiar automáticamente','error'));
+      }
     });
 }
 
