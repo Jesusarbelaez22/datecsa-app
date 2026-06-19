@@ -870,7 +870,7 @@ async function renderOrdenes(){
       <td style="min-width:150px;max-width:180px">
         <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">${o.incidente||'–'}</span>
       </td>
-      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span style="color:#888;font-style:italic;font-size:11px">Pendiente</span>`}</td>
+      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span class="badge" style="background:rgba(200,140,0,0.15);color:#ffaa00;border:1px solid rgba(200,140,0,0.3)">⏳ Pendiente</span>`}</td>
       <td style="font-size:12px">${o.sede||'–'}</td>
       <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
       <td style="white-space:nowrap">
@@ -904,7 +904,15 @@ async function verOrden(id){
                      font-weight:${destacado?'600':'400'};text-align:right;
                      word-break:break-word">${valor||'–'}</span>
       </div>`;
+    const pendienteHTML = !data.os ? `
+      <div style="background:rgba(200,140,0,0.1);border:1px solid rgba(200,140,0,0.3);
+                  border-radius:8px;padding:10px 14px;margin-bottom:16px;
+                  font-size:12.5px;color:#ffaa00">
+        ⏳ Esta orden está pendiente de confirmación de O.S.
+        Usa "Copiar para correo" para enviar la solicitud.
+      </div>` : '';
     const html = `
+      ${pendienteHTML}
       <div style="margin-bottom:16px">
         <span class="badge ${badgeIncidente(data.incidente)} badge-incidente" style="max-width:none;display:inline-block">${data.incidente||'–'}</span>
       </div>
