@@ -324,7 +324,6 @@ function openNewTicket(){
   if(horaFinField) horaFinField.value='';
   document.querySelector('#modal-ticket .modal-title').textContent='Nuevo Ticket / Caso';
   openModal('modal-ticket');
-  _bindSerieAC('ticket-serial', autocompletarTicket);
 }
 
 async function editTicket(id){
@@ -367,7 +366,6 @@ async function editTicket(id){
   document.getElementById('ticket-estado').value=data.estado||'Abierto';
   document.querySelector('#modal-ticket .modal-title').textContent='Editar Ticket / Caso';
   openModal('modal-ticket');
-  _bindSerieAC('ticket-serial', autocompletarTicket);
 }
 
 async function saveTicket(){
@@ -617,7 +615,6 @@ function openNewInstalado(){
   const titulo = document.querySelector('#modal-instalado .modal-title');
   if(titulo) titulo.textContent='Registrar Toner Instalado';
   openModal('modal-instalado');
-  _bindSerieAC('instalado-serial', autocompletarInstalado);
 }
 
 async function editInstalado(id){
@@ -634,7 +631,6 @@ async function editInstalado(id){
   document.getElementById('instalado-observacion').value=data.observacion||'';
   document.querySelector('#modal-instalado .modal-title').textContent='Editar Toner Instalado';
   openModal('modal-instalado');
-  _bindSerieAC('instalado-serial', autocompletarInstalado);
 }
 
 async function saveInstalado(){
@@ -723,7 +719,6 @@ function openNewOrden(){
   if(hWrapO) hWrapO.style.display='none';
   document.querySelector('#modal-orden .modal-title').textContent='Nueva Orden de Servicio';
   openModal('modal-orden');
-  _bindSerieAC('orden-serial', autocompletarOrden);
 }
 
 async function editOrden(id){
@@ -762,7 +757,6 @@ async function editOrden(id){
   }
   document.querySelector('#modal-orden .modal-title').textContent='Editar Orden de Servicio';
   openModal('modal-orden');
-  _bindSerieAC('orden-serial', autocompletarOrden);
 }
 
 async function saveOrden(){
@@ -1177,63 +1171,65 @@ async function exportarTodoCSV(){
   toast('Todos los informes exportados');
 }
 
-// ─── AUTOCOMPLETADO DE EQUIPOS ───
-let _searchTimeout;
+// ─── AUTOCOMPLETADO DE EQUIPOS (delegación global) ───
+let _acTimeout;
 
-async function autocompletarTicket(serie){
-  if(!serie || serie.trim().length<3) return;
+document.addEventListener('input', function(e){
+  const id = e.target.id;
+  if(id === 'ticket-serial'){
+    clearTimeout(_acTimeout);
+    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
+      modelo:    'ticket-modelo',
+      ubicacion: 'ticket-ubicacion',
+    }), 500);
+  }
+  if(id === 'instalado-serial'){
+    clearTimeout(_acTimeout);
+    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
+      modelo:    'instalado-equipo',
+      ubicacion: 'instalado-area',
+    }), 500);
+  }
+  if(id === 'orden-serial'){
+    clearTimeout(_acTimeout);
+    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
+      modelo:    'orden-modelo',
+      ubicacion: 'orden-ubicacion',
+      sede:      'orden-sede',
+    }), 500);
+  }
+});
+
+async function autocompletarPorSerie(serie, campos){
+  if(!serie || serie.trim().length < 3) return;
+  console.log('[AC] Buscando serie:', serie);
   try {
-    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
-    if(data && data.length){
+    const { data, error } = await sb
+      .from('inventario_equipos')
+      .select('*')
+      .ilike('serie', `%${serie.trim()}%`)
+      .limit(1);
+    console.log('[AC] Resultado:', data, error);
+    if(error){ console.error('[AC] Error Supabase:', error); return; }
+    if(data && data.length > 0){
       const eq = data[0];
-      const modeloF = document.getElementById('ticket-modelo');
-      const ubicF   = document.getElementById('ticket-ubicacion');
-      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
-      if(ubicF   && !ubicF.value)   ubicF.value   = eq.ubicacion;
-      toast(`✓ ${eq.modelo} - ${eq.ubicacion} (${eq.sede})`,'success');
+      if(campos.modelo){
+        const f = document.getElementById(campos.modelo);
+        if(f) f.value = eq.modelo || '';
+      }
+      if(campos.ubicacion){
+        const f = document.getElementById(campos.ubicacion);
+        if(f) f.value = eq.ubicacion || '';
+      }
+      if(campos.sede){
+        const f = document.getElementById(campos.sede);
+        if(f) f.value = eq.sede || '';
+      }
+      toast(`✓ ${eq.modelo} - ${eq.ubicacion}`, 'success');
     }
-  } catch(e){ console.error(e); }
-}
-
-async function autocompletarInstalado(serie){
-  if(!serie || serie.trim().length<3) return;
-  try {
-    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
-    if(data && data.length){
-      const eq    = data[0];
-      const modeloF = document.getElementById('instalado-equipo');
-      const areaF   = document.getElementById('instalado-area');
-      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
-      if(areaF   && !areaF.value)   areaF.value   = eq.ubicacion;
-      toast(`✓ ${eq.modelo} - ${eq.ubicacion}`,'success');
-    }
-  } catch(e){ console.error(e); }
-}
-
-async function autocompletarOrden(serie){
-  if(!serie || serie.trim().length<3) return;
-  try {
-    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
-    if(data && data.length){
-      const eq    = data[0];
-      const modeloF = document.getElementById('orden-modelo');
-      const ubicF   = document.getElementById('orden-ubicacion');
-      const sedeF   = document.getElementById('orden-sede');
-      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
-      if(ubicF   && !ubicF.value)   ubicF.value   = eq.ubicacion;
-      if(sedeF   && !sedeF.value)   sedeF.value   = eq.sede;
-      toast(`✓ ${eq.modelo} - ${eq.ubicacion} (${eq.sede})`,'success');
-    }
-  } catch(e){ console.error(e); }
-}
-
-function _bindSerieAC(fieldId, fn){
-  const field = document.getElementById(fieldId);
-  if(!field) return;
-  field.oninput = function(){
-    clearTimeout(_searchTimeout);
-    _searchTimeout = setTimeout(()=>fn(this.value), 600);
-  };
+  } catch(err){
+    console.error('[AC] Error:', err);
+  }
 }
 
 // ─── CONFIRM MODAL ───
