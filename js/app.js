@@ -1198,6 +1198,14 @@ document.addEventListener('input', function(e){
       sede:      'orden-sede',
     }), 500);
   }
+  if(id === 'entrada-serie'){
+    clearTimeout(_acTimeout);
+    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
+      modelo:    'entrada-modelo',
+      ubicacion: 'entrada-area',
+      sede:      'entrada-ubicacion',
+    }), 500);
+  }
 });
 
 async function autocompletarPorSerie(serie, campos){
