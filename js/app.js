@@ -324,6 +324,7 @@ function openNewTicket(){
   if(horaFinField) horaFinField.value='';
   document.querySelector('#modal-ticket .modal-title').textContent='Nuevo Ticket / Caso';
   openModal('modal-ticket');
+  _bindSerieAC('ticket-serial', autocompletarTicket);
 }
 
 async function editTicket(id){
@@ -366,6 +367,7 @@ async function editTicket(id){
   document.getElementById('ticket-estado').value=data.estado||'Abierto';
   document.querySelector('#modal-ticket .modal-title').textContent='Editar Ticket / Caso';
   openModal('modal-ticket');
+  _bindSerieAC('ticket-serial', autocompletarTicket);
 }
 
 async function saveTicket(){
@@ -615,6 +617,7 @@ function openNewInstalado(){
   const titulo = document.querySelector('#modal-instalado .modal-title');
   if(titulo) titulo.textContent='Registrar Toner Instalado';
   openModal('modal-instalado');
+  _bindSerieAC('instalado-serial', autocompletarInstalado);
 }
 
 async function editInstalado(id){
@@ -631,6 +634,7 @@ async function editInstalado(id){
   document.getElementById('instalado-observacion').value=data.observacion||'';
   document.querySelector('#modal-instalado .modal-title').textContent='Editar Toner Instalado';
   openModal('modal-instalado');
+  _bindSerieAC('instalado-serial', autocompletarInstalado);
 }
 
 async function saveInstalado(){
@@ -719,6 +723,7 @@ function openNewOrden(){
   if(hWrapO) hWrapO.style.display='none';
   document.querySelector('#modal-orden .modal-title').textContent='Nueva Orden de Servicio';
   openModal('modal-orden');
+  _bindSerieAC('orden-serial', autocompletarOrden);
 }
 
 async function editOrden(id){
@@ -757,6 +762,7 @@ async function editOrden(id){
   }
   document.querySelector('#modal-orden .modal-title').textContent='Editar Orden de Servicio';
   openModal('modal-orden');
+  _bindSerieAC('orden-serial', autocompletarOrden);
 }
 
 async function saveOrden(){
@@ -1169,6 +1175,65 @@ function exportPDF(titulo, headers, rows){
 async function exportarTodoCSV(){
   await Promise.all(['tickets','entradas','instalados','ordenes','notif','toners'].map(m=>exportInforme(m,'csv')));
   toast('Todos los informes exportados');
+}
+
+// ─── AUTOCOMPLETADO DE EQUIPOS ───
+let _searchTimeout;
+
+async function autocompletarTicket(serie){
+  if(!serie || serie.trim().length<3) return;
+  try {
+    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
+    if(data && data.length){
+      const eq = data[0];
+      const modeloF = document.getElementById('ticket-modelo');
+      const ubicF   = document.getElementById('ticket-ubicacion');
+      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
+      if(ubicF   && !ubicF.value)   ubicF.value   = eq.ubicacion;
+      toast(`✓ ${eq.modelo} - ${eq.ubicacion} (${eq.sede})`,'success');
+    }
+  } catch(e){ console.error(e); }
+}
+
+async function autocompletarInstalado(serie){
+  if(!serie || serie.trim().length<3) return;
+  try {
+    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
+    if(data && data.length){
+      const eq    = data[0];
+      const modeloF = document.getElementById('instalado-equipo');
+      const areaF   = document.getElementById('instalado-area');
+      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
+      if(areaF   && !areaF.value)   areaF.value   = eq.ubicacion;
+      toast(`✓ ${eq.modelo} - ${eq.ubicacion}`,'success');
+    }
+  } catch(e){ console.error(e); }
+}
+
+async function autocompletarOrden(serie){
+  if(!serie || serie.trim().length<3) return;
+  try {
+    const {data} = await sb.from('inventario_equipos').select('*').ilike('serie',`%${serie.trim()}%`).limit(1);
+    if(data && data.length){
+      const eq    = data[0];
+      const modeloF = document.getElementById('orden-modelo');
+      const ubicF   = document.getElementById('orden-ubicacion');
+      const sedeF   = document.getElementById('orden-sede');
+      if(modeloF && !modeloF.value) modeloF.value = eq.modelo;
+      if(ubicF   && !ubicF.value)   ubicF.value   = eq.ubicacion;
+      if(sedeF   && !sedeF.value)   sedeF.value   = eq.sede;
+      toast(`✓ ${eq.modelo} - ${eq.ubicacion} (${eq.sede})`,'success');
+    }
+  } catch(e){ console.error(e); }
+}
+
+function _bindSerieAC(fieldId, fn){
+  const field = document.getElementById(fieldId);
+  if(!field) return;
+  field.oninput = function(){
+    clearTimeout(_searchTimeout);
+    _searchTimeout = setTimeout(()=>fn(this.value), 600);
+  };
 }
 
 // ─── CONFIRM MODAL ───

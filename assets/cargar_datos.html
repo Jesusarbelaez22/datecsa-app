@@ -41,6 +41,17 @@
 
 <div class="grid">
 
+  <!-- INVENTARIO EQUIPOS MAESTRO -->
+  <div class="card">
+    <div class="card-title">🖨 Inventario de Equipos (Maestro)</div>
+    <div class="card-sub">Columnas: SEDE, MODELO, SERIE, UBICACION</div>
+    <input type="file" id="file_inventario" accept=".csv"/>
+    <button class="btn-upload" onclick="document.getElementById('file_inventario').click()" id="btn_inventario">
+      📂 Seleccionar inventario_equipos.csv
+    </button>
+    <div class="log" id="log_inventario"></div>
+  </div>
+
   <!-- TONER INSTALADOS -->
   <div class="card">
     <div class="card-title">🖨 Toner Instalados</div>
@@ -107,6 +118,24 @@
 const SUPABASE_URL = 'https://znvbjrrkndmytjwikzno.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudmJqcnJrbmRteXRqd2lrem5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTA0MzMsImV4cCI6MjA5NzM2NjQzM30.YjnYkuMTdo3S7yIX-zjmy-FCNEMaw1NZaQNoPYEvzbg';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ─── PARSERS POR MÓDULO ─── INVENTARIO EQUIPOS
+document.getElementById('file_inventario').addEventListener('change',function(e){
+  readCSV(e.target.files[0],'inventario',(lines,delim)=>{
+    const registros=[];
+    lines.slice(1).forEach(line=>{
+      const c=parseCSVLine(line,delim);
+      if(!c[2]||!c[2].trim()) return;
+      registros.push({
+        sede:      c[0]||'',
+        modelo:    c[1]||'',
+        serie:     c[2]||'',
+        ubicacion: c[3]||'',
+      });
+    });
+    guardar('inventario_equipos', registros, 'inventario');
+  });
+});
 
 // ─── UTILIDADES ───
 function parseCSVLine(line, delim){
