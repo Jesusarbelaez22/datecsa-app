@@ -870,7 +870,7 @@ async function renderOrdenes(){
       <td style="min-width:150px;max-width:180px">
         <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">${o.incidente||'–'}</span>
       </td>
-      <td style="color:#ffcc44;font-weight:700;font-size:12px">${o.os||'–'}</td>
+      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span style="color:#888;font-style:italic;font-size:11px">Pendiente</span>`}</td>
       <td style="font-size:12px">${o.sede||'–'}</td>
       <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
       <td style="white-space:nowrap">
@@ -887,7 +887,10 @@ async function renderOrdenes(){
   hideLoading();
 }
 
+let currentOrdenId = null;
+
 async function verOrden(id){
+  currentOrdenId = id;
   showLoading();
   try {
     const {data} = await sb.from('ordenes').select('*').eq('id',id).single();
@@ -927,6 +930,17 @@ async function verOrden(id){
     openModal('modal-ver-orden');
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
+}
+
+function copiarParaCorreo(id){
+  sb.from('ordenes').select('modelo,serial,ubicacion,incidente').eq('id',id).single()
+    .then(({data, error})=>{
+      if(error||!data){ toast('Error al obtener datos','error'); return; }
+      const texto=`Solicitud de Orden de Servicio - DATECSA\n\nModelo: ${data.modelo||'–'}\nSerial: ${data.serial||'–'}\nUbicación: ${data.ubicacion||'–'}\nIncidente: ${data.incidente||'–'}\n\nPor favor confirmar número de O.S para este servicio.`;
+      navigator.clipboard.writeText(texto)
+        .then(()=>toast('✓ Copiado al portapapeles, listo para pegar en el correo'))
+        .catch(()=>toast('No se pudo copiar automáticamente','error'));
+    });
 }
 
 function openNewOrden(){
@@ -983,18 +997,19 @@ async function saveOrden(){
   const id=parseInt(document.getElementById('orden-id').value)||null;
   const modelo=document.getElementById('orden-modelo').value.trim();
   const serial=document.getElementById('orden-serial').value.trim();
-  const os=document.getElementById('orden-os').value.trim();
-  if(!modelo||!serial||!os){ toast('Complete los campos requeridos: MODELO, SERIAL y O.S','error'); return; }
+  const ubicacion=document.getElementById('orden-ubicacion').value.trim();
   const incSel=document.getElementById('orden-incidente').value;
   const incOtro=document.getElementById('orden-incidente-otro')?.value.trim();
   const incidente=(incSel==='OTRO'&&incOtro)?incOtro:incSel;
+  if(!modelo){    toast('El campo MODELO es requerido','error');    return; }
+  if(!serial){    toast('El campo SERIAL es requerido','error');    return; }
+  if(!ubicacion){ toast('El campo UBICACIÓN es requerido','error'); return; }
+  if(!incidente){ toast('El campo INCIDENTE es requerido','error'); return; }
   const respSel=document.getElementById('orden-responsable')?.value||'';
   const respOtro=document.getElementById('orden-helpdesk-otro')?.value.trim()||'';
   const responsable=(respSel==='OTRO'&&respOtro)?respOtro:respSel;
   const obj={
-    modelo, serial,
-    ubicacion:       document.getElementById('orden-ubicacion').value.trim(),
-    incidente,
+    modelo, serial, ubicacion, incidente,
     fecha_solicitud: document.getElementById('orden-fechaSolicitud').value||null,
     os,
     fecha_servicio:  document.getElementById('orden-fechaServicio').value||null,

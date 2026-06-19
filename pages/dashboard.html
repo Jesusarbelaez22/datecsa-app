@@ -1175,8 +1175,8 @@
     <div class="form-grid">
       <div class="form-group"><label>MODELO *</label><input id="orden-modelo" placeholder="Ej: P3155dn, M3145idn..."/></div>
       <div class="form-group"><label>SERIAL *</label><input id="orden-serial" placeholder="Número de serie"/></div>
-      <div class="form-group"><label>UBICACIÓN</label><input id="orden-ubicacion" placeholder="Ej: BIBLIOTECA B1-P1, PAGADURÍA..."/></div>
-      <div class="form-group"><label>INCIDENTE</label>
+      <div class="form-group span2"><label>UBICACIÓN *</label><input id="orden-ubicacion" placeholder="Ej: BIBLIOTECA B1-P1, PAGADURÍA..."/></div>
+      <div class="form-group span2"><label>INCIDENTE *</label>
         <select id="orden-incidente">
           <option value="">-- Seleccionar incidente --</option>
           <option>CONFIGURACION E INSTALACION</option>
@@ -1204,34 +1204,40 @@
                         font-size:13.5px;font-family:'Inter',sans-serif;"/>
         </div>
       </div>
-      <div class="form-group"><label>FECHA SOLICITUD</label><input type="date" id="orden-fechaSolicitud"/></div>
-      <div class="form-group"><label>O.S *</label><input id="orden-os" placeholder="Ej: OS 4102308"/></div>
-      <div class="form-group"><label>FECHA SERVICIO</label><input type="date" id="orden-fechaServicio"/></div>
-      <div class="form-group"><label>SEDE</label>
-        <select id="orden-sede">
-          <option>PAMPALINDA</option>
-          <option>USC CENTRO</option>
-          <option>USC PALMIRA</option>
-          <option>CLÍNICA VETERINARIA</option>
-          <option>RESTAURANTE SAN CARLO</option>
-        </select>
-      </div>
-      <div class="form-group span2"><label>TRABAJO REALIZADO</label><textarea id="orden-trabajo" placeholder="Trabajo realizado u observaciones..."></textarea></div>
-      <div class="form-group"><label>HELPDESK</label>
-        <select id="orden-responsable">
-          <option value="JESÚS ARBELAEZ">JESÚS ARBELAEZ</option>
-          <option value="JHON CAMACHO">JHON CAMACHO</option>
-          <option value="OTRO">OTRO</option>
-        </select>
-        <div id="orden-helpdesk-otro-wrap" style="display:none;margin-top:8px;">
-          <input type="text" id="orden-helpdesk-otro"
-                 placeholder="Nombre del helpdesk..."
-                 style="width:100%;background:#111;border:1px solid #2a2a2a;
-                        color:#e0e0e0;padding:10px 14px;border-radius:6px;
-                        font-size:13.5px;font-family:'Inter',sans-serif;"/>
+    </div>
+    <div style="border-top:1px solid #2a2a2a;margin-top:20px;padding-top:16px">
+      <p style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">
+        Información adicional (se completa al recibir confirmación)
+      </p>
+      <div class="form-grid">
+        <div class="form-group"><label>FECHA SOLICITUD</label><input type="date" id="orden-fechaSolicitud"/></div>
+        <div class="form-group"><label>O.S</label><input id="orden-os" placeholder="Se completa al recibir el correo"/></div>
+        <div class="form-group"><label>FECHA SERVICIO</label><input type="date" id="orden-fechaServicio"/></div>
+        <div class="form-group"><label>SEDE</label>
+          <select id="orden-sede">
+            <option>PAMPALINDA</option>
+            <option>USC CENTRO</option>
+            <option>USC PALMIRA</option>
+            <option>CLÍNICA VETERINARIA</option>
+            <option>RESTAURANTE SAN CARLO</option>
+          </select>
         </div>
+        <div class="form-group"><label>RESPONSABLE</label>
+          <select id="orden-responsable">
+            <option value="JESÚS ARBELAEZ">JESÚS ARBELAEZ</option>
+            <option value="JHON CAMACHO">JHON CAMACHO</option>
+            <option value="OTRO">OTRO</option>
+          </select>
+          <div id="orden-helpdesk-otro-wrap" style="display:none;margin-top:8px;">
+            <input type="text" id="orden-helpdesk-otro"
+                   placeholder="Nombre del responsable..."
+                   style="width:100%;background:#111;border:1px solid #2a2a2a;
+                          color:#e0e0e0;padding:10px 14px;border-radius:6px;
+                          font-size:13.5px;font-family:'Inter',sans-serif;"/>
+          </div>
+        </div>
+        <div class="form-group span2"><label>TRABAJO REALIZADO</label><textarea id="orden-trabajo" placeholder="Trabajo realizado u observaciones..."></textarea></div>
       </div>
-      <div class="form-group"><label></label></div>
     </div>
     </form>
     <div class="modal-footer">
@@ -1344,9 +1350,12 @@ document.getElementById('orden-responsable').addEventListener('change', function
       <button class="modal-close" onclick="closeModal('modal-ver-orden')">×</button>
     </div>
     <div id="ver-orden-content"></div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal('modal-ver-orden')">Cerrar</button>
-      <button class="btn-primary" id="ver-orden-editar-btn">Editar esta orden</button>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn-secondary" onclick="copiarParaCorreo(currentOrdenId)">📋 Copiar para correo</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn-secondary" onclick="closeModal('modal-ver-orden')">Cerrar</button>
+        <button class="btn-primary" id="ver-orden-editar-btn">Editar esta orden</button>
+      </div>
     </div>
   </div>
 </div>
