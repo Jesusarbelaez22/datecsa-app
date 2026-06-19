@@ -289,6 +289,7 @@ tr:hover td{background:rgba(180,0,0,0.035)!important;color:#ddd;transition:backg
 .badge-closed{background:rgba(0,160,80,0.14);color:#44dd88;border:1px solid rgba(0,160,80,0.24);}
 .badge-critical{background:rgba(180,0,0,0.18);color:#ff6666;border:1px solid rgba(180,0,0,0.32);}
 .badge-low{background:rgba(100,100,100,0.16);color:#888;border:1px solid #282828;}
+.badge-incidente{display:inline-block;padding:4px 10px;border-radius:6px;font-size:10.5px;font-weight:600;letter-spacing:.2px;white-space:normal;line-height:1.3;text-align:center;max-width:150px;}
 
 /* ─── STOCK PROGRESS BAR ─── */
 .stock-cell{display:flex;align-items:center;gap:10px;}

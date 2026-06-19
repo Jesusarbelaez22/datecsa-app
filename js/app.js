@@ -867,8 +867,8 @@ async function renderOrdenes(){
     tbody.innerHTML=all.length?all.map(o=>`<tr>
       <td style="white-space:nowrap;font-size:12px">${fmtDate(o.fecha_solicitud)}</td>
       <td style="font-size:12px">${o.modelo||'–'}</td>
-      <td style="font-size:12px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-        <span class="badge ${badgeIncidente(o.incidente)}">${o.incidente||'–'}</span>
+      <td style="min-width:150px;max-width:180px">
+        <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">${o.incidente||'–'}</span>
       </td>
       <td style="color:#ffcc44;font-weight:700;font-size:12px">${o.os||'–'}</td>
       <td style="font-size:12px">${o.sede||'–'}</td>
@@ -903,7 +903,7 @@ async function verOrden(id){
       </div>`;
     const html = `
       <div style="margin-bottom:16px">
-        <span class="badge ${badgeIncidente(data.incidente)}">${data.incidente||'–'}</span>
+        <span class="badge ${badgeIncidente(data.incidente)} badge-incidente" style="max-width:none;display:inline-block">${data.incidente||'–'}</span>
       </div>
       ${campo('Modelo', data.modelo, true)}
       ${campo('Serial', data.serial)}
