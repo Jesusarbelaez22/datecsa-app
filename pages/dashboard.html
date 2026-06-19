@@ -465,7 +465,7 @@
       <div class="table-wrap">
         <div class="records-info" id="count-entradas"></div>
         <table>
-          <thead><tr><th>MODELO</th><th>SERIE</th><th>REFERENCIA</th><th>REMISIÓN</th><th>UBICACIÓN</th><th>ÁREA</th><th>RECIBE</th><th>OS</th><th>FECHA</th><th>SOLICITUD</th><th>OBSERVACIÓN</th><th>ACCIÓN</th></tr></thead>
+          <thead><tr><th>FECHA</th><th>MODELO</th><th>REFERENCIA</th><th>UBICACIÓN</th><th>ÁREA</th><th>RECIBE</th><th>ACCIONES</th></tr></thead>
           <tbody id="entradas-body"></tbody>
         </table>
       </div>
@@ -483,7 +483,7 @@
       <div class="table-wrap">
         <div class="records-info" id="count-instalados"></div>
         <table>
-          <thead><tr><th>MODELO</th><th>SERIE</th><th>ÁREA</th><th>TONER</th><th>CONTADOR</th><th>FECHA</th><th>RESPONSABLE</th><th>OBSERVACIÓN</th><th>ACCIÓN</th></tr></thead>
+          <thead><tr><th>FECHA</th><th>MODELO</th><th>ÁREA</th><th>TONER</th><th>RESPONSABLE</th><th>ACCIONES</th></tr></thead>
           <tbody id="instalados-body"></tbody>
         </table>
       </div>
@@ -501,7 +501,7 @@
       <div class="table-wrap">
         <div class="records-info" id="count-ordenes"></div>
         <table>
-          <thead><tr><th>MODELO</th><th>SERIAL</th><th>UBICACIÓN</th><th>INCIDENTE</th><th>FECHA SOLICITUD</th><th>O.S</th><th>FECHA SERVICIO</th><th>TRABAJO REALIZADO</th><th>SEDE</th><th>RESPONSABLE</th><th>ACCIÓN</th></tr></thead>
+          <thead><tr><th>FECHA</th><th>MODELO</th><th>INCIDENTE</th><th>O.S</th><th>SEDE</th><th>RESPONSABLE</th><th>ACCIONES</th></tr></thead>
           <tbody id="ordenes-body"></tbody>
         </table>
       </div>
@@ -850,11 +850,10 @@
         <div class="records-info" id="count-notif"></div>
         <table>
           <thead><tr>
-            <th style="width:20px"></th>
-            <th>FECHA NOTIF. KFS</th>
+            <th style="width:16px"></th>
+            <th>FECHA</th>
             <th>IMPRESORA/SERIE</th>
-            <th>O.S DE APROB.</th>
-            <th>OBSERVACIONES</th>
+            <th>O.S</th>
             <th>ACCIÓN</th>
           </tr></thead>
           <tbody id="notif-body"></tbody>
@@ -1303,6 +1302,66 @@ document.getElementById('orden-responsable').addEventListener('change', function
     <div class="confirm-btns">
       <button class="confirm-btn-yes danger" id="confirm-btn-yes">Sí, eliminar</button>
       <button class="confirm-btn-no" id="confirm-btn-no">No, cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VER ENTRADA -->
+<div class="modal-overlay" id="modal-ver-entrada">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <span class="modal-title">📦 Detalle de Entrada</span>
+      <button class="modal-close" onclick="closeModal('modal-ver-entrada')">×</button>
+    </div>
+    <div id="ver-entrada-content"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ver-entrada')">Cerrar</button>
+      <button class="btn-primary" id="ver-entrada-editar-btn">Editar esta entrada</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VER INSTALADO -->
+<div class="modal-overlay" id="modal-ver-instalado">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <span class="modal-title">🖨 Detalle de Instalación</span>
+      <button class="modal-close" onclick="closeModal('modal-ver-instalado')">×</button>
+    </div>
+    <div id="ver-instalado-content"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ver-instalado')">Cerrar</button>
+      <button class="btn-primary" id="ver-instalado-editar-btn">Editar esta instalación</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VER ORDEN -->
+<div class="modal-overlay" id="modal-ver-orden">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <span class="modal-title">📋 Detalle de Orden de Servicio</span>
+      <button class="modal-close" onclick="closeModal('modal-ver-orden')">×</button>
+    </div>
+    <div id="ver-orden-content"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ver-orden')">Cerrar</button>
+      <button class="btn-primary" id="ver-orden-editar-btn">Editar esta orden</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VER NOTIF -->
+<div class="modal-overlay" id="modal-ver-notif">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title">🔔 Detalle de Notificación KFS</span>
+      <button class="modal-close" onclick="closeModal('modal-ver-notif')">×</button>
+    </div>
+    <div id="ver-notif-content"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ver-notif')">Cerrar</button>
+      <button class="btn-primary" id="ver-notif-editar-btn">Editar esta notificación</button>
     </div>
   </div>
 </div>

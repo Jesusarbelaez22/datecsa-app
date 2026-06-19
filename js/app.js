@@ -531,23 +531,65 @@ async function renderEntradas(){
     if(countEl) countEl.textContent=`${all.length} registro${all.length!==1?'s':''}`;
     const tbody=document.getElementById('entradas-body');
     tbody.innerHTML=all.length?all.map(e=>`<tr>
-      <td>${e.modelo||'–'}</td>
-      <td>${e.serie||'–'}</td>
-      <td><strong>${e.referencia||'–'}</strong></td>
-      <td>${e.remision||'–'}</td>
-      <td>${e.ubicacion||'–'}</td>
-      <td>${e.area||'–'}</td>
-      <td>${e.recibe||'–'}</td>
-      <td>${e.os||'–'}</td>
-      <td>${fmtDate(e.fecha)}</td>
-      <td>${e.solicitud||'–'}</td>
-      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(e.observacion||'').replace(/"/g,'&quot;')}">${e.observacion||'–'}</td>
-      <td><div class="action-btns"><button class="btn-edit" onclick="editEntrada(${e.id})">✏ Editar</button><button class="btn-danger" onclick="deleteEntrada(${e.id})">✕ Eliminar</button></div></td>
+      <td style="white-space:nowrap;font-size:12px">${fmtDate(e.fecha)}</td>
+      <td style="font-size:12px">${e.modelo||'–'}</td>
+      <td><strong style="font-size:12px">${e.referencia||'–'}</strong></td>
+      <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.ubicacion||'–'}</td>
+      <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.area||'–'}</td>
+      <td style="font-size:12px;white-space:nowrap">${e.recibe||'–'}</td>
+      <td style="white-space:nowrap">
+        <div class="action-btns">
+          <button class="btn-view" onclick="verEntrada(${e.id})">👁 Ver</button>
+          <button class="btn-edit" onclick="editEntrada(${e.id})">✏ Editar</button>
+          <button class="btn-danger" onclick="deleteEntrada(${e.id})">✕</button>
+        </div>
+      </td>
     </tr>`).join(''):
-    `<tr><td colspan="12"><div class="empty-state"><div class="icon"><i data-lucide="package"></i></div><p>Sin entradas registradas</p></div></td></tr>`;
+    `<tr><td colspan="7"><div class="empty-state"><div class="icon"><i data-lucide="package"></i></div><p>Sin entradas registradas</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando entradas','error'); }
   hideLoading();
+}
+
+async function verEntrada(id){
+  showLoading();
+  try {
+    const {data} = await sb.from('entradas_toner').select('*').eq('id',id).single();
+    if(!data){ toast('Registro no encontrado','error'); return; }
+    const campo = (label, valor, destacado=false) => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">${label}</span>
+        <span style="font-size:13.5px;color:${destacado?'#fff':'#ccc'};
+                     font-weight:${destacado?'600':'400'};text-align:right;
+                     word-break:break-word">${valor||'–'}</span>
+      </div>`;
+    const html = `
+      ${campo('Modelo', data.modelo, true)}
+      ${campo('Serie', data.serie)}
+      ${campo('Referencia', data.referencia, true)}
+      ${campo('Remisión', data.remision)}
+      ${campo('Ubicación', data.ubicacion)}
+      ${campo('Área', data.area)}
+      ${campo('Recibe', data.recibe, true)}
+      ${campo('O.S', data.os)}
+      ${campo('Fecha', fmtDate(data.fecha))}
+      ${campo('Solicitud', data.solicitud)}
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:8px">Observación</span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:14px;font-size:13px;color:#ccc;line-height:1.6;
+                    white-space:pre-wrap">${data.observacion||'Sin observación'}</div>
+      </div>`;
+    document.getElementById('ver-entrada-content').innerHTML = html;
+    document.getElementById('ver-entrada-editar-btn').onclick = () => {
+      closeModal('modal-ver-entrada'); editEntrada(id);
+    };
+    openModal('modal-ver-entrada');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 function openNewEntrada(){
@@ -657,20 +699,61 @@ async function renderInstalados(){
     if(countEl) countEl.textContent=`${all.length} registro${all.length!==1?'s':''}`;
     const tbody=document.getElementById('instalados-body');
     tbody.innerHTML=all.length?all.map(i=>`<tr>
-      <td>${i.equipo||'–'}</td>
-      <td>${i.serial||'–'}</td>
-      <td>${i.sede||'–'}</td>
-      <td><strong>${i.referencia||'–'}</strong></td>
-      <td>${i.contador||'–'}</td>
-      <td>${fmtDate(i.fecha)}</td>
-      <td>${i.tecnico||'–'}</td>
-      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(i.observacion||'').replace(/"/g,'&quot;')}">${i.observacion||'–'}</td>
-      <td><div class="action-btns"><button class="btn-edit" onclick="editInstalado(${i.id})">✏ Editar</button><button class="btn-danger" onclick="deleteInstalado(${i.id})">✕ Eliminar</button></div></td>
+      <td style="white-space:nowrap;font-size:12px">${fmtDate(i.fecha)}</td>
+      <td style="font-size:12px">${i.equipo||'–'}</td>
+      <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${i.sede||'–'}</td>
+      <td><strong style="font-size:12px">${i.referencia||'–'}</strong></td>
+      <td style="font-size:12px;white-space:nowrap">${i.tecnico||'–'}</td>
+      <td style="white-space:nowrap">
+        <div class="action-btns">
+          <button class="btn-view" onclick="verInstalado(${i.id})">👁 Ver</button>
+          <button class="btn-edit" onclick="editInstalado(${i.id})">✏ Editar</button>
+          <button class="btn-danger" onclick="deleteInstalado(${i.id})">✕</button>
+        </div>
+      </td>
     </tr>`).join(''):
-    `<tr><td colspan="9"><div class="empty-state"><div class="icon"><i data-lucide="printer"></i></div><p>Sin instalaciones registradas</p></div></td></tr>`;
+    `<tr><td colspan="6"><div class="empty-state"><div class="icon"><i data-lucide="printer"></i></div><p>Sin instalaciones registradas</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando instalados','error'); }
   hideLoading();
+}
+
+async function verInstalado(id){
+  showLoading();
+  try {
+    const {data} = await sb.from('toners_instalados').select('*').eq('id',id).single();
+    if(!data){ toast('Registro no encontrado','error'); return; }
+    const campo = (label, valor, destacado=false) => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">${label}</span>
+        <span style="font-size:13.5px;color:${destacado?'#fff':'#ccc'};
+                     font-weight:${destacado?'600':'400'};text-align:right;
+                     word-break:break-word">${valor||'–'}</span>
+      </div>`;
+    const html = `
+      ${campo('Modelo', data.equipo, true)}
+      ${campo('Serie', data.serial)}
+      ${campo('Área', data.sede)}
+      ${campo('Toner', data.referencia, true)}
+      ${campo('Contador', data.contador)}
+      ${campo('Fecha', fmtDate(data.fecha))}
+      ${campo('Responsable', data.tecnico, true)}
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:8px">Observación</span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:14px;font-size:13px;color:#ccc;line-height:1.6;
+                    white-space:pre-wrap">${data.observacion||'Sin observación'}</div>
+      </div>`;
+    document.getElementById('ver-instalado-content').innerHTML = html;
+    document.getElementById('ver-instalado-editar-btn').onclick = () => {
+      closeModal('modal-ver-instalado'); editInstalado(id);
+    };
+    openModal('modal-ver-instalado');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 function openNewInstalado(){
@@ -782,22 +865,68 @@ async function renderOrdenes(){
     if(countEl) countEl.textContent=`${all.length} registro${all.length!==1?'s':''}`;
     const tbody=document.getElementById('ordenes-body');
     tbody.innerHTML=all.length?all.map(o=>`<tr>
-      <td>${o.modelo||'–'}</td>
-      <td>${o.serial||'–'}</td>
-      <td>${o.ubicacion||'–'}</td>
-      <td><span class="badge ${badgeIncidente(o.incidente)}">${o.incidente||'–'}</span></td>
-      <td>${fmtDate(o.fecha_solicitud)}</td>
-      <td style="color:#ffcc44;font-weight:700">${o.os||'–'}</td>
-      <td>${fmtDate(o.fecha_servicio)}</td>
-      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(o.trabajo||'').replace(/"/g,'&quot;')}">${o.trabajo||'–'}</td>
-      <td>${o.sede||'–'}</td>
-      <td style="color:#fff;font-weight:700">${o.responsable||'–'}</td>
-      <td><div class="action-btns"><button class="btn-edit" onclick="editOrden(${o.id})">✏ Editar</button><button class="btn-danger" onclick="deleteOrden(${o.id})">✕ Eliminar</button></div></td>
+      <td style="white-space:nowrap;font-size:12px">${fmtDate(o.fecha_solicitud)}</td>
+      <td style="font-size:12px">${o.modelo||'–'}</td>
+      <td style="font-size:12px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+        <span class="badge ${badgeIncidente(o.incidente)}">${o.incidente||'–'}</span>
+      </td>
+      <td style="color:#ffcc44;font-weight:700;font-size:12px">${o.os||'–'}</td>
+      <td style="font-size:12px">${o.sede||'–'}</td>
+      <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
+      <td style="white-space:nowrap">
+        <div class="action-btns">
+          <button class="btn-view" onclick="verOrden(${o.id})">👁 Ver</button>
+          <button class="btn-edit" onclick="editOrden(${o.id})">✏ Editar</button>
+          <button class="btn-danger" onclick="deleteOrden(${o.id})">✕</button>
+        </div>
+      </td>
     </tr>`).join(''):
-    `<tr><td colspan="11"><div class="empty-state"><div class="icon"><i data-lucide="clipboard-list"></i></div><p>Sin órdenes de servicio</p></div></td></tr>`;
+    `<tr><td colspan="7"><div class="empty-state"><div class="icon"><i data-lucide="clipboard-list"></i></div><p>Sin órdenes de servicio</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando órdenes','error'); }
   hideLoading();
+}
+
+async function verOrden(id){
+  showLoading();
+  try {
+    const {data} = await sb.from('ordenes').select('*').eq('id',id).single();
+    if(!data){ toast('Orden no encontrada','error'); return; }
+    const campo = (label, valor, destacado=false) => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">${label}</span>
+        <span style="font-size:13.5px;color:${destacado?'#fff':'#ccc'};
+                     font-weight:${destacado?'600':'400'};text-align:right;
+                     word-break:break-word">${valor||'–'}</span>
+      </div>`;
+    const html = `
+      <div style="margin-bottom:16px">
+        <span class="badge ${badgeIncidente(data.incidente)}">${data.incidente||'–'}</span>
+      </div>
+      ${campo('Modelo', data.modelo, true)}
+      ${campo('Serial', data.serial)}
+      ${campo('Ubicación', data.ubicacion)}
+      ${campo('Sede', data.sede, true)}
+      ${campo('O.S', data.os, true)}
+      ${campo('Fecha Solicitud', fmtDate(data.fecha_solicitud))}
+      ${campo('Fecha Servicio', fmtDate(data.fecha_servicio))}
+      ${campo('Responsable', data.responsable, true)}
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:8px">Trabajo Realizado</span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:14px;font-size:13px;color:#ccc;line-height:1.6;
+                    white-space:pre-wrap">${data.trabajo||'Sin información'}</div>
+      </div>`;
+    document.getElementById('ver-orden-content').innerHTML = html;
+    document.getElementById('ver-orden-editar-btn').onclick = () => {
+      closeModal('modal-ver-orden'); editOrden(id);
+    };
+    openModal('modal-ver-orden');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 function openNewOrden(){
@@ -915,22 +1044,58 @@ async function renderNotificaciones(){
     const countRec=document.getElementById('count-notif');
     if(countRec) countRec.textContent=`${all.length} registro${all.length!==1?'s':''}`;
     const tbody=document.getElementById('notif-body');
-    tbody.innerHTML=all.length?all.map(n=>`<tr style="${n.leido?'opacity:0.5':''}">
+    tbody.innerHTML=all.length?all.map(n=>`<tr style="${n.leido?'opacity:.5':''}">
       <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${n.leido?'#444':'#b40000'}"></span></td>
-      <td>${fmtDate(n.fecha)}</td>
-      <td style="color:#fff">${n.impresora||'–'}</td>
-      <td style="color:#ffcc44;font-weight:700">${n.os||'–'}</td>
-      <td style="color:#888;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(n.observacion||'').replace(/"/g,'&quot;')}">${n.observacion||'–'}</td>
-      <td><div class="action-btns">
-        <button class="btn-edit" onclick="editNotif(${n.id})">✏ Editar</button>
-        ${!n.leido?`<button class="btn-secondary" style="font-size:11px;padding:5px 10px;width:80px;height:30px" onclick="markRead(${n.id})">Leída</button>`:''}
-        <button class="btn-danger" onclick="deleteNotif(${n.id})">✕ Eliminar</button>
-      </div></td>
+      <td style="font-size:12px">${fmtDate(n.fecha)}</td>
+      <td style="font-size:12px">${n.impresora||'–'}</td>
+      <td style="color:#ffcc44;font-weight:700;font-size:12px">${n.os||'–'}</td>
+      <td style="white-space:nowrap">
+        <div class="action-btns">
+          <button class="btn-view" onclick="verNotif(${n.id})">👁 Ver</button>
+          ${!n.leido?`<button class="btn-secondary" style="width:70px;height:26px;font-size:10px;padding:0" onclick="markRead(${n.id})">Leída</button>`:''}
+          <button class="btn-danger" onclick="deleteNotif(${n.id})">✕</button>
+        </div>
+      </td>
     </tr>`).join(''):
-    `<tr><td colspan="6"><div class="empty-state"><div class="icon"><i data-lucide="bell"></i></div><p>Sin notificaciones</p></div></td></tr>`;
+    `<tr><td colspan="5"><div class="empty-state"><div class="icon"><i data-lucide="bell"></i></div><p>Sin notificaciones</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando notificaciones','error'); }
   hideLoading();
+}
+
+async function verNotif(id){
+  showLoading();
+  try {
+    const {data} = await sb.from('notificaciones').select('*').eq('id',id).single();
+    if(!data){ toast('Notificación no encontrada','error'); return; }
+    const campo = (label, valor, destacado=false) => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">${label}</span>
+        <span style="font-size:13.5px;color:${destacado?'#fff':'#ccc'};
+                     font-weight:${destacado?'600':'400'};text-align:right;
+                     word-break:break-word">${valor||'–'}</span>
+      </div>`;
+    const html = `
+      ${campo('Fecha Notif. KFS', fmtDate(data.fecha), true)}
+      ${campo('Impresora/Serie', data.impresora, true)}
+      ${campo('O.S de Aprob.', data.os, true)}
+      ${campo('Estado', data.leido ? 'Leída' : 'Sin leer')}
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:8px">Observaciones</span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:14px;font-size:13px;color:#ccc;line-height:1.6;
+                    white-space:pre-wrap">${data.observacion||'Sin observaciones'}</div>
+      </div>`;
+    document.getElementById('ver-notif-content').innerHTML = html;
+    document.getElementById('ver-notif-editar-btn').onclick = () => {
+      closeModal('modal-ver-notif'); editNotif(id);
+    };
+    openModal('modal-ver-notif');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 function openNewNotif(){
