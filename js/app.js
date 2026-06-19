@@ -870,7 +870,7 @@ async function renderOrdenes(){
       <td style="min-width:150px;max-width:180px">
         <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">${o.incidente||'–'}</span>
       </td>
-      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span class="badge" style="background:rgba(200,140,0,0.15);color:#ffaa00;border:1px solid rgba(200,140,0,0.3)">⏳ Pendiente</span>`}</td>
+      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span style="color:#888;font-style:italic">Pendiente</span>`}</td>
       <td style="font-size:12px">${o.sede||'–'}</td>
       <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
       <td style="white-space:nowrap">
@@ -907,8 +907,8 @@ async function verOrden(id){
     const pendienteHTML = !data.os ? `
       <div style="background:rgba(200,140,0,0.1);border:1px solid rgba(200,140,0,0.3);
                   border-radius:8px;padding:10px 14px;margin-bottom:16px;
-                  font-size:12.5px;color:#ffaa00">
-        ⏳ Esta orden está pendiente de confirmación de O.S.
+                  font-size:12.5px;color:#ffaa00;font-style:italic">
+        Esta orden está pendiente de confirmación de O.S.
         Usa "Copiar para correo" para enviar la solicitud.
       </div>` : '';
     const html = `
@@ -940,20 +940,40 @@ async function verOrden(id){
   finally { hideLoading(); }
 }
 
+const DIRECCIONES_SEDE = {
+  'PAMPALINDA':            'Calle 5 # 62-00',
+  'USC CENTRO':            'Carrera 8 # 8-17, Barrio Santa Rosa',
+  'CENTRO':                'Carrera 8 # 8-17, Barrio Santa Rosa',
+  'USC PALMIRA':           'Carrera 29 # 38-47, Barrio Alfonso López',
+  'PALMIRA':               'Carrera 29 # 38-47, Barrio Alfonso López',
+  'CLÍNICA VETERINARIA':   'Cl. 18 #35-53, Cristóbal Colón, Cali',
+  'CLINICA VETERINARIA':   'Cl. 18 #35-53, Cristóbal Colón, Cali',
+  'RESTAURANTE SAN CARLO': 'Cra. 4 #4-63, Barrio El Peñón, Cali',
+};
+function getDireccionSede(sede){
+  if(!sede) return '';
+  return DIRECCIONES_SEDE[sede.trim().toUpperCase()] || '';
+}
+
 function copiarParaCorreo(id){
-  sb.from('ordenes').select('modelo,serial,ubicacion,incidente').eq('id',id).single()
+  sb.from('ordenes').select('modelo,serial,ubicacion,incidente,sede').eq('id',id).single()
     .then(({data, error})=>{
       if(error||!data){ toast('Error al obtener datos','error'); return; }
       const modelo=data.modelo||'', serial=data.serial||'',
-            ubicacion=data.ubicacion||'', incidente=data.incidente||'';
-      const html=`<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px"><tr style="background:#f2f2f2;font-weight:bold"><td>MODELO</td><td>SERIAL</td><td>UBICACIÓN</td><td>INCIDENTE</td></tr><tr><td>${modelo}</td><td>${serial}</td><td>${ubicacion}</td><td>${incidente}</td></tr></table>`;
-      const textoPlano=`MODELO\tSERIAL\tUBICACIÓN\tINCIDENTE\n${modelo}\t${serial}\t${ubicacion}\t${incidente}`;
+            ubicacion=data.ubicacion||'', incidente=data.incidente||'',
+            sede=data.sede||'', direccion=getDireccionSede(sede);
+      const sedeLinea = direccion ? `\n\nSede: ${sede} — ${direccion}` : '';
+      const sedePar   = direccion
+        ? `<p style="font-family:Arial,sans-serif;font-size:12px;color:#444;margin-top:8px"><strong>Sede:</strong> ${sede} — ${direccion}</p>`
+        : '';
+      const html=`<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px"><tr style="background:#f2f2f2;font-weight:bold"><td>MODELO</td><td>SERIAL</td><td>UBICACIÓN</td><td>INCIDENTE</td></tr><tr><td>${modelo}</td><td>${serial}</td><td>${ubicacion}</td><td>${incidente}</td></tr></table>${sedePar}`;
+      const textoPlano=`MODELO\tSERIAL\tUBICACIÓN\tINCIDENTE\n${modelo}\t${serial}\t${ubicacion}\t${incidente}${sedeLinea}`;
       try {
-        const item=new ClipboardItem({
+        const clipData=new ClipboardItem({
           'text/html':  new Blob([html],        {type:'text/html'}),
           'text/plain': new Blob([textoPlano],  {type:'text/plain'}),
         });
-        navigator.clipboard.write([item]).then(()=>{
+        navigator.clipboard.write([clipData]).then(()=>{
           toast('✓ Copiado en formato tabla, pega en el correo');
         }).catch(err=>{
           console.error('Error clipboard avanzado:',err);
