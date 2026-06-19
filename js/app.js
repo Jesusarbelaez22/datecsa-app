@@ -936,10 +936,17 @@ function copiarParaCorreo(id){
   sb.from('ordenes').select('modelo,serial,ubicacion,incidente').eq('id',id).single()
     .then(({data, error})=>{
       if(error||!data){ toast('Error al obtener datos','error'); return; }
-      const texto=`Solicitud de Orden de Servicio - DATECSA\n\nModelo: ${data.modelo||'–'}\nSerial: ${data.serial||'–'}\nUbicación: ${data.ubicacion||'–'}\nIncidente: ${data.incidente||'–'}\n\nPor favor confirmar número de O.S para este servicio.`;
-      navigator.clipboard.writeText(texto)
-        .then(()=>toast('✓ Copiado al portapapeles, listo para pegar en el correo'))
-        .catch(()=>toast('No se pudo copiar automáticamente','error'));
+      const texto=`${data.modelo||''}\t${data.serial||''}\t${data.ubicacion||''}\t${data.incidente||''}`;
+      navigator.clipboard.writeText(texto).then(()=>{
+        toast('✓ Copiado, pega en el correo o Excel');
+      }).catch(()=>{
+        const ta=document.createElement('textarea');
+        ta.value=texto; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('✓ Copiado, pega en el correo o Excel'); }
+        catch(e){ toast('No se pudo copiar automáticamente','error'); }
+        document.body.removeChild(ta);
+      });
     });
 }
 
