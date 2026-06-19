@@ -270,7 +270,7 @@ async function renderTickets(){
     const tbody = document.getElementById('tickets-body');
 
     if(!filtered.length){
-      tbody.innerHTML = `<tr><td colspan="15"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>Sin registros</p></div></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>Sin registros</p></div></td></tr>`;
       lucide.createIcons();
       return;
     }
@@ -278,30 +278,78 @@ async function renderTickets(){
     tbody.innerHTML = filtered.map(t=>{
       const usuario = t.usuario||'–';
       const partes = usuario.match(/^(.+?)\s+([\w.\-]+@[\w.\-]+)$/);
-      const usuarioHTML = partes
-        ? `<div style="font-weight:500;color:#e0e0e0">${partes[1]}</div><div style="font-size:11px;color:#666;margin-top:2px">${partes[2]}</div>`
-        : usuario;
+      const usuarioCorto = partes ? partes[1] : usuario.split('@')[0];
       return `<tr>
         <td><span class="badge ${badgeLlegada(t.llegada)}">${t.llegada||'–'}</span></td>
-        <td>${t.modelo||'–'}</td>
-        <td>${t.serial||'–'}</td>
-        <td>${fmtDate(t.fecha_inicial)}</td>
-        <td>${t.hora_inicio||'–'}</td>
-        <td class="col-wrap">${usuarioHTML}</td>
-        <td class="col-wrap">${t.ubicacion||'–'}</td>
-        <td class="col-wrap"><strong>${t.tipo_solicitud||'–'}</strong></td>
-        <td>${fmtDate(t.fecha_final)}</td>
-        <td>${t.hora_fin||'–'}</td>
-        <td class="col-obs">${t.observaciones||'–'}</td>
-        <td><strong>${t.helpdesk||'–'}</strong></td>
-        <td><span class="badge ${badgePrio(t.prioridad)}">${t.prioridad||'–'}</span></td>
+        <td style="white-space:nowrap;font-size:12px">${fmtDate(t.fecha_inicial)}</td>
+        <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${usuarioCorto}</td>
+        <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.ubicacion||'–'}</td>
+        <td style="font-size:12px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><strong>${t.tipo_solicitud||'–'}</strong></td>
+        <td style="font-size:12px;white-space:nowrap">${t.helpdesk||'–'}</td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
-        <td style="white-space:nowrap"><div class="action-btns"><button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button><button class="btn-danger" onclick="deleteTicket(${t.id})">✕ Eliminar</button></div></td>
+        <td style="white-space:nowrap">
+          <div class="action-btns">
+            <button class="btn-view" onclick="verTicket(${t.id})">👁 Ver</button>
+            <button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button>
+            <button class="btn-danger" onclick="deleteTicket(${t.id})">✕</button>
+          </div>
+        </td>
       </tr>`;
     }).join('');
     lucide.createIcons();
   } catch(e){
     toast('Error cargando casos: '+e.message,'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function verTicket(id){
+  showLoading();
+  try {
+    const {data} = await sb.from('tickets').select('*').eq('id',id).single();
+    if(!data){ toast('Caso no encontrado','error'); return; }
+    const campo = (label, valor, destacado=false) => `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">${label}</span>
+        <span style="font-size:13.5px;color:${destacado?'#fff':'#ccc'};
+                     font-weight:${destacado?'600':'400'};text-align:right;
+                     word-break:break-word">${valor||'–'}</span>
+      </div>`;
+    const html = `
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <span class="badge ${badgeLlegada(data.llegada)}">${data.llegada||'–'}</span>
+        <span class="badge ${badgePrio(data.prioridad)}">${data.prioridad||'–'}</span>
+        <span class="badge ${badgeEstado(data.estado)}">${data.estado||'–'}</span>
+      </div>
+      ${campo('Tipo de Solicitud', data.tipo_solicitud, true)}
+      ${campo('Usuario / Solicitante', data.usuario)}
+      ${campo('Ubicación', data.ubicacion)}
+      ${campo('Modelo Impresora', data.modelo)}
+      ${campo('N° Serie', data.serial)}
+      ${campo('Fecha Inicial', fmtDate(data.fecha_inicial))}
+      ${campo('Hora Inicio', data.hora_inicio)}
+      ${campo('Fecha Final', fmtDate(data.fecha_final))}
+      ${campo('Hora Final', data.hora_fin)}
+      ${campo('Helpdesk', data.helpdesk, true)}
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:8px">Observaciones</span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:14px;font-size:13px;color:#ccc;line-height:1.6;
+                    white-space:pre-wrap">${data.observaciones||'Sin observaciones'}</div>
+      </div>
+    `;
+    document.getElementById('ver-ticket-content').innerHTML = html;
+    document.getElementById('ver-ticket-editar-btn').onclick = () => {
+      closeModal('modal-ver-ticket');
+      editTicket(id);
+    };
+    openModal('modal-ver-ticket');
+  } catch(e){
+    toast('Error: '+e.message,'error');
   } finally {
     hideLoading();
   }

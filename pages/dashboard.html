@@ -431,18 +431,11 @@
           <thead>
             <tr>
               <th>LLEGADA</th>
-              <th>MODELO</th>
-              <th>SERIE</th>
-              <th>FECHA INICIAL</th>
-              <th>HORA INICIO</th>
-              <th>USUARIO / SOLICITANTE</th>
+              <th>FECHA</th>
+              <th>USUARIO</th>
               <th>UBICACIÓN</th>
               <th>TIPO DE SOLICITUD</th>
-              <th>FECHA FINAL</th>
-              <th>HORA FINAL</th>
-              <th>OBSERVACIONES</th>
               <th>HELPDESK</th>
-              <th>PRIORIDAD</th>
               <th>ESTADO</th>
               <th>ACCIONES</th>
             </tr>
@@ -1310,6 +1303,22 @@ document.getElementById('orden-responsable').addEventListener('change', function
     <div class="confirm-btns">
       <button class="confirm-btn-yes danger" id="confirm-btn-yes">Sí, eliminar</button>
       <button class="confirm-btn-no" id="confirm-btn-no">No, cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VER TICKET -->
+<div class="modal-overlay" id="modal-ver-ticket">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <span class="modal-title">📋 Detalle del Caso</span>
+      <button class="modal-close" onclick="closeModal('modal-ver-ticket')">×</button>
+    </div>
+    <div id="ver-ticket-content" style="display:flex;flex-direction:column;gap:0">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-ver-ticket')">Cerrar</button>
+      <button class="btn-primary" id="ver-ticket-editar-btn">Editar este caso</button>
     </div>
   </div>
 </div>

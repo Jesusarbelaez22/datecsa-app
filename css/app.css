@@ -214,7 +214,20 @@ body.collapsed-sidebar #main{margin-left:64px;}
 .btn-secondary:hover{border-color:#444;color:#fff;}
 .btn-secondary svg{width:13px;height:13px;}
 
-.action-btns{display:flex;flex-direction:column;gap:6px;align-items:flex-start;}
+.action-btns{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+.action-btns .btn-edit,
+.action-btns .btn-danger,
+.action-btns .btn-view{width:70px;height:26px;font-size:11px;}
+
+.btn-view{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:70px;height:28px;
+  background:rgba(0,160,80,0.12);color:#44dd88;
+  border:1px solid rgba(0,160,80,0.25);border-radius:6px;
+  font-size:11px;font-weight:500;font-family:'Inter',sans-serif;
+  cursor:pointer;transition:all .15s;
+}
+.btn-view:hover{background:rgba(0,160,80,0.22);border-color:#44dd88;}
 
 .btn-danger{
   display:inline-flex;align-items:center;justify-content:center;
