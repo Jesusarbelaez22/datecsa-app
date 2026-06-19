@@ -1202,33 +1202,53 @@ document.addEventListener('input', function(e){
 
 async function autocompletarPorSerie(serie, campos){
   if(!serie || serie.trim().length < 3) return;
-  console.log('[AC] Buscando serie:', serie);
+
+  const serieClean = serie.trim().toUpperCase();
+  console.log('[AC] Buscando serie limpia:', JSON.stringify(serieClean));
+
   try {
-    const { data, error } = await sb
+    const { data: allData, error } = await sb
       .from('inventario_equipos')
-      .select('*')
-      .ilike('serie', `%${serie.trim()}%`)
-      .limit(1);
-    console.log('[AC] Resultado:', data, error);
+      .select('*');
+
+    console.log('[AC] Total registros en tabla:', allData?.length, 'error:', error);
+
     if(error){ console.error('[AC] Error Supabase:', error); return; }
-    if(data && data.length > 0){
-      const eq = data[0];
+
+    if(!allData || allData.length === 0){
+      console.log('[AC] Tabla vacía o sin acceso');
+      return;
+    }
+
+    console.log('[AC] Muestra de serie en BD:', JSON.stringify(allData[0]?.serie));
+
+    const match = allData.find(eq => {
+      const serieBD      = (eq.serie || '').trim().toUpperCase().replace(/\s+/g,'');
+      const serieBuscada = serieClean.replace(/\s+/g,'');
+      return serieBD.includes(serieBuscada) || serieBuscada.includes(serieBD);
+    });
+
+    console.log('[AC] Match encontrado:', match);
+
+    if(match){
       if(campos.modelo){
         const f = document.getElementById(campos.modelo);
-        if(f) f.value = eq.modelo || '';
+        if(f) f.value = match.modelo || '';
       }
       if(campos.ubicacion){
         const f = document.getElementById(campos.ubicacion);
-        if(f) f.value = eq.ubicacion || '';
+        if(f) f.value = match.ubicacion || '';
       }
       if(campos.sede){
         const f = document.getElementById(campos.sede);
-        if(f) f.value = eq.sede || '';
+        if(f) f.value = match.sede || '';
       }
-      toast(`✓ ${eq.modelo} - ${eq.ubicacion}`, 'success');
+      toast(`✓ ${match.modelo} - ${match.ubicacion}`, 'success');
+    } else {
+      console.log('[AC] Sin coincidencia para:', serieClean);
     }
   } catch(err){
-    console.error('[AC] Error:', err);
+    console.error('[AC] Excepción:', err);
   }
 }
 
