@@ -1047,6 +1047,43 @@
       <div class="form-group span2"><label>OBSERVACIONES</label>
         <textarea id="ticket-observaciones" placeholder="Observaciones..."></textarea>
       </div>
+      <div class="form-group span2">
+        <label>EVIDENCIA (foto opcional)</label>
+        <div id="evidencia-dropzone" style="
+          border: 2px dashed #2a2a2a;
+          border-radius: 8px;
+          padding: 20px;
+          text-align: center;
+          cursor: pointer;
+          transition: border-color .2s;
+          background: #111;
+          position: relative;
+        "
+        onclick="document.getElementById('ticket-evidencia-input').click()"
+        ondragover="event.preventDefault();this.style.borderColor='#b40000'"
+        ondragleave="this.style.borderColor='#2a2a2a'"
+        ondrop="handleEvidenciaDrop(event)"
+        >
+          <input type="file" id="ticket-evidencia-input" accept="image/*"
+                 style="display:none" onchange="handleEvidenciaChange(this)"/>
+          <div id="evidencia-placeholder" style="color:#666;font-size:13px">
+            <div style="font-size:28px;margin-bottom:8px">📷</div>
+            <div>Clic para subir foto o arrastra la imagen aquí</div>
+            <div style="font-size:11px;color:#444;margin-top:4px">JPG, PNG, WEBP (máx. 2MB)</div>
+          </div>
+          <div id="evidencia-preview-wrap" style="display:none">
+            <img id="evidencia-preview" style="
+              max-width:100%;max-height:200px;border-radius:6px;
+              object-fit:contain;display:block;margin:0 auto
+            "/>
+            <button type="button" onclick="event.stopPropagation();limpiarEvidencia()" style="
+              margin-top:8px;background:rgba(180,0,0,0.15);color:#ff6666;
+              border:1px solid rgba(180,0,0,0.3);border-radius:5px;
+              padding:4px 12px;font-size:12px;cursor:pointer
+            ">✕ Quitar foto</button>
+          </div>
+        </div>
+      </div>
     </div>
     </form>
     <div class="modal-footer">

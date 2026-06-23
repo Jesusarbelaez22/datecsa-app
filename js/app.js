@@ -341,6 +341,25 @@ async function verTicket(id){
                     padding:14px;font-size:13px;color:#ccc;line-height:1.6;
                     white-space:pre-wrap">${data.observaciones||'Sin observaciones'}</div>
       </div>
+      ${data.evidencia ? `
+      <div style="padding:14px 0">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;display:block;margin-bottom:10px">
+          Evidencia fotográfica
+        </span>
+        <div style="background:#111;border:1px solid #222;border-radius:8px;
+                    padding:12px;text-align:center">
+          <img src="${data.evidencia}" style="
+            max-width:100%;max-height:320px;border-radius:6px;
+            object-fit:contain;cursor:pointer;
+          "
+          onclick="window.open('${data.evidencia}','_blank')"
+          title="Clic para ver en tamaño completo"/>
+          <div style="font-size:11px;color:#555;margin-top:8px">
+            Clic en la imagen para ver en tamaño completo
+          </div>
+        </div>
+      </div>` : ''}
     `;
     document.getElementById('ver-ticket-content').innerHTML = html;
     document.getElementById('ver-ticket-editar-btn').onclick = () => {
@@ -371,6 +390,7 @@ function openNewTicket(){
   const horaFinField=document.getElementById('ticket-hora-fin');
   if(horaFinField) horaFinField.value='';
   document.querySelector('#modal-ticket .modal-title').textContent='Nuevo Ticket / Caso';
+  limpiarEvidencia();
   openModal('modal-ticket');
 }
 
@@ -413,6 +433,7 @@ async function editTicket(id){
   document.getElementById('ticket-prioridad').value=data.prioridad||'Normal';
   document.getElementById('ticket-estado').value=data.estado||'Abierto';
   document.querySelector('#modal-ticket .modal-title').textContent='Editar Ticket / Caso';
+  cargarEvidenciaEnDropzone(data.evidencia || null);
   openModal('modal-ticket');
 }
 
@@ -438,6 +459,7 @@ async function saveTicket(){
     fecha_final:     document.getElementById('ticket-fechaFinal').value||null,
     hora_fin:        document.getElementById('ticket-hora-fin')?.value||'',
     observaciones:   document.getElementById('ticket-observaciones').value.trim(),
+    evidencia:       _evidenciaBase64 || null,
     helpdesk,
     prioridad:       document.getElementById('ticket-prioridad').value,
     estado:          document.getElementById('ticket-estado').value,
@@ -1495,6 +1517,64 @@ function exportPDF(titulo, headers, rows){
 async function exportarTodoCSV(){
   await Promise.all(['tickets','entradas','instalados','ordenes','notif','toners'].map(m=>exportInforme(m,'csv')));
   toast('Todos los informes exportados');
+}
+
+// ─── EVIDENCIA FOTO ───
+let _evidenciaBase64 = null;
+
+function handleEvidenciaChange(input){
+  const file = input.files[0];
+  if(!file) return;
+  procesarEvidencia(file);
+}
+
+function handleEvidenciaDrop(event){
+  event.preventDefault();
+  document.getElementById('evidencia-dropzone').style.borderColor = '#2a2a2a';
+  const file = event.dataTransfer.files[0];
+  if(!file || !file.type.startsWith('image/')) return;
+  procesarEvidencia(file);
+}
+
+function procesarEvidencia(file){
+  if(file.size > 2 * 1024 * 1024){
+    toast('La imagen no debe superar 2MB', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    _evidenciaBase64 = e.target.result;
+    const preview     = document.getElementById('evidencia-preview');
+    const previewWrap = document.getElementById('evidencia-preview-wrap');
+    const placeholder = document.getElementById('evidencia-placeholder');
+    if(preview)     preview.src = _evidenciaBase64;
+    if(previewWrap) previewWrap.style.display = 'block';
+    if(placeholder) placeholder.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function limpiarEvidencia(){
+  _evidenciaBase64 = null;
+  const input       = document.getElementById('ticket-evidencia-input');
+  const preview     = document.getElementById('evidencia-preview');
+  const previewWrap = document.getElementById('evidencia-preview-wrap');
+  const placeholder = document.getElementById('evidencia-placeholder');
+  if(input)       input.value = '';
+  if(preview)     preview.src = '';
+  if(previewWrap) previewWrap.style.display = 'none';
+  if(placeholder) placeholder.style.display = 'block';
+}
+
+function cargarEvidenciaEnDropzone(base64){
+  if(!base64){ limpiarEvidencia(); return; }
+  _evidenciaBase64 = base64;
+  const preview     = document.getElementById('evidencia-preview');
+  const previewWrap = document.getElementById('evidencia-preview-wrap');
+  const placeholder = document.getElementById('evidencia-placeholder');
+  if(preview)     preview.src = base64;
+  if(previewWrap) previewWrap.style.display = 'block';
+  if(placeholder) placeholder.style.display = 'none';
 }
 
 // ─── AUTOCOMPLETADO DE EQUIPOS (delegación global) ───
