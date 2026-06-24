@@ -1691,11 +1691,13 @@ async function autocompletarNotif(serie){
   try {
     const {data: allData} = await sb.from('inventario_equipos').select('*');
     if(!allData || !allData.length) return;
+
     const match = allData.find(eq => {
       const serieBD = (eq.serie||'').trim().toUpperCase().replace(/\s+/g,'');
       const serieBuscada = serieClean.replace(/\s+/g,'');
       return serieBD.includes(serieBuscada) || serieBuscada.includes(serieBD);
     });
+
     if(match){
       const fm = document.getElementById('notif-modelo');
       if(fm && !fm.value) fm.value = match.modelo || '';
@@ -1703,25 +1705,24 @@ async function autocompletarNotif(serie){
       const fu = document.getElementById('notif-ubicacion');
       if(fu && !fu.value){
         const sedeMap = {
-          'PAMPALINDA': 'PAMPALINDA',
-          'CENTRO': 'USC CENTRO',
-          'USC CENTRO': 'USC CENTRO',
-          'PALMIRA': 'USC PALMIRA',
-          'USC PALMIRA': 'USC PALMIRA',
-          'CLINICA VETERINARIA': 'CLÍNICA VETERINARIA',
-          'CLÍNICA VETERINARIA': 'CLÍNICA VETERINARIA',
-          'RESTAURANTE SAN CARLO': 'RESTAURANTE SAN CARLO',
-          'RESTAURANTE': 'RESTAURANTE SAN CARLO',
+          'PAMPALINDA':           'PAMPALINDA',
+          'CENTRO':               'USC CENTRO',
+          'USC CENTRO':           'USC CENTRO',
+          'PALMIRA':              'USC PALMIRA',
+          'USC PALMIRA':          'USC PALMIRA',
+          'CLINICA VETERINARIA':  'CLÍNICA VETERINARIA',
+          'CLÍNICA VETERINARIA':  'CLÍNICA VETERINARIA',
+          'RESTAURANTE SAN CARLO':'RESTAURANTE SAN CARLO',
+          'RESTAURANTE':          'RESTAURANTE SAN CARLO',
         };
         const sedeKey = (match.sede||'').toUpperCase().trim();
-        const sedeValor = sedeMap[sedeKey] || match.sede || '';
-        if(sedeValor) fu.value = sedeValor;
+        fu.value = sedeMap[sedeKey] || match.sede || '';
       }
 
       const fa = document.getElementById('notif-area');
       if(fa && !fa.value) fa.value = match.ubicacion || '';
 
-      toast(`✓ ${match.modelo} - ${match.ubicacion}`, 'success');
+      toast(`✓ ${match.modelo} — ${match.sede} — ${match.ubicacion}`, 'success');
     }
   } catch(err){
     console.error('[AC Notif]', err);
