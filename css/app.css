@@ -605,6 +605,41 @@ tr:hover td{background:rgba(180,0,0,0.035)!important;color:#ddd;transition:backg
 }
 .confirm-btn-no:hover { border-color: #555; color: #fff; }
 
+/* ─── LUCIDE ICONS GLOBAL ─── */
+[data-lucide] {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+.btn-view [data-lucide],
+.btn-edit [data-lucide],
+.btn-danger [data-lucide] {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+}
+.modal-title [data-lucide] {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+.empty-state [data-lucide] {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  color: #444;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.confirm-icon [data-lucide] {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
 /* ─── TABLA CASOS Y SOLICITUDES ─── */
 #page-tickets .table-wrap {
   overflow-x: auto;

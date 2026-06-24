@@ -202,7 +202,7 @@ async function renderDashboard(){
     const recent = recentData||[];
     if(!recent.length){
       cont.innerHTML = `<div style="text-align:center;padding:32px;color:#444;background:#161616;border:1px solid #222;border-radius:10px">
-        <div style="font-size:32px;margin-bottom:8px">🎫</div>
+        <i data-lucide="ticket" style="width:32px;height:32px;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;color:#444"></i>
         <p style="font-size:13px">Sin actividad reciente</p>
       </div>`;
     } else {
@@ -222,9 +222,9 @@ async function renderDashboard(){
               <span style="font-size:12px;color:#777">${t.usuario||'–'}</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <span style="font-size:11px;color:#555">📍 ${t.ubicacion||'–'}</span>
-              ${t.modelo?`<span style="font-size:11px;color:#555">🖨 ${t.modelo}</span>`:''}
-              <span style="font-size:11px;color:#555">📅 ${fmtDate(t.fecha_inicial)}${t.hora_inicio?` · ⏰ ${t.hora_inicio}`:''}</span>
+              <span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="map-pin" style="width:11px;height:11px;margin:0"></i> ${t.ubicacion||'–'}</span>
+              ${t.modelo?`<span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="printer" style="width:11px;height:11px;margin:0"></i> ${t.modelo}</span>`:''}
+              <span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="calendar" style="width:11px;height:11px;margin:0"></i> ${fmtDate(t.fecha_inicial)}${t.hora_inicio?` · <i data-lucide="clock" style="width:11px;height:11px;margin:0"></i> ${t.hora_inicio}`:''}</span>
             </div>
           </div>
           <div style="flex-shrink:0;text-align:right">
@@ -238,6 +238,7 @@ async function renderDashboard(){
       }).join('');
     }
   } catch(e){ toast('Error cargando dashboard','error'); }
+  lucide.createIcons();
   hideLoading();
 }
 
@@ -270,7 +271,7 @@ async function renderTickets(){
     const tbody = document.getElementById('tickets-body');
 
     if(!filtered.length){
-      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="icon"><i data-lucide="ticket"></i></div><p>Sin registros</p></div></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i data-lucide="ticket"></i><p>Sin registros</p></div></td></tr>`;
       lucide.createIcons();
       return;
     }
@@ -289,9 +290,9 @@ async function renderTickets(){
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
         <td style="white-space:nowrap">
           <div class="action-btns">
-            <button class="btn-view" onclick="verTicket(${t.id})">👁 Ver</button>
-            <button class="btn-edit" onclick="editTicket(${t.id})">✏ Editar</button>
-            <button class="btn-danger" onclick="deleteTicket(${t.id})">✕</button>
+            <button class="btn-view" onclick="verTicket(${t.id})"><i data-lucide="eye"></i> Ver</button>
+            <button class="btn-edit" onclick="editTicket(${t.id})"><i data-lucide="pencil"></i> Editar</button>
+            <button class="btn-danger" onclick="deleteTicket(${t.id})"><i data-lucide="trash-2"></i></button>
           </div>
         </td>
       </tr>`;
@@ -366,6 +367,7 @@ async function verTicket(id){
       closeModal('modal-ver-ticket');
       editTicket(id);
     };
+    lucide.createIcons();
     openModal('modal-ver-ticket');
   } catch(e){
     toast('Error: '+e.message,'error');
@@ -479,7 +481,7 @@ function deleteTicket(id){
   showConfirm({
     titulo:'¿Eliminar caso?',
     mensaje:'Este caso y solicitud será eliminado permanentemente.',
-    icono:'🎫', tipo:'danger',
+    icono:'<i data-lucide="ticket"></i>', tipo:'danger',
     textoSi:'Sí, eliminar', textoNo:'Cancelar',
     callback: async(ok)=>{
       if(!ok) return;
@@ -561,13 +563,13 @@ async function renderEntradas(){
       <td style="font-size:12px;white-space:nowrap">${e.recibe||'–'}</td>
       <td style="white-space:nowrap">
         <div class="action-btns">
-          <button class="btn-view" onclick="verEntrada(${e.id})">👁 Ver</button>
-          <button class="btn-edit" onclick="editEntrada(${e.id})">✏ Editar</button>
-          <button class="btn-danger" onclick="deleteEntrada(${e.id})">✕</button>
+          <button class="btn-view" onclick="verEntrada(${e.id})"><i data-lucide="eye"></i> Ver</button>
+          <button class="btn-edit" onclick="editEntrada(${e.id})"><i data-lucide="pencil"></i> Editar</button>
+          <button class="btn-danger" onclick="deleteEntrada(${e.id})"><i data-lucide="trash-2"></i></button>
         </div>
       </td>
     </tr>`).join(''):
-    `<tr><td colspan="7"><div class="empty-state"><div class="icon"><i data-lucide="package"></i></div><p>Sin entradas registradas</p></div></td></tr>`;
+    `<tr><td colspan="7"><div class="empty-state"><i data-lucide="package"></i><p>Sin entradas registradas</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando entradas','error'); }
   hideLoading();
@@ -609,6 +611,7 @@ async function verEntrada(id){
     document.getElementById('ver-entrada-editar-btn').onclick = () => {
       closeModal('modal-ver-entrada'); editEntrada(id);
     };
+    lucide.createIcons();
     openModal('modal-ver-entrada');
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
@@ -696,7 +699,7 @@ function deleteEntrada(id){
   showConfirm({
     titulo:'¿Eliminar entrada?',
     mensaje:'Este registro de llegada de toner será eliminado.',
-    icono:'📦', tipo:'danger',
+    icono:'<i data-lucide="package"></i>', tipo:'danger',
     textoSi:'Sí, eliminar', textoNo:'Cancelar',
     callback: async(ok)=>{
       if(!ok) return;
@@ -728,13 +731,13 @@ async function renderInstalados(){
       <td style="font-size:12px;white-space:nowrap">${i.tecnico||'–'}</td>
       <td style="white-space:nowrap">
         <div class="action-btns">
-          <button class="btn-view" onclick="verInstalado(${i.id})">👁 Ver</button>
-          <button class="btn-edit" onclick="editInstalado(${i.id})">✏ Editar</button>
-          <button class="btn-danger" onclick="deleteInstalado(${i.id})">✕</button>
+          <button class="btn-view" onclick="verInstalado(${i.id})"><i data-lucide="eye"></i> Ver</button>
+          <button class="btn-edit" onclick="editInstalado(${i.id})"><i data-lucide="pencil"></i> Editar</button>
+          <button class="btn-danger" onclick="deleteInstalado(${i.id})"><i data-lucide="trash-2"></i></button>
         </div>
       </td>
     </tr>`).join(''):
-    `<tr><td colspan="6"><div class="empty-state"><div class="icon"><i data-lucide="printer"></i></div><p>Sin instalaciones registradas</p></div></td></tr>`;
+    `<tr><td colspan="6"><div class="empty-state"><i data-lucide="printer"></i><p>Sin instalaciones registradas</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando instalados','error'); }
   hideLoading();
@@ -773,6 +776,7 @@ async function verInstalado(id){
     document.getElementById('ver-instalado-editar-btn').onclick = () => {
       closeModal('modal-ver-instalado'); editInstalado(id);
     };
+    lucide.createIcons();
     openModal('modal-ver-instalado');
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
@@ -862,7 +866,7 @@ function deleteInstalado(id){
   showConfirm({
     titulo:'¿Eliminar instalación?',
     mensaje:'Este registro de toner instalado será eliminado.',
-    icono:'🖨', tipo:'danger',
+    icono:'<i data-lucide="printer"></i>', tipo:'danger',
     textoSi:'Sí, eliminar', textoNo:'Cancelar',
     callback: async(ok)=>{
       if(!ok) return;
@@ -897,13 +901,13 @@ async function renderOrdenes(){
       <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
       <td style="white-space:nowrap">
         <div class="action-btns">
-          <button class="btn-view" onclick="verOrden(${o.id})">👁 Ver</button>
-          <button class="btn-edit" onclick="editOrden(${o.id})">✏ Editar</button>
-          <button class="btn-danger" onclick="deleteOrden(${o.id})">✕</button>
+          <button class="btn-view" onclick="verOrden(${o.id})"><i data-lucide="eye"></i> Ver</button>
+          <button class="btn-edit" onclick="editOrden(${o.id})"><i data-lucide="pencil"></i> Editar</button>
+          <button class="btn-danger" onclick="deleteOrden(${o.id})"><i data-lucide="trash-2"></i></button>
         </div>
       </td>
     </tr>`).join(''):
-    `<tr><td colspan="7"><div class="empty-state"><div class="icon"><i data-lucide="clipboard-list"></i></div><p>Sin órdenes de servicio</p></div></td></tr>`;
+    `<tr><td colspan="7"><div class="empty-state"><i data-lucide="clipboard-list"></i><p>Sin órdenes de servicio</p></div></td></tr>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando órdenes','error'); }
   hideLoading();
@@ -957,6 +961,7 @@ async function verOrden(id){
     document.getElementById('ver-orden-editar-btn').onclick = () => {
       closeModal('modal-ver-orden'); editOrden(id);
     };
+    lucide.createIcons();
     openModal('modal-ver-orden');
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
@@ -1109,7 +1114,7 @@ function deleteOrden(id){
   showConfirm({
     titulo:'¿Eliminar orden de servicio?',
     mensaje:'Esta orden será eliminada permanentemente.',
-    icono:'📋', tipo:'danger',
+    icono:'<i data-lucide="clipboard-list"></i>', tipo:'danger',
     textoSi:'Sí, eliminar', textoNo:'Cancelar',
     callback: async(ok)=>{
       if(!ok) return;
@@ -1136,8 +1141,8 @@ async function renderNotificaciones(){
     const cont = document.getElementById('notif-container');
 
     if(!all.length){
-      cont.innerHTML = `<div class="empty-state"><div class="icon">🔔</div>
-        <p>Sin notificaciones KFS</p></div>`;
+      cont.innerHTML = `<div class="empty-state"><i data-lucide="bell"></i><p>Sin notificaciones KFS</p></div>`;
+      lucide.createIcons();
       return;
     }
 
@@ -1168,14 +1173,15 @@ async function renderNotificaciones(){
             </td>
             <td style="white-space:nowrap">
               <div class="action-btns">
-                <button class="btn-view" onclick="verNotif(${n.id})">👁 Ver</button>
-                <button class="btn-edit" onclick="editNotif(${n.id})">✏ Editar</button>
-                <button class="btn-danger" onclick="deleteNotif(${n.id})">✕</button>
+                <button class="btn-view" onclick="verNotif(${n.id})"><i data-lucide="eye"></i> Ver</button>
+                <button class="btn-edit" onclick="editNotif(${n.id})"><i data-lucide="pencil"></i> Editar</button>
+                <button class="btn-danger" onclick="deleteNotif(${n.id})"><i data-lucide="trash-2"></i></button>
               </div>
             </td>
           </tr>`).join('')}
         </tbody>
       </table>`;
+    lucide.createIcons();
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
 }
@@ -1224,6 +1230,7 @@ async function verNotif(id){
       closeModal('modal-ver-notif');
       editNotif(id);
     };
+    lucide.createIcons();
     openModal('modal-ver-notif');
   } catch(e){ toast('Error: '+e.message,'error'); }
   finally { hideLoading(); }
@@ -1289,7 +1296,7 @@ function deleteNotif(id){
   showConfirm({
     titulo:'¿Eliminar notificación?',
     mensaje:'Esta notificación KFS será eliminada.',
-    icono:'🔔', tipo:'danger',
+    icono:'<i data-lucide="bell"></i>', tipo:'danger',
     textoSi:'Sí, eliminar', textoNo:'Cancelar',
     callback: async(ok)=>{
       if(!ok) return;
@@ -1417,7 +1424,7 @@ function renderCliente(){
     correoEl.textContent=correo;
   }
   const extEl=document.getElementById('cliente-extension');
-  if(extEl) extEl.textContent='📞 '+(cfg.extension||'6725');
+  if(extEl) extEl.innerHTML='<i data-lucide="phone"></i> '+(cfg.extension||'6725');
   lucide.createIcons();
 }
 
@@ -1732,16 +1739,17 @@ async function autocompletarPorSerie(serie, campos){
 // ─── CONFIRM MODAL ───
 let _confirmCallback = null;
 
-function showConfirm({ titulo, mensaje, icono='🗑', tipo='danger', textoSi='Sí, eliminar', textoNo='No, cancelar', callback }){
+function showConfirm({ titulo, mensaje, icono='<i data-lucide="trash-2"></i>', tipo='danger', textoSi='Sí, eliminar', textoNo='No, cancelar', callback }){
   document.getElementById('confirm-title').textContent   = titulo   || '¿Confirmar acción?';
   document.getElementById('confirm-msg').textContent     = mensaje  || '¿Deseas continuar?';
-  document.getElementById('confirm-icon').textContent    = icono;
+  document.getElementById('confirm-icon').innerHTML      = icono;
   document.getElementById('confirm-icon').className      = `confirm-icon ${tipo}`;
   document.getElementById('confirm-btn-yes').textContent = textoSi;
   document.getElementById('confirm-btn-yes').className   = `confirm-btn-yes ${tipo}`;
   document.getElementById('confirm-btn-no').textContent  = textoNo;
   _confirmCallback = callback;
   document.getElementById('modal-confirm').classList.add('open');
+  lucide.createIcons();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1762,7 +1770,7 @@ function logout(){
   showConfirm({
     titulo:'¿Cerrar sesión?',
     mensaje:'Se cerrará tu sesión actual en el sistema DATECSA.',
-    icono:'👤', tipo:'warning',
+    icono:'<i data-lucide="user"></i>', tipo:'warning',
     textoSi:'Sí, salir',
     textoNo:'No, quedarme',
     callback:(ok)=>{
