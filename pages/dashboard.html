@@ -843,22 +843,11 @@
       <div class="section-header">
         <span class="section-title">Notificaciones KFS <span class="topbar-badge" id="notif-count"></span></span>
         <div style="display:flex;gap:8px">
-          <button class="btn-secondary" onclick="markAllRead()"><i data-lucide="check"></i> Marcar todas leídas</button>
           <button class="btn-primary" onclick="openNewNotif()"><i data-lucide="plus"></i> Nueva Notificación</button>
         </div>
       </div>
       <div class="table-wrap">
-        <div class="records-info" id="count-notif"></div>
-        <table>
-          <thead><tr>
-            <th style="width:16px"></th>
-            <th>FECHA</th>
-            <th>IMPRESORA/SERIE</th>
-            <th>O.S</th>
-            <th>ACCIÓN</th>
-          </tr></thead>
-          <tbody id="notif-body"></tbody>
-        </table>
+        <div id="notif-container"></div>
       </div>
     </div>
 
@@ -1290,22 +1279,53 @@
 <div class="modal-overlay" id="modal-notif">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Nueva Notificación KFS</span>
+      <span class="modal-title" id="modal-notif-title">Nueva Notificación KFS</span>
       <button class="modal-close" onclick="closeModal('modal-notif')">×</button>
     </div>
     <form id="notif-form" onsubmit="event.preventDefault()">
     <input type="hidden" id="notif-id" value="">
     <div class="form-grid">
-      <div class="form-group"><label>FECHA NOTIF. KFS *</label><input type="date" id="notif-fecha"/></div>
-      <div class="form-group"><label>IMPRESORA/SERIE *</label><input id="notif-impresora" placeholder="Ej: R4A2X53349"/></div>
-      <div class="form-group"><label>O.S DE APROB. *</label><input id="notif-os" placeholder="Ej: OS 4276660"/></div>
-      <div class="form-group"><label></label></div>
-      <div class="form-group span2"><label>OBSERVACIONES</label><textarea id="notif-observacion" placeholder="Observaciones adicionales..."></textarea></div>
+
+      <div class="form-group">
+        <label>FECHA *</label>
+        <input type="date" id="notif-fecha"/>
+      </div>
+
+      <div class="form-group">
+        <label>IMPRESORA / SERIE *</label>
+        <input type="text" id="notif-impresora" placeholder="Ej: R4P8916483"/>
+      </div>
+
+      <div class="form-group">
+        <label>MODELO</label>
+        <input type="text" id="notif-modelo" placeholder="Ej: ECOSYS M3145idn"/>
+      </div>
+
+      <div class="form-group">
+        <label>UBICACIÓN</label>
+        <input type="text" id="notif-ubicacion" placeholder="Ej: BIBLIOTECA, PAGADURIA..."/>
+      </div>
+
+      <div class="form-group span2">
+        <label>O.S DE APROB.</label>
+        <input type="text" id="notif-os"
+               placeholder="Dejar vacío si aún no tiene O.S"/>
+        <small style="color:#666;font-size:11px;margin-top:4px;display:block">
+          Si no tienes el número de O.S todavía, déjalo vacío — quedará como Pendiente
+        </small>
+      </div>
+
+      <div class="form-group span2">
+        <label>OBSERVACIONES</label>
+        <textarea id="notif-cuerpo"
+                  placeholder="Observaciones adicionales..."></textarea>
+      </div>
+
     </div>
     </form>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal('modal-notif')">Cancelar</button>
-      <button class="btn-primary" onclick="saveNotif()">Crear Notificación</button>
+      <button class="btn-primary" onclick="addNotif()">Guardar Notificación</button>
     </div>
   </div>
 </div>

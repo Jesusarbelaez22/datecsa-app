@@ -1128,31 +1128,56 @@ function deleteOrden(id){
 async function renderNotificaciones(){
   showLoading();
   try {
-    const { data } = await sb.from('notificaciones').select('*').order('id', {ascending:false});
-    const all = data||[];
-    const unread = all.filter(n=>!n.leido).length;
-    const countEl=document.getElementById('notif-count');
-    if(countEl) countEl.textContent=unread>0?`${unread} sin leer`:'';
-    const countRec=document.getElementById('count-notif');
-    if(countRec) countRec.textContent=`${all.length} registro${all.length!==1?'s':''}`;
-    const tbody=document.getElementById('notif-body');
-    tbody.innerHTML=all.length?all.map(n=>`<tr style="${n.leido?'opacity:.5':''}">
-      <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${n.leido?'#444':'#b40000'}"></span></td>
-      <td style="font-size:12px">${fmtDate(n.fecha)}</td>
-      <td style="font-size:12px">${n.impresora||'–'}</td>
-      <td style="color:#ffcc44;font-weight:700;font-size:12px">${n.os||'–'}</td>
-      <td style="white-space:nowrap">
-        <div class="action-btns">
-          <button class="btn-view" onclick="verNotif(${n.id})">👁 Ver</button>
-          ${!n.leido?`<button class="btn-secondary" style="width:70px;height:26px;font-size:10px;padding:0" onclick="markRead(${n.id})">Leída</button>`:''}
-          <button class="btn-danger" onclick="deleteNotif(${n.id})">✕</button>
-        </div>
-      </td>
-    </tr>`).join(''):
-    `<tr><td colspan="5"><div class="empty-state"><div class="icon"><i data-lucide="bell"></i></div><p>Sin notificaciones</p></div></td></tr>`;
-    lucide.createIcons();
-  } catch(e){ toast('Error cargando notificaciones','error'); }
-  hideLoading();
+    const {data, error} = await sb.from('notificaciones').select('*').order('id',{ascending:false});
+    if(error) throw error;
+    const all = data || [];
+    document.getElementById('notif-count').textContent = `${all.length} registros`;
+
+    const cont = document.getElementById('notif-container');
+
+    if(!all.length){
+      cont.innerHTML = `<div class="empty-state"><div class="icon">🔔</div>
+        <p>Sin notificaciones KFS</p></div>`;
+      return;
+    }
+
+    cont.innerHTML = `
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr>
+          <th>FECHA</th>
+          <th>SERIE</th>
+          <th>MODELO</th>
+          <th>UBICACIÓN</th>
+          <th>O.S DE APROB.</th>
+          <th>ACCIÓN</th>
+        </tr></thead>
+        <tbody>
+          ${all.map(n => `<tr>
+            <td style="font-size:12px;white-space:nowrap">${fmtDate(n.fecha)}</td>
+            <td style="font-size:12px;font-weight:600">${n.impresora||'–'}</td>
+            <td style="font-size:12px">${n.modelo||'–'}</td>
+            <td style="font-size:12px;max-width:160px;white-space:nowrap;
+                       overflow:hidden;text-overflow:ellipsis">
+              ${n.ubicacion||'–'}
+            </td>
+            <td style="font-size:12px">
+              ${n.os
+                ? `<span style="color:#ffcc44;font-weight:700">${n.os}</span>`
+                : `<span style="color:#888;font-style:italic">Pendiente</span>`
+              }
+            </td>
+            <td style="white-space:nowrap">
+              <div class="action-btns">
+                <button class="btn-view" onclick="verNotif(${n.id})">👁 Ver</button>
+                <button class="btn-edit" onclick="editNotif(${n.id})">✏ Editar</button>
+                <button class="btn-danger" onclick="deleteNotif(${n.id})">✕</button>
+              </div>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 async function verNotif(id){
@@ -1160,6 +1185,7 @@ async function verNotif(id){
   try {
     const {data} = await sb.from('notificaciones').select('*').eq('id',id).single();
     if(!data){ toast('Notificación no encontrada','error'); return; }
+
     const campo = (label, valor, destacado=false) => `
       <div style="display:flex;justify-content:space-between;align-items:flex-start;
                   padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
@@ -1169,21 +1195,34 @@ async function verNotif(id){
                      font-weight:${destacado?'600':'400'};text-align:right;
                      word-break:break-word">${valor||'–'}</span>
       </div>`;
+
+    const osHTML = data.os
+      ? `<span style="color:#ffcc44;font-weight:700">${data.os}</span>`
+      : `<span style="color:#888;font-style:italic">Pendiente</span>`;
+
     const html = `
-      ${campo('Fecha Notif. KFS', fmtDate(data.fecha), true)}
-      ${campo('Impresora/Serie', data.impresora, true)}
-      ${campo('O.S de Aprob.', data.os, true)}
-      ${campo('Estado', data.leido ? 'Leída' : 'Sin leer')}
+      ${campo('Fecha', fmtDate(data.fecha), true)}
+      ${campo('Impresora / Serie', data.impresora, true)}
+      ${campo('Modelo', data.modelo)}
+      ${campo('Ubicación', data.ubicacion)}
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+                  padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
+        <span style="font-size:11px;color:#666;text-transform:uppercase;
+                     letter-spacing:.5px;flex-shrink:0;min-width:120px">O.S DE APROB.</span>
+        <span style="font-size:13.5px;text-align:right">${osHTML}</span>
+      </div>
       <div style="padding:14px 0">
         <span style="font-size:11px;color:#666;text-transform:uppercase;
                      letter-spacing:.5px;display:block;margin-bottom:8px">Observaciones</span>
         <div style="background:#111;border:1px solid #222;border-radius:8px;
                     padding:14px;font-size:13px;color:#ccc;line-height:1.6;
-                    white-space:pre-wrap">${data.observacion||'Sin observaciones'}</div>
+                    white-space:pre-wrap">${data.observacion || 'Sin observaciones'}</div>
       </div>`;
+
     document.getElementById('ver-notif-content').innerHTML = html;
     document.getElementById('ver-notif-editar-btn').onclick = () => {
-      closeModal('modal-ver-notif'); editNotif(id);
+      closeModal('modal-ver-notif');
+      editNotif(id);
     };
     openModal('modal-ver-notif');
   } catch(e){ toast('Error: '+e.message,'error'); }
@@ -1199,54 +1238,51 @@ function openNewNotif(){
 }
 
 async function editNotif(id){
-  const { data, error } = await sb.from('notificaciones').select('*').eq('id',id).single();
-  if(error||!data){ toast('Error cargando notificación','error'); return; }
-  document.getElementById('notif-id').value=data.id;
-  document.getElementById('notif-fecha').value=data.fecha||'';
-  document.getElementById('notif-impresora').value=data.impresora||'';
-  document.getElementById('notif-os').value=data.os||'';
-  document.getElementById('notif-observacion').value=data.observacion||'';
-  document.querySelector('#modal-notif .modal-title').textContent='Editar Notificación KFS';
+  const {data} = await sb.from('notificaciones').select('*').eq('id',id).single();
+  if(!data) return;
+  const idF = document.getElementById('notif-id');
+  if(idF) idF.value = data.id;
+  const fd = document.getElementById('notif-fecha'); if(fd) fd.value = data.fecha||'';
+  const fi = document.getElementById('notif-impresora'); if(fi) fi.value = data.impresora||'';
+  const fm = document.getElementById('notif-modelo'); if(fm) fm.value = data.modelo||'';
+  const fu = document.getElementById('notif-ubicacion'); if(fu) fu.value = data.ubicacion||'';
+  const fo = document.getElementById('notif-os'); if(fo) fo.value = data.os||'';
+  const fc = document.getElementById('notif-cuerpo'); if(fc) fc.value = data.observacion||'';
+  document.getElementById('modal-notif-title').textContent = 'Editar Notificación KFS';
   openModal('modal-notif');
 }
 
-async function saveNotif(){
-  const id=parseInt(document.getElementById('notif-id').value)||null;
-  const fecha=document.getElementById('notif-fecha').value;
-  const impresora=document.getElementById('notif-impresora').value.trim();
-  const os=document.getElementById('notif-os').value.trim();
-  if(!fecha||!impresora||!os){ toast('Complete los campos requeridos: FECHA, IMPRESORA y O.S','error'); return; }
-  const obj={
-    fecha, impresora, os,
-    observacion: document.getElementById('notif-observacion').value.trim(),
-    leido: false,
-  };
+async function addNotif(){
+  const idVal = parseInt(document.getElementById('notif-id')?.value)||null;
+  const fecha = document.getElementById('notif-fecha')?.value || null;
+  const impresora = document.getElementById('notif-impresora')?.value.trim() || '';
+  const modelo = document.getElementById('notif-modelo')?.value.trim() || '';
+  const ubicacion = document.getElementById('notif-ubicacion')?.value.trim() || '';
+  const os = document.getElementById('notif-os')?.value.trim() || '';
+  const observacion = document.getElementById('notif-cuerpo')?.value.trim() || '';
+
+  if(!impresora){ toast('IMPRESORA/SERIE es requerida','error'); return; }
+  if(!fecha){ toast('La FECHA es requerida','error'); return; }
+
+  const obj = { fecha, impresora, modelo, ubicacion, os, observacion, leido: false };
+
   showLoading();
   try {
-    if(id){ await sb.from('notificaciones').update({...obj, leido:undefined}).eq('id',id); }
-    else   { await sb.from('notificaciones').insert(obj); }
+    if(idVal){
+      const {error} = await sb.from('notificaciones').update(obj).eq('id',idVal);
+      if(error) throw error;
+      toast('Notificación actualizada');
+    } else {
+      const {error} = await sb.from('notificaciones').insert(obj);
+      if(error) throw error;
+      toast('Notificación creada');
+    }
     closeModal('modal-notif');
+    const idF = document.getElementById('notif-id');
+    if(idF) idF.value = '';
     await renderNotificaciones();
-    toast(id?'Notificación actualizada':'Notificación creada');
-  } catch(e){ toast('Error guardando notificación','error'); }
-  hideLoading();
-}
-
-async function markRead(id){
-  try {
-    await sb.from('notificaciones').update({leido:true}).eq('id',id);
-    await renderNotificaciones();
-  } catch(e){ toast('Error actualizando notificación','error'); }
-}
-
-async function markAllRead(){
-  showLoading();
-  try {
-    await sb.from('notificaciones').update({leido:true}).eq('leido',false);
-    await renderNotificaciones();
-    toast('Todas marcadas como leídas');
-  } catch(e){ toast('Error actualizando notificaciones','error'); }
-  hideLoading();
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
 }
 
 function deleteNotif(id){
@@ -1435,8 +1471,8 @@ async function exportInforme(modulo, formato){
       campoFecha:'fecha',
       fromId:'inf-notif-from',
       toId:'inf-notif-to',
-      headers:['FECHA NOTIF. KFS','IMPRESORA/SERIE','O.S DE APROB.','OBSERVACIONES'],
-      campos:['fecha','impresora','os','observacion']
+      headers:['FECHA','IMPRESORA/SERIE','MODELO','UBICACIÓN','O.S DE APROB.','OBSERVACIONES'],
+      campos:['fecha','impresora','modelo','ubicacion','os','observacion']
     }
   };
 
@@ -1611,6 +1647,13 @@ document.addEventListener('input', function(e){
       ubicacion: 'entrada-area',
       sede:      'entrada-ubicacion',
     }), 500);
+  }
+  if(id === 'notif-impresora'){
+    clearTimeout(_acTimeout);
+    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
+      modelo: 'notif-modelo',
+      ubicacion: 'notif-ubicacion'
+    }), 600);
   }
 });
 
