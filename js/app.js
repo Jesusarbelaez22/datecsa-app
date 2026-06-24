@@ -248,7 +248,8 @@ async function renderDashboard(){
   const usuario = sessionStorage.getItem('dtcUser') || 'Admin';
   const saludoEl = document.getElementById('dash-saludo');
   const fechaEl = document.getElementById('dash-fecha');
-  if(saludoEl) saludoEl.textContent = `${saludo}, ${usuario} 👋`;
+  if(saludoEl) saludoEl.innerHTML = `${saludo}, ${usuario} <i data-lucide="hand-metal" style="width:22px;height:22px;vertical-align:middle;margin-left:6px;color:#b40000"></i>`;
+  lucide.createIcons();
   if(fechaEl){
     const ahora = new Date();
     fechaEl.textContent = ahora.toLocaleDateString('es-CO', {
