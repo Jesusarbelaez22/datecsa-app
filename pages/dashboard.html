@@ -98,6 +98,9 @@
     <a class="nav-item" data-page="cliente" data-tooltip="Cliente" onclick="navigate('cliente')">
       <span class="nav-icon"><i data-lucide="building-2"></i></span><span class="nav-text">Cliente</span>
     </a>
+    <a class="nav-item" data-page="usuarios" data-tooltip="Usuarios" onclick="navigate('usuarios')">
+      <span class="nav-icon"><i data-lucide="users"></i></span><span class="nav-text">Usuarios</span>
+    </a>
     <a class="nav-item" data-page="tickets" data-tooltip="Casos y Solicitudes" onclick="navigate('tickets')">
       <span class="nav-icon"><i data-lucide="ticket"></i></span><span class="nav-text">Casos y Solicitudes</span>
     </a>
@@ -398,6 +401,52 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- ══════════════ USUARIOS ══════════════ -->
+    <div class="page" id="page-usuarios">
+      <div class="section-header">
+        <span class="section-title">Usuarios</span>
+        <button class="btn-primary" onclick="openNewUsuario()">
+          <i data-lucide="user-plus"></i> Agregar Usuario
+        </button>
+      </div>
+
+      <!-- BUSCADOR DESTACADO -->
+      <div style="background:#161616;border:1px solid #222;border-radius:10px;
+                  padding:20px;margin-bottom:20px">
+        <div style="font-size:12px;color:#666;text-transform:uppercase;
+                    letter-spacing:.5px;margin-bottom:10px">
+          Buscar usuario por nombre, usuario o código
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <input type="text" id="usuarios-search"
+                 placeholder="Escribe nombre, usuario o código PIN..."
+                 style="flex:1;background:#111;border:1px solid #2a2a2a;
+                        color:#e0e0e0;padding:12px 16px;border-radius:8px;
+                        font-size:14px;font-family:'Inter',sans-serif"
+                 oninput="buscarUsuarios(this.value)"/>
+          <button class="btn-secondary" onclick="buscarUsuarios(document.getElementById('usuarios-search').value)">
+            <i data-lucide="search"></i> Buscar
+          </button>
+          <button class="btn-secondary" onclick="limpiarBusquedaUsuarios()">
+            <i data-lucide="x"></i> Limpiar
+          </button>
+        </div>
+        <!-- Resultado destacado de búsqueda -->
+        <div id="usuarios-resultado-destacado" style="display:none;
+             margin-top:14px;background:#111;border:1px solid #b40000;
+             border-radius:8px;padding:14px">
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <span id="usuarios-count" style="font-size:12px;color:#666">0 registros</span>
+        </div>
+        <div id="usuarios-table-container"></div>
+      </div>
     </div>
 
     <!-- ══════════════ TICKETS ══════════════ -->
@@ -1334,6 +1383,38 @@
   </div>
 </div>
 
+
+<!-- Modal Agregar/Editar Usuario -->
+<div class="modal-overlay" id="modal-usuario">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <span class="modal-title" id="usuario-modal-title">Agregar Usuario</span>
+      <button class="modal-close" onclick="closeModal('modal-usuario')">×</button>
+    </div>
+    <input type="hidden" id="usuario-id"/>
+    <div class="form-grid">
+      <div class="form-group span2">
+        <label>Nombre de Usuario *</label>
+        <input type="text" id="usuario-nombre"
+               placeholder="Nombre completo del usuario"/>
+      </div>
+      <div class="form-group">
+        <label>Usuario *</label>
+        <input type="text" id="usuario-usuario"
+               placeholder="Ej: aarcos"/>
+      </div>
+      <div class="form-group">
+        <label>Código PIN *</label>
+        <input type="text" id="usuario-codigo"
+               placeholder="Ej: 1899"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-usuario')">Cancelar</button>
+      <button class="btn-primary" onclick="saveUsuario()">Guardar</button>
+    </div>
+  </div>
+</div>
 
 <div id="toast-container"></div>
 

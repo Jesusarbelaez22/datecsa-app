@@ -68,6 +68,7 @@ function navigate(page){
     'cliente':        renderCliente,
     'cierre':         renderCierre,
     'informes':       renderInformes,
+    'usuarios':       renderUsuarios,
   };
   if(renders[page]) renders[page]();
 }
@@ -1872,6 +1873,219 @@ function logout(){
       if(!ok) return;
       sessionStorage.clear();
       window.location.replace('../index.html');
+    }
+  });
+}
+
+// ─── USUARIOS ───
+let _usuariosPage = 1;
+const _usuariosPerPage = 50;
+let _usuariosBusqueda = '';
+
+async function renderUsuarios(){
+  showLoading();
+  try {
+    const desde = (_usuariosPage - 1) * _usuariosPerPage;
+    const hasta = desde + _usuariosPerPage - 1;
+
+    let query = sb.from('usuarios').select('*', {count:'exact'});
+
+    if(_usuariosBusqueda){
+      query = query.or(
+        `nombre.ilike.%${_usuariosBusqueda}%,usuario.ilike.%${_usuariosBusqueda}%,codigo.ilike.%${_usuariosBusqueda}%`
+      );
+    }
+
+    const {data, error, count} = await query
+      .order('nombre', {ascending:true})
+      .range(desde, hasta);
+
+    if(error) throw error;
+    const all = data || [];
+    const total = count || 0;
+
+    document.getElementById('usuarios-count').textContent =
+      `${total} usuarios${_usuariosBusqueda ? ' encontrados' : ' en total'}`;
+
+    const container = document.getElementById('usuarios-table-container');
+
+    if(!all.length){
+      container.innerHTML = `<div class="empty-state">
+        <i data-lucide="users"></i>
+        <p>No se encontraron usuarios</p>
+      </div>`;
+      lucide.createIcons();
+      return;
+    }
+
+    const totalPages = Math.ceil(total / _usuariosPerPage);
+    const paginacion = totalPages > 1 ? `
+      <div style="display:flex;justify-content:center;align-items:center;
+                  gap:10px;padding:14px;border-top:1px solid #1e1e1e">
+        <button class="btn-secondary"
+                onclick="_usuariosPage=${_usuariosPage-1};renderUsuarios()"
+                ${_usuariosPage<=1?'disabled style="opacity:.4"':''}>
+          ← Anterior
+        </button>
+        <span style="font-size:12px;color:#666">
+          Página ${_usuariosPage} de ${totalPages}
+        </span>
+        <button class="btn-secondary"
+                onclick="_usuariosPage=${_usuariosPage+1};renderUsuarios()"
+                ${_usuariosPage>=totalPages?'disabled style="opacity:.4"':''}>
+          Siguiente →
+        </button>
+      </div>` : '';
+
+    container.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+        <thead><tr>
+          <th style="width:40%">NOMBRE DE USUARIO</th>
+          <th style="width:25%">USUARIO</th>
+          <th style="width:15%">CÓDIGO</th>
+          <th style="width:20%">ACCIONES</th>
+        </tr></thead>
+        <tbody>
+          ${all.map(u => `<tr>
+            <td style="font-size:13px">${u.nombre||'–'}</td>
+            <td style="font-size:12px;color:#888">${u.usuario||'–'}</td>
+            <td>
+              <span style="font-size:14px;font-weight:700;
+                           color:#fff;letter-spacing:1px">
+                ${u.codigo||'–'}
+              </span>
+            </td>
+            <td>
+              <div class="action-btns">
+                <button class="btn-edit" onclick="editUsuario(${u.id})">
+                  <i data-lucide="pencil"></i> Editar
+                </button>
+                <button class="btn-danger" onclick="deleteUsuario(${u.id})">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      ${paginacion}`;
+
+    lucide.createIcons();
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
+}
+
+async function buscarUsuarios(texto){
+  _usuariosBusqueda = texto.trim();
+  _usuariosPage = 1;
+
+  if(_usuariosBusqueda.length >= 2){
+    const {data} = await sb.from('usuarios').select('*')
+      .or(`nombre.ilike.%${_usuariosBusqueda}%,usuario.ilike.%${_usuariosBusqueda}%,codigo.ilike.%${_usuariosBusqueda}%`)
+      .order('nombre')
+      .limit(5);
+
+    const dest = document.getElementById('usuarios-resultado-destacado');
+    if(data && data.length){
+      dest.style.display = 'block';
+      dest.innerHTML = `
+        <div style="font-size:11px;color:#666;margin-bottom:10px;
+                    text-transform:uppercase;letter-spacing:.5px">
+          Coincidencias rápidas
+        </div>
+        ${data.map(u => `
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      padding:8px 0;border-bottom:1px solid #1e1e1e">
+            <div>
+              <div style="font-size:13px;font-weight:500;color:#fff">${u.nombre}</div>
+              <div style="font-size:11px;color:#666">${u.usuario}</div>
+            </div>
+            <div style="font-size:18px;font-weight:700;color:#fff;
+                        background:rgba(180,0,0,0.15);border:1px solid rgba(180,0,0,0.3);
+                        padding:4px 12px;border-radius:6px;letter-spacing:2px">
+              ${u.codigo}
+            </div>
+          </div>`).join('')}`;
+    } else {
+      dest.style.display = 'block';
+      dest.innerHTML = `<div style="color:#666;font-size:13px;text-align:center">
+        Sin resultados para "${_usuariosBusqueda}"</div>`;
+    }
+  } else {
+    document.getElementById('usuarios-resultado-destacado').style.display = 'none';
+  }
+
+  await renderUsuarios();
+}
+
+function limpiarBusquedaUsuarios(){
+  document.getElementById('usuarios-search').value = '';
+  document.getElementById('usuarios-resultado-destacado').style.display = 'none';
+  _usuariosBusqueda = '';
+  _usuariosPage = 1;
+  renderUsuarios();
+}
+
+function openNewUsuario(){
+  document.getElementById('usuario-id').value = '';
+  document.getElementById('usuario-nombre').value = '';
+  document.getElementById('usuario-usuario').value = '';
+  document.getElementById('usuario-codigo').value = '';
+  document.getElementById('usuario-modal-title').textContent = 'Agregar Usuario';
+  openModal('modal-usuario');
+}
+
+async function editUsuario(id){
+  const {data} = await sb.from('usuarios').select('*').eq('id',id).single();
+  if(!data) return;
+  document.getElementById('usuario-id').value = data.id;
+  document.getElementById('usuario-nombre').value = data.nombre || '';
+  document.getElementById('usuario-usuario').value = data.usuario || '';
+  document.getElementById('usuario-codigo').value = data.codigo || '';
+  document.getElementById('usuario-modal-title').textContent = 'Editar Usuario';
+  openModal('modal-usuario');
+}
+
+async function saveUsuario(){
+  const id = parseInt(document.getElementById('usuario-id').value) || null;
+  const nombre = document.getElementById('usuario-nombre').value.trim();
+  const usuario = document.getElementById('usuario-usuario').value.trim();
+  const codigo = document.getElementById('usuario-codigo').value.trim();
+
+  if(!nombre){ toast('El nombre es requerido','error'); return; }
+  if(!codigo){ toast('El código es requerido','error'); return; }
+
+  const obj = { nombre, usuario, codigo };
+  showLoading();
+  try {
+    if(id){
+      const {error} = await sb.from('usuarios').update(obj).eq('id',id);
+      if(error) throw error;
+      toast('Usuario actualizado');
+    } else {
+      const {error} = await sb.from('usuarios').insert(obj);
+      if(error) throw error;
+      toast('Usuario agregado');
+    }
+    closeModal('modal-usuario');
+    await renderUsuarios();
+  } catch(e){ toast('Error: '+e.message,'error'); }
+  finally { hideLoading(); }
+}
+
+async function deleteUsuario(id){
+  showConfirm({
+    titulo: '¿Eliminar usuario?',
+    mensaje: 'Este usuario será eliminado permanentemente.',
+    icono: 'user-x', tipo: 'danger',
+    textoSi: 'Sí, eliminar', textoNo: 'Cancelar',
+    callback: async(ok) => {
+      if(!ok) return;
+      showLoading();
+      await sb.from('usuarios').delete().eq('id',id);
+      hideLoading();
+      await renderUsuarios();
+      toast('Usuario eliminado','error');
     }
   });
 }
