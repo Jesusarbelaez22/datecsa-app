@@ -890,25 +890,58 @@ async function renderOrdenes(){
     const all = data||[];
     const countEl=document.getElementById('count-ordenes');
     if(countEl) countEl.textContent=`${all.length} registro${all.length!==1?'s':''}`;
-    const tbody=document.getElementById('ordenes-body');
-    tbody.innerHTML=all.length?all.map(o=>`<tr>
-      <td style="white-space:nowrap;font-size:12px">${fmtDate(o.fecha_solicitud)}</td>
-      <td style="font-size:12px">${o.modelo||'–'}</td>
-      <td style="min-width:150px;max-width:180px">
-        <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">${o.incidente||'–'}</span>
-      </td>
-      <td style="font-size:12px">${o.os?`<span style="color:#ffcc44;font-weight:700">${o.os}</span>`:`<span style="color:#888;font-style:italic">Pendiente</span>`}</td>
-      <td style="font-size:12px">${o.sede||'–'}</td>
-      <td style="font-size:12px;white-space:nowrap">${o.responsable||'–'}</td>
-      <td style="white-space:nowrap">
-        <div class="action-btns">
-          <button class="btn-view" onclick="verOrden(${o.id})"><i data-lucide="eye"></i> Ver</button>
-          <button class="btn-edit" onclick="editOrden(${o.id})"><i data-lucide="pencil"></i> Editar</button>
-          <button class="btn-danger" onclick="deleteOrden(${o.id})"><i data-lucide="trash-2"></i></button>
-        </div>
-      </td>
-    </tr>`).join(''):
-    `<tr><td colspan="7"><div class="empty-state"><i data-lucide="clipboard-list"></i><p>Sin órdenes de servicio</p></div></td></tr>`;
+    const cont = document.getElementById('ordenes-table-container');
+    if(!all.length){
+      cont.innerHTML = `<div class="empty-state"><i data-lucide="clipboard-list"></i><p>Sin órdenes de servicio</p></div>`;
+      lucide.createIcons();
+      return;
+    }
+    cont.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+        <thead><tr>
+          <th style="width:90px">FECHA</th>
+          <th style="width:130px">MODELO</th>
+          <th style="width:150px">INCIDENTE</th>
+          <th style="width:100px">O.S</th>
+          <th style="width:110px">SEDE</th>
+          <th style="width:110px">RESPONSABLE</th>
+          <th style="width:110px">ACCIONES</th>
+        </tr></thead>
+        <tbody>
+          ${all.map(o => `<tr>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${fmtDate(o.fecha_solicitud)}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.modelo||'–'}
+            </td>
+            <td style="font-size:12px">
+              <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">
+                ${o.incidente||'–'}
+              </span>
+            </td>
+            <td style="font-size:12px">
+              ${o.os
+                ? `<span style="color:#ffcc44;font-weight:700;white-space:nowrap">${o.os}</span>`
+                : `<span style="color:#888;font-style:italic">Pendiente</span>`
+              }
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.sede||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.responsable||'–'}
+            </td>
+            <td>
+              <div class="action-btns">
+                <button class="btn-view" onclick="verOrden(${o.id})"><i data-lucide="eye"></i> Ver</button>
+                <button class="btn-edit" onclick="editOrden(${o.id})"><i data-lucide="pencil"></i> Editar</button>
+                <button class="btn-danger" onclick="deleteOrden(${o.id})"><i data-lucide="trash-2"></i></button>
+              </div>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
     lucide.createIcons();
   } catch(e){ toast('Error cargando órdenes','error'); }
   hideLoading();
