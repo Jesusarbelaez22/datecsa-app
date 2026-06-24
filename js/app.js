@@ -385,6 +385,7 @@ function openNewTicket(){
   const hWrap=document.getElementById('ticket-helpdesk-otro-wrap');
   if(hWrap) hWrap.style.display='none';
   const ahora=new Date();
+  ahora.setMinutes(ahora.getMinutes()-15);
   const hh=String(ahora.getHours()).padStart(2,'0');
   const mm=String(ahora.getMinutes()).padStart(2,'0');
   const horaField=document.getElementById('ticket-hora-inicio');
@@ -1152,7 +1153,8 @@ async function renderNotificaciones(){
           <th>FECHA</th>
           <th>SERIE</th>
           <th>MODELO</th>
-          <th>UBICACIÓN</th>
+          <th>SEDE</th>
+          <th>ÁREA</th>
           <th>O.S DE APROB.</th>
           <th>ACCIÓN</th>
         </tr></thead>
@@ -1161,10 +1163,9 @@ async function renderNotificaciones(){
             <td style="font-size:12px;white-space:nowrap">${fmtDate(n.fecha)}</td>
             <td style="font-size:12px;font-weight:600">${n.impresora||'–'}</td>
             <td style="font-size:12px">${n.modelo||'–'}</td>
-            <td style="font-size:12px;max-width:160px;white-space:nowrap;
-                       overflow:hidden;text-overflow:ellipsis">
-              ${n.ubicacion||'–'}
-            </td>
+            <td style="font-size:12px">${n.ubicacion||'–'}</td>
+            <td style="font-size:12px;max-width:150px;white-space:nowrap;
+                       overflow:hidden;text-overflow:ellipsis">${n.area||'–'}</td>
             <td style="font-size:12px">
               ${n.os
                 ? `<span style="color:#ffcc44;font-weight:700">${n.os}</span>`
@@ -1210,7 +1211,8 @@ async function verNotif(id){
       ${campo('Fecha', fmtDate(data.fecha), true)}
       ${campo('Impresora / Serie', data.impresora, true)}
       ${campo('Modelo', data.modelo)}
-      ${campo('Ubicación', data.ubicacion)}
+      ${campo('Sede', data.ubicacion)}
+      ${campo('Área', data.area)}
       <div style="display:flex;justify-content:space-between;align-items:flex-start;
                   padding:12px 0;border-bottom:1px solid #1e1e1e;gap:16px">
         <span style="font-size:11px;color:#666;text-transform:uppercase;
@@ -1253,6 +1255,7 @@ async function editNotif(id){
   const fi = document.getElementById('notif-impresora'); if(fi) fi.value = data.impresora||'';
   const fm = document.getElementById('notif-modelo'); if(fm) fm.value = data.modelo||'';
   const fu = document.getElementById('notif-ubicacion'); if(fu) fu.value = data.ubicacion||'';
+  const fa = document.getElementById('notif-area'); if(fa) fa.value = data.area||'';
   const fo = document.getElementById('notif-os'); if(fo) fo.value = data.os||'';
   const fc = document.getElementById('notif-cuerpo'); if(fc) fc.value = data.observacion||'';
   document.getElementById('modal-notif-title').textContent = 'Editar Notificación KFS';
@@ -1264,14 +1267,15 @@ async function addNotif(){
   const fecha = document.getElementById('notif-fecha')?.value || null;
   const impresora = document.getElementById('notif-impresora')?.value.trim() || '';
   const modelo = document.getElementById('notif-modelo')?.value.trim() || '';
-  const ubicacion = document.getElementById('notif-ubicacion')?.value.trim() || '';
+  const ubicacion = document.getElementById('notif-ubicacion')?.value || '';
+  const area = document.getElementById('notif-area')?.value.trim() || '';
   const os = document.getElementById('notif-os')?.value.trim() || '';
   const observacion = document.getElementById('notif-cuerpo')?.value.trim() || '';
 
   if(!impresora){ toast('IMPRESORA/SERIE es requerida','error'); return; }
   if(!fecha){ toast('La FECHA es requerida','error'); return; }
 
-  const obj = { fecha, impresora, modelo, ubicacion, os, observacion, leido: false };
+  const obj = { fecha, impresora, modelo, ubicacion, area, os, observacion, leido: false };
 
   showLoading();
   try {
@@ -1657,10 +1661,7 @@ document.addEventListener('input', function(e){
   }
   if(id === 'notif-impresora'){
     clearTimeout(_acTimeout);
-    _acTimeout = setTimeout(()=>autocompletarPorSerie(e.target.value, {
-      modelo: 'notif-modelo',
-      ubicacion: 'notif-ubicacion'
-    }), 600);
+    _acTimeout = setTimeout(()=>autocompletarNotif(e.target.value), 600);
   }
 });
 
@@ -1683,6 +1684,49 @@ document.addEventListener('change', function(e){
     if(wrap) wrap.style.display = e.target.value === 'OTRO' ? 'block' : 'none';
   }
 });
+
+async function autocompletarNotif(serie){
+  if(!serie || serie.trim().length < 3) return;
+  const serieClean = serie.trim().toUpperCase();
+  try {
+    const {data: allData} = await sb.from('inventario_equipos').select('*');
+    if(!allData || !allData.length) return;
+    const match = allData.find(eq => {
+      const serieBD = (eq.serie||'').trim().toUpperCase().replace(/\s+/g,'');
+      const serieBuscada = serieClean.replace(/\s+/g,'');
+      return serieBD.includes(serieBuscada) || serieBuscada.includes(serieBD);
+    });
+    if(match){
+      const fm = document.getElementById('notif-modelo');
+      if(fm && !fm.value) fm.value = match.modelo || '';
+
+      const fu = document.getElementById('notif-ubicacion');
+      if(fu && !fu.value){
+        const sedeMap = {
+          'PAMPALINDA': 'PAMPALINDA',
+          'CENTRO': 'USC CENTRO',
+          'USC CENTRO': 'USC CENTRO',
+          'PALMIRA': 'USC PALMIRA',
+          'USC PALMIRA': 'USC PALMIRA',
+          'CLINICA VETERINARIA': 'CLÍNICA VETERINARIA',
+          'CLÍNICA VETERINARIA': 'CLÍNICA VETERINARIA',
+          'RESTAURANTE SAN CARLO': 'RESTAURANTE SAN CARLO',
+          'RESTAURANTE': 'RESTAURANTE SAN CARLO',
+        };
+        const sedeKey = (match.sede||'').toUpperCase().trim();
+        const sedeValor = sedeMap[sedeKey] || match.sede || '';
+        if(sedeValor) fu.value = sedeValor;
+      }
+
+      const fa = document.getElementById('notif-area');
+      if(fa && !fa.value) fa.value = match.ubicacion || '';
+
+      toast(`✓ ${match.modelo} - ${match.ubicacion}`, 'success');
+    }
+  } catch(err){
+    console.error('[AC Notif]', err);
+  }
+}
 
 async function autocompletarPorSerie(serie, campos){
   if(!serie || serie.trim().length < 3) return;
