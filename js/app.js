@@ -900,10 +900,12 @@ async function renderOrdenes(){
       <table style="width:100%;border-collapse:collapse;table-layout:fixed">
         <thead><tr>
           <th style="width:90px">FECHA</th>
-          <th style="width:130px">MODELO</th>
-          <th style="width:150px">INCIDENTE</th>
-          <th style="width:100px">O.S</th>
-          <th style="width:110px">SEDE</th>
+          <th style="width:110px">MODELO</th>
+          <th style="width:110px">SERIE</th>
+          <th style="width:100px">SEDE</th>
+          <th style="width:130px">UBICACIÓN</th>
+          <th style="width:130px">INCIDENTE</th>
+          <th style="width:95px">O.S</th>
           <th style="width:110px">RESPONSABLE</th>
           <th style="width:110px">ACCIONES</th>
         </tr></thead>
@@ -912,8 +914,17 @@ async function renderOrdenes(){
             <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               ${fmtDate(o.fecha_solicitud)}
             </td>
-            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+            <td style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               ${o.modelo||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.serial||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.sede||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${o.ubicacion||'–'}
             </td>
             <td style="font-size:12px">
               <span class="badge ${badgeIncidente(o.incidente)} badge-incidente">
@@ -925,9 +936,6 @@ async function renderOrdenes(){
                 ? `<span style="color:#ffcc44;font-weight:700;white-space:nowrap">${o.os}</span>`
                 : `<span style="color:#888;font-style:italic">Pendiente</span>`
               }
-            </td>
-            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-              ${o.sede||'–'}
             </td>
             <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               ${o.responsable||'–'}
