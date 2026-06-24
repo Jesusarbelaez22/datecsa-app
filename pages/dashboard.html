@@ -169,32 +169,83 @@
     <!-- ══════════════ DASHBOARD ══════════════ -->
     <div class="page" id="page-dashboard">
 
-      <div class="stats-grid" style="grid-template-columns:repeat(5,1fr)">
-        <div class="stat-card">
-          <div class="stat-icon blue"><i data-lucide="ticket"></i></div>
-          <div><div class="stat-num" id="dash-abiertos">0</div><div class="stat-label">Tickets Abiertos</div></div>
+      <div style="margin-bottom:24px">
+        <h1 id="dash-saludo" style="font-size:22px;font-weight:600;
+            color:#fff;margin-bottom:4px"></h1>
+        <p id="dash-fecha" style="font-size:13px;color:#666;margin:0"></p>
+      </div>
+
+      <div class="stats-grid">
+
+        <!-- Tickets Abiertos → azul -->
+        <div class="stat-card stat-card-hover" style="border-left:3px solid #3B82F6;
+             background:linear-gradient(135deg,#161616 0%,#1a1f2e 100%)">
+          <div class="stat-icon-circle" style="background:rgba(59,130,246,0.15)">
+            <i data-lucide="ticket" style="color:#3B82F6;width:22px;height:22px"></i>
+          </div>
+          <div>
+            <div class="stat-num" id="dash-abiertos" style="font-size:32px;color:#3B82F6">0</div>
+            <div class="stat-label">Tickets Abiertos</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon yellow"><i data-lucide="clock"></i></div>
-          <div><div class="stat-num" id="dash-progreso">0</div><div class="stat-label">En Progreso</div></div>
+
+        <!-- En Progreso → amarillo -->
+        <div class="stat-card stat-card-hover" style="border-left:3px solid #F59E0B;
+             background:linear-gradient(135deg,#161616 0%,#1e1a10 100%)">
+          <div class="stat-icon-circle" style="background:rgba(245,158,11,0.15)">
+            <i data-lucide="clock" style="color:#F59E0B;width:22px;height:22px"></i>
+          </div>
+          <div>
+            <div class="stat-num" id="dash-progreso" style="font-size:32px;color:#F59E0B">0</div>
+            <div class="stat-label">En Progreso</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon green"><i data-lucide="check-circle-2"></i></div>
-          <div><div class="stat-num" id="dash-cerrados">0</div><div class="stat-label">Tickets Cerrados</div></div>
+
+        <!-- Tickets Cerrados → verde -->
+        <div class="stat-card stat-card-hover" style="border-left:3px solid #10B981;
+             background:linear-gradient(135deg,#161616 0%,#0f1f19 100%)">
+          <div class="stat-icon-circle" style="background:rgba(16,185,129,0.15)">
+            <i data-lucide="check-circle" style="color:#10B981;width:22px;height:22px"></i>
+          </div>
+          <div>
+            <div class="stat-num" id="dash-cerrados" style="font-size:32px;color:#10B981">0</div>
+            <div class="stat-label">Tickets Cerrados</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:rgba(100,60,200,0.12);color:#9966ff;width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center"><i data-lucide="clipboard-list" style="width:22px;height:22px;margin:0"></i></div>
-          <div><div class="stat-num" id="dash-ordenes">0</div><div class="stat-label">Órdenes de Servicio</div></div>
+
+        <!-- Órdenes de Servicio → morado -->
+        <div class="stat-card stat-card-hover" style="border-left:3px solid #8B5CF6;
+             background:linear-gradient(135deg,#161616 0%,#1a1628 100%)">
+          <div class="stat-icon-circle" style="background:rgba(139,92,246,0.15)">
+            <i data-lucide="clipboard-list" style="color:#8B5CF6;width:22px;height:22px"></i>
+          </div>
+          <div>
+            <div class="stat-num" id="dash-ordenes" style="font-size:32px;color:#8B5CF6">0</div>
+            <div class="stat-label">Órdenes de Servicio</div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:rgba(200,140,0,0.12);color:#ffcc44;width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center"><i data-lucide="bell" style="width:22px;height:22px;margin:0"></i></div>
-          <div><div class="stat-num" id="dash-notif">0</div><div class="stat-label">Notif. KFS Pendientes</div></div>
+
+        <!-- Notif KFS Pendientes → naranja -->
+        <div class="stat-card stat-card-hover" style="border-left:3px solid #F97316;
+             background:linear-gradient(135deg,#161616 0%,#1e1510 100%)">
+          <div class="stat-icon-circle" style="background:rgba(249,115,22,0.15)">
+            <i data-lucide="bell" style="color:#F97316;width:22px;height:22px"></i>
+          </div>
+          <div>
+            <div class="stat-num" id="dash-notif" style="font-size:32px;color:#F97316">0</div>
+            <div class="stat-label">Notif. KFS Pendientes</div>
+          </div>
         </div>
+
       </div>
 
       <!-- Chart -->
       <div class="chart-card">
-        <div class="section-header" style="margin-bottom:16px"><span class="section-title">Resumen de Tickets</span></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:3px;height:18px;background:var(--color-accent);border-radius:2px"></div>
+          <span class="section-title">Resumen de Tickets</span>
+          <div style="flex:1;height:1px;background:#1e1e1e"></div>
+        </div>
         <div class="chart-inner">
           <div class="chart-canvas-wrap"><canvas id="tickets-chart"></canvas></div>
           <div class="chart-legend" id="chart-legend"></div>
@@ -202,9 +253,11 @@
       </div>
 
       <div style="margin-top:24px">
-        <div class="section-header" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:12px;margin:28px 0 16px">
+          <div style="width:3px;height:18px;background:var(--color-accent);border-radius:2px"></div>
           <span class="section-title">Actividad Reciente</span>
-          <button class="btn-secondary" onclick="navigate('tickets')" style="font-size:12px;padding:6px 14px">Ver todos →</button>
+          <div style="flex:1;height:1px;background:#1e1e1e"></div>
+          <button id="dash-ver-todos" onclick="navigate('tickets')">Ver todos →</button>
         </div>
         <div id="dash-tickets-container"></div>
       </div>

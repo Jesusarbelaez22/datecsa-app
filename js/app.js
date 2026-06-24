@@ -241,6 +241,20 @@ async function renderDashboard(){
   } catch(e){ toast('Error cargando dashboard','error'); }
   lucide.createIcons();
   hideLoading();
+
+  // Saludo dinámico
+  const hora = new Date().getHours();
+  const saludo = hora < 12 ? 'Buenos días' : hora < 18 ? 'Buenas tardes' : 'Buenas noches';
+  const usuario = sessionStorage.getItem('dtcUser') || 'Admin';
+  const saludoEl = document.getElementById('dash-saludo');
+  const fechaEl = document.getElementById('dash-fecha');
+  if(saludoEl) saludoEl.textContent = `${saludo}, ${usuario} 👋`;
+  if(fechaEl){
+    const ahora = new Date();
+    fechaEl.textContent = ahora.toLocaleDateString('es-CO', {
+      weekday:'long', year:'numeric', month:'long', day:'numeric'
+    });
+  }
 }
 
 // ─── TICKETS ───
