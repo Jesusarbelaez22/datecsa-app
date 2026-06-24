@@ -1148,31 +1148,40 @@ async function renderNotificaciones(){
     }
 
     cont.innerHTML = `
-      <table style="width:100%;border-collapse:collapse">
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed">
         <thead><tr>
-          <th>FECHA</th>
-          <th>SERIE</th>
-          <th>MODELO</th>
-          <th>SEDE</th>
-          <th>ÁREA</th>
-          <th>O.S DE APROB.</th>
-          <th>ACCIÓN</th>
+          <th style="width:90px">FECHA</th>
+          <th style="width:110px">SERIE</th>
+          <th style="width:130px">MODELO</th>
+          <th style="width:110px">SEDE</th>
+          <th style="width:150px">ÁREA</th>
+          <th style="width:100px">O.S DE APROB.</th>
+          <th style="width:110px">ACCIÓN</th>
         </tr></thead>
         <tbody>
           ${all.map(n => `<tr>
-            <td style="font-size:12px;white-space:nowrap">${fmtDate(n.fecha)}</td>
-            <td style="font-size:12px;font-weight:600">${n.impresora||'–'}</td>
-            <td style="font-size:12px">${n.modelo||'–'}</td>
-            <td style="font-size:12px">${n.ubicacion||'–'}</td>
-            <td style="font-size:12px;max-width:150px;white-space:nowrap;
-                       overflow:hidden;text-overflow:ellipsis">${n.area||'–'}</td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${fmtDate(n.fecha)}
+            </td>
+            <td style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${n.impresora||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${n.modelo||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${n.ubicacion||'–'}
+            </td>
+            <td style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              ${n.area||'–'}
+            </td>
             <td style="font-size:12px">
               ${n.os
-                ? `<span style="color:#ffcc44;font-weight:700">${n.os}</span>`
+                ? `<span style="color:#ffcc44;font-weight:700;white-space:nowrap">${n.os}</span>`
                 : `<span style="color:#888;font-style:italic">Pendiente</span>`
               }
             </td>
-            <td style="white-space:nowrap">
+            <td>
               <div class="action-btns">
                 <button class="btn-view" onclick="verNotif(${n.id})"><i data-lucide="eye"></i> Ver</button>
                 <button class="btn-edit" onclick="editNotif(${n.id})"><i data-lucide="pencil"></i> Editar</button>
