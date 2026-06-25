@@ -104,9 +104,10 @@ function closeModal(id){
   const hayAbiertos = document.querySelectorAll('.modal-overlay.open').length > 0;
   if(!hayAbiertos) document.body.classList.remove('modal-open');
 }
-document.addEventListener('click', e=>{
-  if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
-});
+// DESACTIVADO: No cerrar modal al hacer clic fuera
+// document.addEventListener('click', e=>{
+//   if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+// });
 
 // ─── DATE ───
 function today(){ return new Date().toISOString().split('T')[0]; }
