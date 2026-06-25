@@ -138,7 +138,7 @@ body.collapsed-sidebar #main{margin-left:64px;}
 }
 .btn-logout:hover{border-color:var(--color-accent);color:#ff6666;}
 
-.content{padding:28px;flex:1;}
+.content{padding:20px;flex:1;}
 .page{display:none;}
 .page.active{display:block;animation:fadeInUp .28s ease both;}
 @keyframes fadeInUp{

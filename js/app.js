@@ -577,13 +577,13 @@ async function renderToners(){
     cont.innerHTML = `
 
       <!-- TÍTULO SECCIÓN -->
-      <div style="margin-bottom:24px">
+      <div style="margin-bottom:12px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
           <div style="width:3px;height:24px;background:var(--color-accent);
                       border-radius:2px"></div>
           <i data-lucide="printer" style="width:20px;height:20px;
              color:var(--color-accent)"></i>
-          <h2 style="font-size:18px;font-weight:600;color:#fff;margin:0">
+          <h2 style="font-size:16px;font-weight:600;color:#fff;margin:0">
             Registro de Toner
           </h2>
           <span style="font-size:11px;background:rgba(180,0,0,0.12);
@@ -592,72 +592,72 @@ async function renderToners(){
             Inventario activo
           </span>
         </div>
-        <p style="font-size:12px;color:#555;margin:0 0 0 15px">
+        <p style="font-size:11px;color:#555;margin:0 0 0 15px">
           Resumen de inventario actual — calculado automáticamente
         </p>
       </div>
 
       <!-- MINI CARDS RESUMEN -->
-      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+      <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
 
         <!-- Total Llegada -->
-        <div style="flex:1;min-width:140px;background:#161616;
+        <div style="flex:1;min-width:120px;background:#161616;
                     border:1px solid #222;border-left:3px solid #3B82F6;
-                    border-radius:10px;padding:16px 20px;transition:all .2s">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:32px;height:32px;border-radius:8px;
+                    border-radius:10px;padding:12px 16px;transition:all .2s">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div style="width:28px;height:28px;border-radius:6px;
                         background:rgba(59,130,246,0.12);
                         display:flex;align-items:center;justify-content:center">
-              <i data-lucide="package" style="width:16px;height:16px;color:#3B82F6"></i>
+              <i data-lucide="package" style="width:14px;height:14px;color:#3B82F6"></i>
             </div>
-            <span style="font-size:11px;color:#666;text-transform:uppercase;
+            <span style="font-size:10px;color:#666;text-transform:uppercase;
                          letter-spacing:.5px">Total Llegada</span>
           </div>
-          <div style="font-size:28px;font-weight:700;color:#3B82F6;line-height:1">
+          <div style="font-size:22px;font-weight:700;color:#3B82F6;line-height:1">
             ${totalLlegada}
           </div>
-          <div style="font-size:11px;color:#444;margin-top:4px">unidades recibidas</div>
+          <div style="font-size:10px;color:#444;margin-top:2px">unidades recibidas</div>
         </div>
 
         <!-- Total Instalados -->
-        <div style="flex:1;min-width:140px;background:#161616;
+        <div style="flex:1;min-width:120px;background:#161616;
                     border:1px solid #222;border-left:3px solid #F59E0B;
-                    border-radius:10px;padding:16px 20px;transition:all .2s">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:32px;height:32px;border-radius:8px;
+                    border-radius:10px;padding:12px 16px;transition:all .2s">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div style="width:28px;height:28px;border-radius:6px;
                         background:rgba(245,158,11,0.12);
                         display:flex;align-items:center;justify-content:center">
-              <i data-lucide="check-circle" style="width:16px;height:16px;color:#F59E0B"></i>
+              <i data-lucide="check-circle" style="width:14px;height:14px;color:#F59E0B"></i>
             </div>
-            <span style="font-size:11px;color:#666;text-transform:uppercase;
+            <span style="font-size:10px;color:#666;text-transform:uppercase;
                          letter-spacing:.5px">Total Instalados</span>
           </div>
-          <div style="font-size:28px;font-weight:700;color:#F59E0B;line-height:1">
+          <div style="font-size:22px;font-weight:700;color:#F59E0B;line-height:1">
             ${totalInst}
           </div>
-          <div style="font-size:11px;color:#444;margin-top:4px">unidades instaladas</div>
+          <div style="font-size:10px;color:#444;margin-top:2px">unidades instaladas</div>
         </div>
 
         <!-- Disponibles -->
-        <div style="flex:1;min-width:140px;background:#161616;
+        <div style="flex:1;min-width:120px;background:#161616;
                     border:1px solid #222;
                     border-left:3px solid ${totalDisp <= 10 ? '#EF4444' : '#10B981'};
-                    border-radius:10px;padding:16px 20px;transition:all .2s">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:32px;height:32px;border-radius:8px;
+                    border-radius:10px;padding:12px 16px;transition:all .2s">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div style="width:28px;height:28px;border-radius:6px;
                         background:${totalDisp <= 10 ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)'};
                         display:flex;align-items:center;justify-content:center">
-              <i data-lucide="archive" style="width:16px;height:16px;
+              <i data-lucide="archive" style="width:14px;height:14px;
                  color:${totalDisp <= 10 ? '#EF4444' : '#10B981'}"></i>
             </div>
-            <span style="font-size:11px;color:#666;text-transform:uppercase;
+            <span style="font-size:10px;color:#666;text-transform:uppercase;
                          letter-spacing:.5px">Disponibles</span>
           </div>
-          <div style="font-size:28px;font-weight:700;
+          <div style="font-size:22px;font-weight:700;
                       color:${totalDisp <= 10 ? '#EF4444' : '#10B981'};line-height:1">
             ${totalDisp}
           </div>
-          <div style="font-size:11px;color:#444;margin-top:4px">
+          <div style="font-size:10px;color:#444;margin-top:2px">
             ${totalDisp <= 10 ? '⚠ Stock bajo' : 'unidades disponibles'}
           </div>
         </div>
@@ -671,16 +671,16 @@ async function renderToners(){
         <table style="width:100%;border-collapse:collapse">
           <thead>
             <tr style="background:#111111">
-              <th style="padding:14px 20px;text-align:left;font-size:11px;font-weight:600;
+              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;
                          color:#666;letter-spacing:1px;text-transform:uppercase;
                          border-bottom:1px solid rgba(255,255,255,0.06)">TONER</th>
-              <th style="padding:14px 20px;text-align:center;font-size:11px;font-weight:600;
+              <th style="padding:10px 16px;text-align:center;font-size:10px;font-weight:600;
                          color:#3B82F6;letter-spacing:1px;text-transform:uppercase;
                          border-bottom:1px solid rgba(255,255,255,0.06)">LLEGADA</th>
-              <th style="padding:14px 20px;text-align:center;font-size:11px;font-weight:600;
+              <th style="padding:10px 16px;text-align:center;font-size:10px;font-weight:600;
                          color:#F59E0B;letter-spacing:1px;text-transform:uppercase;
                          border-bottom:1px solid rgba(255,255,255,0.06)">INSTALADOS</th>
-              <th style="padding:14px 20px;text-align:center;font-size:11px;font-weight:600;
+              <th style="padding:10px 16px;text-align:center;font-size:10px;font-weight:600;
                          color:#10B981;letter-spacing:1px;text-transform:uppercase;
                          border-bottom:1px solid rgba(255,255,255,0.06)">DISPONIBLES</th>
             </tr>
@@ -697,9 +697,9 @@ async function renderToners(){
                   ? 'rgba(245,158,11,0.1)'
                   : 'rgba(16,185,129,0.1)';
               const stockBajo = f.disp <= 3 ? `
-                <span style="font-size:10px;background:rgba(239,68,68,0.15);
+                <span style="font-size:9px;background:rgba(239,68,68,0.15);
                              color:#EF4444;border:1px solid rgba(239,68,68,0.3);
-                             border-radius:4px;padding:1px 6px;margin-left:8px;font-weight:600">
+                             border-radius:4px;padding:1px 5px;margin-left:8px;font-weight:600">
                   <i data-lucide="alert-triangle" style="width:10px;height:10px;
                      vertical-align:middle"></i> Stock Bajo
                 </span>` : '';
@@ -707,32 +707,32 @@ async function renderToners(){
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.06);transition:background .15s"
                     onmouseover="this.style.background='rgba(255,255,255,0.04)'"
                     onmouseout="this.style.background='transparent'">
-                  <td style="padding:16px 20px">
+                  <td style="padding:10px 16px">
                     <div style="display:flex;align-items:center;gap:10px">
                       <span style="display:inline-block;background:#222;color:#fff;
-                                   font-weight:700;font-size:13px;padding:4px 12px;
+                                   font-weight:700;font-size:12px;padding:3px 10px;
                                    border-radius:6px;letter-spacing:.5px">${f.ref}</span>
                       ${stockBajo}
                     </div>
                   </td>
-                  <td style="padding:16px 20px;text-align:center">
+                  <td style="padding:10px 16px;text-align:center">
                     <span style="display:inline-block;background:rgba(59,130,246,0.1);
-                                 color:#3B82F6;font-weight:700;font-size:16px;
-                                 padding:4px 16px;border-radius:8px;min-width:50px">
+                                 color:#3B82F6;font-weight:700;font-size:13px;
+                                 padding:3px 10px;border-radius:8px;min-width:40px">
                       ${f.llegada}
                     </span>
                   </td>
-                  <td style="padding:16px 20px;text-align:center">
+                  <td style="padding:10px 16px;text-align:center">
                     <span style="display:inline-block;background:rgba(245,158,11,0.1);
-                                 color:#F59E0B;font-weight:700;font-size:16px;
-                                 padding:4px 16px;border-radius:8px;min-width:50px">
+                                 color:#F59E0B;font-weight:700;font-size:13px;
+                                 padding:3px 10px;border-radius:8px;min-width:40px">
                       ${f.instCount}
                     </span>
                   </td>
-                  <td style="padding:16px 20px;text-align:center">
+                  <td style="padding:10px 16px;text-align:center">
                     <span style="display:inline-block;background:${bgDisp};
-                                 color:${colorDisp};font-weight:700;font-size:16px;
-                                 padding:4px 16px;border-radius:8px;min-width:50px">
+                                 color:${colorDisp};font-weight:700;font-size:13px;
+                                 padding:3px 10px;border-radius:8px;min-width:40px">
                       ${f.disp}
                     </span>
                   </td>
@@ -741,22 +741,22 @@ async function renderToners(){
           </tbody>
           <tfoot>
             <tr style="background:rgba(255,255,255,0.06)">
-              <td style="padding:16px 20px">
-                <span style="font-size:13px;font-weight:700;color:var(--color-accent);
+              <td style="padding:10px 16px">
+                <span style="font-size:12px;font-weight:700;color:var(--color-accent);
                              text-transform:uppercase;letter-spacing:.5px">
                   <i data-lucide="sigma" style="width:14px;height:14px;
                      vertical-align:middle;margin-right:4px"></i>
                   TOTAL
                 </span>
               </td>
-              <td style="padding:16px 20px;text-align:center">
-                <span style="font-size:18px;font-weight:700;color:#fff">${totalLlegada}</span>
+              <td style="padding:10px 16px;text-align:center">
+                <span style="font-size:15px;font-weight:700;color:#fff">${totalLlegada}</span>
               </td>
-              <td style="padding:16px 20px;text-align:center">
-                <span style="font-size:18px;font-weight:700;color:#fff">${totalInst}</span>
+              <td style="padding:10px 16px;text-align:center">
+                <span style="font-size:15px;font-weight:700;color:#fff">${totalInst}</span>
               </td>
-              <td style="padding:16px 20px;text-align:center">
-                <span style="font-size:18px;font-weight:700;
+              <td style="padding:10px 16px;text-align:center">
+                <span style="font-size:15px;font-weight:700;
                              color:${totalDisp <= 10 ? '#EF4444' : '#10B981'}">
                   ${totalDisp}
                 </span>
