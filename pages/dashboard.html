@@ -1449,12 +1449,17 @@
       <div class="form-group span2">
         <label>Nombre de Usuario *</label>
         <input type="text" id="usuario-nombre"
-               placeholder="Nombre completo del usuario"/>
+               placeholder="Nombre completo del usuario"
+               oninput="
+                 const u = document.getElementById('usuario-usuario');
+                 if(u && !u.dataset.editado) u.value = this.value;
+               "/>
       </div>
       <div class="form-group">
         <label>Usuario *</label>
         <input type="text" id="usuario-usuario"
-               placeholder="Ej: aarcos"/>
+               placeholder="Se llena automáticamente con el nombre"
+               oninput="this.dataset.editado = this.value ? 'true' : ''"/>
       </div>
       <div class="form-group">
         <label>Código PIN *</label>

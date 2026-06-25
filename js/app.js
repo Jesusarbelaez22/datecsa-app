@@ -2046,6 +2046,8 @@ function openNewUsuario(){
   document.getElementById('usuario-nombre').value = '';
   document.getElementById('usuario-usuario').value = '';
   document.getElementById('usuario-codigo').value = '';
+  const uField = document.getElementById('usuario-usuario');
+  if(uField) uField.dataset.editado = '';
   document.getElementById('usuario-modal-title').textContent = 'Agregar Usuario';
   openModal('modal-usuario');
 }
