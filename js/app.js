@@ -538,30 +538,31 @@ async function renderToners(){
   showLoading();
   try {
     const REFS = ['TK-3182','TK-3162','TK-3432','TK-3462'];
-    function normRef(r){ return (r||'').toUpperCase().replace(/[\s\-]/g,''); }
+    function normRef(r){ return (r||'').toUpperCase().replace(/[\s\-\_]/g,''); }
 
-    const [{data:ent},{data:inst}] = await Promise.all([
-      sb.from('entradas_toner').select('referencia,cantidad').limit(10000),
+    const [{data:ent, error:errEnt},{data:inst, error:errInst}] = await Promise.all([
+      sb.from('entradas_toner').select('referencia').limit(10000),
       sb.from('toners_instalados').select('referencia').limit(10000)
     ]);
+
+    if(errEnt)  console.error('[Toners] Error entradas:', errEnt);
+    if(errInst) console.error('[Toners] Error instalados:', errInst);
+
+    console.log('[Toners] entradas:', (ent||[]).length, 'instalados:', (inst||[]).length);
+    if(ent  && ent.length  > 0) console.log('[Toners] Muestra entrada:',    JSON.stringify(ent[0]));
+    if(inst && inst.length > 0) console.log('[Toners] Muestra instalado:', JSON.stringify(inst[0]));
 
     const entradas   = ent  || [];
     const instalados = inst || [];
 
+    // Cada fila de entradas_toner = 1 toner recibido (no existe columna cantidad)
+    // Cada fila de toners_instalados = 1 toner instalado
     const filas = REFS.map(ref => {
-      const llegada  = entradas
-        .filter(e => normRef(e.referencia) === normRef(ref))
-        .reduce((s,e) => s + (parseInt(e.cantidad)||1), 0);
-      const instCount = instalados
-        .filter(i => normRef(i.referencia) === normRef(ref)).length;
+      const llegada   = entradas .filter(e => normRef(e.referencia) === normRef(ref)).length;
+      const instCount = instalados.filter(i => normRef(i.referencia) === normRef(ref)).length;
       const disp = Math.max(0, llegada - instCount);
+      console.log(`[Toners] ${ref}: llegada=${llegada} inst=${instCount} disp=${disp}`);
       return { ref, llegada, instCount, disp };
-    });
-
-    console.log('[Toners] entradas total:', (ent||[]).length);
-    console.log('[Toners] instalados total:', (inst||[]).length);
-    filas.forEach(f => {
-      console.log(`[Toners] ${f.ref}: llegada=${f.llegada} inst=${f.instCount} disp=${f.disp}`);
     });
 
     const totalLlegada = filas.reduce((s,f) => s + f.llegada,   0);
