@@ -1858,10 +1858,18 @@ async function autocompletarPorSerie(serie, campos){
 let _confirmCallback = null;
 
 function showConfirm({ titulo, mensaje, icono='<i data-lucide="trash-2"></i>', tipo='danger', textoSi='Sí, eliminar', textoNo='No, cancelar', callback }){
-  document.getElementById('confirm-title').textContent   = titulo   || '¿Confirmar acción?';
-  document.getElementById('confirm-msg').textContent     = mensaje  || '¿Deseas continuar?';
-  document.getElementById('confirm-icon').innerHTML      = icono;
-  document.getElementById('confirm-icon').className      = `confirm-icon ${tipo}`;
+  document.getElementById('confirm-title').textContent = titulo  || '¿Confirmar acción?';
+  document.getElementById('confirm-msg').innerHTML      = mensaje || '¿Deseas continuar?';
+  const iconEl = document.getElementById('confirm-icon');
+  if(icono && icono.toString().trim().startsWith('<')){
+    iconEl.innerHTML = icono;
+    iconEl.style.background = 'none';
+    iconEl.style.width = 'auto';
+    iconEl.style.height = 'auto';
+  } else {
+    iconEl.innerHTML = icono;
+  }
+  iconEl.className = `confirm-icon ${tipo}`;
   document.getElementById('confirm-btn-yes').textContent = textoSi;
   document.getElementById('confirm-btn-yes').className   = `confirm-btn-yes ${tipo}`;
   document.getElementById('confirm-btn-no').textContent  = textoNo;
@@ -2098,11 +2106,28 @@ async function saveUsuario(){
 }
 
 async function deleteUsuario(id){
+  const {data} = await sb.from('usuarios').select('nombre').eq('id',id).single();
+  const nombreUsuario = data?.nombre || 'este usuario';
+
   showConfirm({
     titulo: '¿Eliminar usuario?',
-    mensaje: 'Este usuario será eliminado permanentemente.',
-    icono: 'user-x', tipo: 'danger',
-    textoSi: 'Sí, eliminar', textoNo: 'Cancelar',
+    mensaje: `Se eliminará permanentemente a <strong style="color:#fff">${nombreUsuario}</strong>. Esta acción no se puede deshacer.`,
+    icono: `<div style="
+      width:64px;height:64px;border-radius:50%;
+      background:linear-gradient(135deg,#7f1d1d,#991b1b);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 4px;
+      box-shadow:0 4px 16px rgba(180,0,0,0.4)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+           viewBox="0 0 24 24" fill="white">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2
+                 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4
+                 c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </div>`,
+    tipo: 'danger',
+    textoSi: 'Sí, eliminar',
+    textoNo: 'Cancelar',
     callback: async(ok) => {
       if(!ok) return;
       showLoading();
