@@ -95,8 +95,15 @@ function toast(msg, type='success'){
 }
 
 // ─── MODAL ───
-function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.classList.add('modal-open');
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  const hayAbiertos = document.querySelectorAll('.modal-overlay.open').length > 0;
+  if(!hayAbiertos) document.body.classList.remove('modal-open');
+}
 document.addEventListener('click', e=>{
   if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
 });
