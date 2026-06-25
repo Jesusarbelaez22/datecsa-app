@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>DATECSA – Sistema de Gestión</title>
   <link rel="icon" href="../assets/favicon.png" type="image/png"/>
   <link rel="shortcut icon" href="../assets/favicon.png"/>
@@ -151,9 +151,14 @@
   </div>
 </nav>
 
+<div id="sidebar-overlay" onclick="closeMobileMenu()"></div>
+
 <!-- ─── TOPBAR ─── -->
 <div id="main">
   <header class="topbar">
+    <button id="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i data-lucide="menu" style="width:18px;height:18px"></i>
+    </button>
     <img src="../assets/favicon.png" id="topbar-logo" style="height:32px;width:32px;object-fit:contain;display:none;margin-right:8px;order:-1;" alt="DATECSA"/>
     <span class="topbar-title" id="topbar-title">Inicio</span>
     <span class="topbar-badge">Soporte de Impresión</span>

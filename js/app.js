@@ -94,6 +94,35 @@ function toast(msg, type='success'){
   setTimeout(()=>t.remove(), 3500);
 }
 
+// ─── MENÚ MÓVIL ───
+function toggleMobileMenu(){
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const isOpen  = sidebar.classList.contains('mobile-open');
+  if(isOpen){
+    closeMobileMenu();
+  } else {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeMobileMenu(){
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.remove('mobile-open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function(e){
+  const navItem = e.target.closest('.nav-item');
+  if(navItem && window.innerWidth <= 768){
+    closeMobileMenu();
+  }
+});
+
 // ─── MODAL ───
 function openModal(id){
   document.getElementById(id).classList.add('open');

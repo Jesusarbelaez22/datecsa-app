@@ -148,3 +148,24 @@ h2::after{
 .btn-login:active{transform:scale(.98);}
 
 .version{text-align:center;color:#2a2a2a;font-size:11px;margin-top:28px;}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 20px;
+    margin: 16px;
+    border-radius: 16px;
+  }
+
+  .login-logo img {
+    width: 180px;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+
+  .btn-login {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
