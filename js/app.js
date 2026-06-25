@@ -541,8 +541,8 @@ async function renderToners(){
     function normRef(r){ return (r||'').toUpperCase().replace(/[\s\-]/g,''); }
 
     const [{data:ent},{data:inst}] = await Promise.all([
-      sb.from('entradas_toner').select('referencia,cantidad'),
-      sb.from('toners_instalados').select('referencia')
+      sb.from('entradas_toner').select('referencia,cantidad').limit(10000),
+      sb.from('toners_instalados').select('referencia').limit(10000)
     ]);
 
     const entradas   = ent  || [];
@@ -556,6 +556,12 @@ async function renderToners(){
         .filter(i => normRef(i.referencia) === normRef(ref)).length;
       const disp = Math.max(0, llegada - instCount);
       return { ref, llegada, instCount, disp };
+    });
+
+    console.log('[Toners] entradas total:', (ent||[]).length);
+    console.log('[Toners] instalados total:', (inst||[]).length);
+    filas.forEach(f => {
+      console.log(`[Toners] ${f.ref}: llegada=${f.llegada} inst=${f.instCount} disp=${f.disp}`);
     });
 
     const totalLlegada = filas.reduce((s,f) => s + f.llegada,   0);
