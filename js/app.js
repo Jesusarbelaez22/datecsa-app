@@ -47,6 +47,55 @@ function loadTheme(){
   applyTheme(saved);
 }
 
+// ─── LIGHT / DARK TOGGLE ───
+function toggleTheme(){
+  if(document.body.classList.contains('light-theme')){
+    applyDarkTheme();
+  } else {
+    applyLightTheme();
+  }
+}
+
+function applyLightTheme(){
+  document.body.classList.add('light-theme');
+  localStorage.setItem('datecsa-theme', 'light');
+  updateThemeToggleUI(true);
+  lucide.createIcons();
+}
+
+function applyDarkTheme(){
+  document.body.classList.remove('light-theme');
+  localStorage.setItem('datecsa-theme', 'dark');
+  updateThemeToggleUI(false);
+  lucide.createIcons();
+}
+
+function updateThemeToggleUI(isLight){
+  const sun   = document.getElementById('theme-icon-sun');
+  const moon  = document.getElementById('theme-icon-moon');
+  const label = document.getElementById('theme-toggle-label');
+  const btn   = document.getElementById('theme-toggle-btn');
+  if(isLight){
+    if(sun)   sun.style.display  = 'block';
+    if(moon)  moon.style.display = 'none';
+    if(label) label.textContent  = 'Oscuro';
+    if(btn){  btn.style.borderColor='#D1D5DB'; btn.style.color='#374151'; btn.style.background='#F3F4F6'; }
+  } else {
+    if(sun)   sun.style.display  = 'none';
+    if(moon)  moon.style.display = 'block';
+    if(label) label.textContent  = 'Claro';
+    if(btn){  btn.style.borderColor='#2a2a2a'; btn.style.color='#888'; btn.style.background='none'; }
+  }
+}
+
+function initTheme(){
+  if(localStorage.getItem('datecsa-theme') === 'light'){
+    applyLightTheme();
+  } else {
+    applyDarkTheme();
+  }
+}
+
 // ─── NAVIGATION ───
 function navigate(page){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -2384,6 +2433,7 @@ async function deleteUsuario(id){
 // ─── INIT ───
 document.addEventListener('DOMContentLoaded', () => {
   loadTheme();
+  initTheme();
   lucide.createIcons();
 
   const sidebar = document.getElementById('sidebar');

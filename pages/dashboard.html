@@ -162,6 +162,15 @@
     <img src="../assets/favicon.png" id="topbar-logo" style="height:32px;width:32px;object-fit:contain;display:none;margin-right:8px;order:-1;" alt="DATECSA"/>
     <span class="topbar-title" id="topbar-title">Inicio</span>
     <span class="topbar-badge">Soporte de Impresión</span>
+    <button id="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar tema"
+      style="background:none;border:1px solid var(--border-color,#2a2a2a);border-radius:20px;
+             padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;
+             font-size:12px;font-family:'Inter',sans-serif;transition:all .2s;
+             color:var(--text-secondary,#888);">
+      <i data-lucide="sun"  id="theme-icon-sun"  style="width:14px;height:14px;display:none"></i>
+      <i data-lucide="moon" id="theme-icon-moon" style="width:14px;height:14px"></i>
+      <span id="theme-toggle-label">Claro</span>
+    </button>
     <div class="topbar-user">
       <div class="avatar">A</div>
       <span id="topbar-user">Admin</span>
