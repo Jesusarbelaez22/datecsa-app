@@ -1781,3 +1781,134 @@ body.light-theme ::-webkit-scrollbar-thumb {
 body.light-theme ::-webkit-scrollbar-thumb:hover {
   background: #9CA3AF;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - DASHBOARD INICIO
+   Resumen de Tickets + Actividad Reciente
+   ═══════════════════════════════════════ */
+
+/* ── CUADRO RESUMEN DE TICKETS (gráfico dona) ── */
+body.light-theme #page-dashboard > div,
+body.light-theme [id="page-dashboard"] > div {
+  color: #111827;
+}
+
+body.light-theme canvas {
+  filter: none;
+}
+
+body.light-theme #page-dashboard div[style*="background:#161616"],
+body.light-theme #page-dashboard div[style*="background: #161616"],
+body.light-theme #page-dashboard div[style*="background:#1a1a1a"],
+body.light-theme #page-dashboard div[style*="background: #1a1a1a"],
+body.light-theme #page-dashboard div[style*="background:#111"],
+body.light-theme #page-dashboard div[style*="background: #111"] {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme #page-dashboard div[style*="background:#161616"] *,
+body.light-theme #page-dashboard div[style*="background:#1a1a1a"] *,
+body.light-theme #page-dashboard div[style*="background:#111"] * {
+  color: #111827 !important;
+}
+
+body.light-theme #page-dashboard span[style*="color:#"],
+body.light-theme #page-dashboard p[style*="color:#"] {
+  color: #374151 !important;
+}
+
+body.light-theme #page-dashboard strong {
+  color: #111827 !important;
+}
+
+body.light-theme #page-dashboard .section-title {
+  color: #111827 !important;
+}
+
+/* ── ACTIVIDAD RECIENTE ── */
+
+body.light-theme #dash-tickets-container > div {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+}
+
+body.light-theme #dash-tickets-container > div:hover {
+  background: #F9FAFB !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+body.light-theme #dash-tickets-container div[style*="color:#fff"],
+body.light-theme #dash-tickets-container div[style*="color: #fff"],
+body.light-theme #dash-tickets-container span[style*="color:#fff"],
+body.light-theme #dash-tickets-container span[style*="color: #fff"] {
+  color: #111827 !important;
+}
+
+body.light-theme #dash-tickets-container div[style*="color:#777"],
+body.light-theme #dash-tickets-container div[style*="color:#666"],
+body.light-theme #dash-tickets-container div[style*="color:#555"],
+body.light-theme #dash-tickets-container span[style*="color:#777"],
+body.light-theme #dash-tickets-container span[style*="color:#666"],
+body.light-theme #dash-tickets-container span[style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+body.light-theme #dash-tickets-container [style*="font-weight:600"],
+body.light-theme #dash-tickets-container [style*="font-weight: 600"] {
+  color: #111827 !important;
+}
+
+body.light-theme #dash-tickets-container [style*="font-size:11px"] {
+  color: #6B7280 !important;
+}
+
+body.light-theme #dash-tickets-container [style*="color:#666;font-size:11px"] {
+  color: #9CA3AF !important;
+}
+
+body.light-theme #dash-tickets-container > div + div {
+  border-top: 1px solid #F3F4F6 !important;
+}
+
+/* ── BOTÓN "VER TODOS" ── */
+body.light-theme #dash-ver-todos {
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+  background: transparent !important;
+}
+
+body.light-theme #dash-ver-todos:hover {
+  border-color: #b40000 !important;
+  color: #b40000 !important;
+  background: #FEF2F2 !important;
+}
+
+/* ── SEPARADORES DE SECCIÓN ── */
+body.light-theme #page-dashboard div[style*="height:1px"][style*="background:#1e1e1e"],
+body.light-theme #page-dashboard div[style*="height:1px"][style*="background: #1e1e1e"] {
+  background: #E5E7EB !important;
+}
+
+/* ── TEXTO DEL SALUDO ── */
+body.light-theme #dash-saludo {
+  color: #111827 !important;
+}
+
+body.light-theme #dash-fecha {
+  color: #6B7280 !important;
+}
+
+/* ── CONTENEDOR GRÁFICO DONA ── */
+body.light-theme #tickets-chart-container,
+body.light-theme [id*="chart"] {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-dashboard [style*="display:flex"][style*="gap"] span,
+body.light-theme #page-dashboard [style*="display:flex"][style*="gap"] div {
+  color: #374151 !important;
+}
