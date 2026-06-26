@@ -60,6 +60,7 @@ function applyLightTheme(){
   document.body.classList.add('light-theme');
   localStorage.setItem('datecsa-theme', 'light');
   updateThemeToggleUI(true);
+  updateHeroGradient();
   lucide.createIcons();
   if(window.ticketsChart){
     window.ticketsChart.options.plugins.legend.labels.color = '#374151';
@@ -72,6 +73,7 @@ function applyDarkTheme(){
   document.body.classList.remove('light-theme');
   localStorage.setItem('datecsa-theme', 'dark');
   updateThemeToggleUI(false);
+  updateHeroGradient();
   lucide.createIcons();
   if(window.ticketsChart){
     window.ticketsChart.options.plugins.legend.labels.color = '#e0e0e0';
@@ -1810,7 +1812,18 @@ function renderCliente(){
   }
   const extEl=document.getElementById('cliente-extension');
   if(extEl) extEl.innerHTML='<i data-lucide="phone"></i> '+(cfg.extension||'6725');
+  updateHeroGradient();
   lucide.createIcons();
+}
+
+function updateHeroGradient(){
+  const isLight = document.body.classList.contains('light-theme');
+  const gradient = document.querySelector('.hero-gradient');
+  if(gradient){
+    gradient.style.background = isLight
+      ? 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(244,245,247,1))'
+      : 'linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(13,13,13,1))';
+  }
 }
 
 // ─── CIERRE ───
