@@ -1981,3 +1981,45 @@ body.light-theme .chart-legend-item {
 body.light-theme .chart-legend-val {
   color: #111827 !important;
 }
+
+/* ── FIX ESPECÍFICO: Cuadro Resumen de Tickets ── */
+
+body.light-theme #resumen-tickets-box {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme #resumen-tickets-box * {
+  color: #374151 !important;
+}
+
+body.light-theme #resumen-tickets-box h2,
+body.light-theme #resumen-tickets-box h3,
+body.light-theme #resumen-tickets-box strong {
+  color: #111827 !important;
+}
+
+body.light-theme #resumen-tickets-box canvas {
+  background: transparent !important;
+}
+
+body.light-theme #resumen-tickets-box [style*="background:#0066cc"],
+body.light-theme #resumen-tickets-box [style*="background:#cc8800"],
+body.light-theme #resumen-tickets-box [style*="background:#00a854"],
+body.light-theme #resumen-tickets-box [style*="width:12px"] {
+  color: transparent !important;
+}
+
+body.light-theme #resumen-tickets-box [style*="border"],
+body.light-theme #resumen-tickets-box [style*="border-top"],
+body.light-theme #resumen-tickets-box [style*="border-bottom"] {
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #resumen-tickets-box [style*="font-size:24px"],
+body.light-theme #resumen-tickets-box [style*="font-size:20px"],
+body.light-theme #resumen-tickets-box [style*="font-weight:700"] {
+  color: #111827 !important;
+}
