@@ -1289,8 +1289,8 @@ body.light-theme {
 
 /* SIDEBAR */
 body.light-theme #sidebar {
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-color);
+  background: #F3F4F6;
+  border-right: 1px solid #E5E7EB;
   box-shadow: 2px 0 8px rgba(0,0,0,0.06);
 }
 body.light-theme .nav-label { color: var(--text-muted); }
