@@ -1060,3 +1060,190 @@ body.modal-open {
     display: none !important;
   }
 }
+
+/* ═══════════════════════════════════
+   TEMA MODO CLARO
+   ═══════════════════════════════════ */
+body.tema-claro {
+  --color-accent:       #b40000;
+  --color-accent-dark:  #8a0000;
+  --color-bg:           #f0f2f5;
+  --color-sidebar:      #ffffff;
+  --color-card:         #ffffff;
+  --color-border:       #e0e0e0;
+  --color-text:         #111111;
+  --color-text-muted:   #555555;
+}
+body.tema-claro #sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+}
+body.tema-claro .nav-item {
+  color: #444;
+}
+body.tema-claro .nav-item:hover {
+  background: #f5f5f5;
+  color: #111;
+}
+body.tema-claro .nav-item.active {
+  background: rgba(180,0,0,0.08);
+  color: #b40000;
+}
+body.tema-claro .nav-label {
+  color: #999;
+}
+body.tema-claro .sidebar-footer {
+  color: #aaa;
+  border-top: 1px solid #e0e0e0;
+}
+body.tema-claro .topbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+body.tema-claro .topbar-title {
+  color: #111;
+}
+body.tema-claro .topbar-user {
+  color: #444;
+}
+body.tema-claro .btn-logout {
+  border-color: #ddd;
+  color: #555;
+}
+body.tema-claro .btn-logout:hover {
+  border-color: #b40000;
+  color: #b40000;
+}
+body.tema-claro .content {
+  background: #f0f2f5;
+}
+body.tema-claro .stat-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+body.tema-claro .stat-label {
+  color: #777;
+}
+body.tema-claro .table-wrap {
+  background: #ffffff;
+  border-color: #e0e0e0;
+}
+body.tema-claro table th {
+  background: #f8f8f8;
+  color: #555;
+  border-bottom: 1px solid #e0e0e0;
+}
+body.tema-claro table td {
+  color: #222;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.tema-claro table tr:hover td {
+  background: #f9f9f9;
+}
+body.tema-claro .section-title {
+  color: #111;
+}
+body.tema-claro .modal {
+  background: #ffffff;
+  border-color: #ddd;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+body.tema-claro .modal-title {
+  color: #111;
+}
+body.tema-claro .modal-close {
+  color: #888;
+}
+body.tema-claro .modal-close:hover {
+  color: #111;
+}
+body.tema-claro .form-group label {
+  color: #555;
+}
+body.tema-claro .form-group input,
+body.tema-claro .form-group select,
+body.tema-claro .form-group textarea {
+  background: #f8f8f8;
+  border-color: #ddd;
+  color: #111;
+}
+body.tema-claro .form-group input:focus,
+body.tema-claro .form-group select:focus,
+body.tema-claro .form-group textarea:focus {
+  border-color: #b40000;
+  background: #fff;
+}
+body.tema-claro .form-group input::placeholder,
+body.tema-claro .form-group textarea::placeholder {
+  color: #aaa;
+}
+body.tema-claro .btn-secondary {
+  background: #f0f0f0;
+  border-color: #ddd;
+  color: #444;
+}
+body.tema-claro .btn-secondary:hover {
+  background: #e5e5e5;
+  color: #111;
+}
+body.tema-claro .modal-footer {
+  border-top: 1px solid #eee;
+}
+body.tema-claro .table-toolbar {
+  border-bottom: 1px solid #eee;
+}
+body.tema-claro .search-input {
+  background: #f8f8f8;
+  border-color: #ddd;
+  color: #111;
+}
+body.tema-claro .search-input::placeholder {
+  color: #aaa;
+}
+body.tema-claro select.filter-select {
+  background: #f8f8f8;
+  border-color: #ddd;
+  color: #444;
+}
+body.tema-claro .notif-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+}
+body.tema-claro .notif-body .title {
+  color: #111;
+}
+body.tema-claro .notif-body .sub {
+  color: #777;
+}
+body.tema-claro .empty-state {
+  color: #bbb;
+}
+body.tema-claro .badge-low {
+  background: #f0f0f0;
+  color: #666;
+  border-color: #ddd;
+}
+body.tema-claro #loading-bar {
+  background: linear-gradient(90deg, #b40000, #ff4444, #b40000);
+}
+body.tema-claro .confirm-box {
+  background: #ffffff;
+  border-color: #ddd;
+}
+body.tema-claro .confirm-title {
+  color: #111;
+}
+body.tema-claro .confirm-msg {
+  color: #666;
+}
+body.tema-claro .confirm-btn-no {
+  background: #f0f0f0;
+  border-color: #ddd;
+  color: #444;
+}
+body.tema-claro .topbar-badge {
+  background: rgba(180,0,0,0.08);
+  color: #b40000;
+  border-color: rgba(180,0,0,0.2);
+}

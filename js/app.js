@@ -37,11 +37,14 @@ function applyTheme(themeId){
   r.setProperty('--color-card',       t.card);
   r.setProperty('--color-text',       t.text);
   r.setProperty('--color-text-muted', t.textMuted);
+  document.body.classList.remove('tema-claro');
+  if(themeId === 'claro') document.body.classList.add('tema-claro');
   localStorage.setItem('dtc_tema', themeId);
 }
 
 function loadTheme(){
-  applyTheme(localStorage.getItem('dtc_tema') || 'rojo');
+  const saved = localStorage.getItem('dtc_tema') || 'rojo';
+  applyTheme(saved);
 }
 
 // ─── NAVIGATION ───
@@ -1673,13 +1676,21 @@ async function renderConfiguracion(){
   const currentTheme = localStorage.getItem('dtc_tema')||'rojo';
   const grid=document.getElementById('theme-grid');
   if(grid){
-    grid.innerHTML=THEMES.map(t=>`
+    grid.innerHTML=THEMES.map(t=>{
+      const isClaro = t.id === 'claro';
+      const circle = isClaro
+        ? `<div style="width:48px;height:48px;border-radius:50%;background:#ffffff;border:2px solid #e0e0e0;display:flex;align-items:center;justify-content:center">
+             ${currentTheme===t.id?'<span class="theme-check" style="color:#b40000">✓</span>':'<div style="width:16px;height:16px;border-radius:50%;background:#b40000"></div>'}
+           </div>`
+        : `<div class="theme-circle" style="background:${t.accent}">
+             ${currentTheme===t.id?'<span class="theme-check">✓</span>':''}
+           </div>`;
+      return `
       <div class="theme-card${currentTheme===t.id?' active':''}" onclick="applyTheme('${t.id}');renderConfiguracion()">
-        <div class="theme-circle" style="background:${t.accent}">
-          ${currentTheme===t.id?'<span class="theme-check">✓</span>':''}
-        </div>
+        ${circle}
         <span class="theme-name">${t.name}</span>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
   const cfg=getClienteConfig();
   [['cfg-cliente',cfg.cliente],['cfg-contrato',cfg.contrato],['cfg-impresoras',cfg.impresoras],
