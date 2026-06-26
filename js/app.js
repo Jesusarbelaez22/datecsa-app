@@ -308,35 +308,35 @@ async function renderDashboard(){
     const cont = document.getElementById('dash-tickets-container');
     const recent = recentData||[];
     if(!recent.length){
-      cont.innerHTML = `<div style="text-align:center;padding:32px;color:#444;background:#161616;border:1px solid #222;border-radius:10px">
-        <i data-lucide="ticket" style="width:32px;height:32px;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;color:#444"></i>
+      cont.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-muted);background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px">
+        <i data-lucide="ticket" style="width:32px;height:32px;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;color:var(--text-muted)"></i>
         <p style="font-size:13px">Sin actividad reciente</p>
       </div>`;
     } else {
       cont.innerHTML = recent.map(t=>{
         const borderColor = t.estado==='Abierto'?'#0066cc':t.estado==='En Progreso'?'#cc8800':'#00a854';
-        return `<div style="background:#161616;border:1px solid #1e1e1e;border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;border-left:3px solid ${borderColor};transition:all .15s;cursor:pointer;"
-          onmouseover="this.style.borderColor='var(--color-accent)';this.style.background='#1a1a1a'"
-          onmouseout="this.style.borderColor='${borderColor}';this.style.background='#161616'"
+        return `<div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;border-left:3px solid ${borderColor};transition:all .15s;cursor:pointer;"
+          onmouseover="this.style.borderColor='var(--color-accent)';this.style.background=getComputedStyle(document.documentElement).getPropertyValue('--bg-hover')"
+          onmouseout="this.style.borderColor='${borderColor}';this.style.background=getComputedStyle(document.documentElement).getPropertyValue('--bg-card')"
           onclick="navigate('tickets')">
           <div style="flex-shrink:0">
             <span class="badge ${badgeLlegada(t.llegada)}" style="font-size:10px">${t.llegada||'–'}</span>
           </div>
           <div style="flex:1;min-width:0">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
-              <span style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${t.tipo_solicitud||'Sin tipo'}</span>
-              <span style="font-size:11px;color:#555">•</span>
-              <span style="font-size:12px;color:#777">${t.usuario||'–'}</span>
+              <span style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${t.tipo_solicitud||'Sin tipo'}</span>
+              <span style="font-size:11px;color:var(--text-secondary)">•</span>
+              <span style="font-size:12px;color:var(--text-secondary)">${t.usuario||'–'}</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="map-pin" style="width:11px;height:11px;margin:0"></i> ${t.ubicacion||'–'}</span>
-              ${t.modelo?`<span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="printer" style="width:11px;height:11px;margin:0"></i> ${t.modelo}</span>`:''}
-              <span style="font-size:11px;color:#555;display:inline-flex;align-items:center;gap:3px"><i data-lucide="calendar" style="width:11px;height:11px;margin:0"></i> ${fmtDate(t.fecha_inicial)}${t.hora_inicio?` · <i data-lucide="clock" style="width:11px;height:11px;margin:0"></i> ${t.hora_inicio}`:''}</span>
+              <span style="font-size:11px;color:var(--text-secondary);display:inline-flex;align-items:center;gap:3px"><i data-lucide="map-pin" style="width:11px;height:11px;margin:0"></i> ${t.ubicacion||'–'}</span>
+              ${t.modelo?`<span style="font-size:11px;color:var(--text-secondary);display:inline-flex;align-items:center;gap:3px"><i data-lucide="printer" style="width:11px;height:11px;margin:0"></i> ${t.modelo}</span>`:''}
+              <span style="font-size:11px;color:var(--text-secondary);display:inline-flex;align-items:center;gap:3px"><i data-lucide="calendar" style="width:11px;height:11px;margin:0"></i> ${fmtDate(t.fecha_inicial)}${t.hora_inicio?` · <i data-lucide="clock" style="width:11px;height:11px;margin:0"></i> ${t.hora_inicio}`:''}</span>
             </div>
           </div>
           <div style="flex-shrink:0;text-align:right">
-            <div style="font-size:11px;color:#666;margin-bottom:4px">Helpdesk</div>
-            <div style="font-size:12px;font-weight:600;color:#ccc">${t.helpdesk||'–'}</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px">Helpdesk</div>
+            <div style="font-size:12px;font-weight:600;color:var(--text-primary)">${t.helpdesk||'–'}</div>
           </div>
           <div style="flex-shrink:0">
             <span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span>
