@@ -2023,3 +2023,148 @@ body.light-theme #resumen-tickets-box [style*="font-size:20px"],
 body.light-theme #resumen-tickets-box [style*="font-weight:700"] {
   color: #111827 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - SECCIÓN CLIENTE
+   ═══════════════════════════════════════ */
+
+/* ── CARDS DE SEDES ── */
+body.light-theme .cliente-sede-card {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme .cliente-sede-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12) !important;
+  border-color: #b40000 !important;
+}
+
+body.light-theme .cliente-sede-card [style*="font-weight:600"],
+body.light-theme .cliente-sede-card [style*="font-weight: 600"],
+body.light-theme .cliente-sede-card strong {
+  color: #111827 !important;
+}
+
+body.light-theme .cliente-sede-card [style*="color:#b40000"],
+body.light-theme .cliente-sede-card [style*="color: #b40000"],
+body.light-theme .cliente-sede-card [style*="color:var(--color-accent)"] {
+  color: #b40000 !important;
+}
+
+body.light-theme .cliente-sede-card [style*="color:#666"],
+body.light-theme .cliente-sede-card [style*="color:#777"],
+body.light-theme .cliente-sede-card [style*="color:#888"],
+body.light-theme .cliente-sede-card [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+body.light-theme .cliente-sede-card [style*="color:#444"] {
+  color: #9CA3AF !important;
+}
+
+body.light-theme .cliente-sede-card [data-lucide] {
+  stroke: #b40000 !important;
+  color: #b40000 !important;
+}
+
+/* ── INFORMACIÓN DEL CONTRATO ── */
+body.light-theme #cliente-contrato-box {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme #cliente-contrato-box * {
+  color: #374151 !important;
+}
+
+body.light-theme #cliente-contrato-box [style*="font-size:15px"],
+body.light-theme #cliente-contrato-box [style*="font-weight:600"],
+body.light-theme #cliente-contrato-box strong {
+  color: #111827 !important;
+}
+
+body.light-theme #cliente-contrato-box [style*="font-size:11px"],
+body.light-theme #cliente-contrato-box [style*="color:#666"],
+body.light-theme #cliente-contrato-box [style*="color:#777"],
+body.light-theme #cliente-contrato-box span[style*="text-transform:uppercase"] {
+  color: #9CA3AF !important;
+}
+
+body.light-theme #cliente-contrato-box a {
+  color: #b40000 !important;
+}
+
+/* ── MAPA / LISTA DE SEDES ── */
+body.light-theme #cliente-mapa-box {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme #cliente-mapa-box * {
+  color: #374151 !important;
+}
+
+body.light-theme #cliente-mapa-box [style*="background:#b40000"],
+body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] {
+  background: #b40000 !important;
+  color: #FFFFFF !important;
+}
+
+body.light-theme #cliente-mapa-box [style*="font-weight:600"],
+body.light-theme #cliente-mapa-box strong {
+  color: #111827 !important;
+}
+
+body.light-theme #cliente-mapa-box [style*="font-size:12px"],
+body.light-theme #cliente-mapa-box [style*="color:#666"],
+body.light-theme #cliente-mapa-box [style*="color:#777"] {
+  color: #6B7280 !important;
+}
+
+body.light-theme #cliente-mapa-box [style*="color:#b40000"] {
+  color: #b40000 !important;
+}
+
+body.light-theme #cliente-mapa-box [style*="border-bottom"] {
+  border-color: #F3F4F6 !important;
+}
+
+/* ── TÍTULOS Y TEXTOS GENERALES ── */
+body.light-theme #page-cliente .section-title,
+body.light-theme #page-cliente h2,
+body.light-theme #page-cliente h3 {
+  color: #111827 !important;
+}
+
+body.light-theme #page-cliente [style*="color:#666"],
+body.light-theme #page-cliente [style*="color:#777"],
+body.light-theme #page-cliente [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+body.light-theme #page-cliente [style*="height:1px"],
+body.light-theme #page-cliente [style*="border-top"] {
+  background: #E5E7EB !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-cliente {
+  background: var(--bg-body) !important;
+}
+
+body.light-theme #page-cliente [style*="background:#161616"],
+body.light-theme #page-cliente [style*="background:#1a1a1a"],
+body.light-theme #page-cliente [style*="background:#111"],
+body.light-theme #page-cliente [style*="background:#0d0d0d"] {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-cliente [style*="background:#161616"] *,
+body.light-theme #page-cliente [style*="background:#1a1a1a"] *,
+body.light-theme #page-cliente [style*="background:#111"] * {
+  color: #374151 !important;
+}
