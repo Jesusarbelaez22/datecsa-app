@@ -61,6 +61,11 @@ function applyLightTheme(){
   localStorage.setItem('datecsa-theme', 'light');
   updateThemeToggleUI(true);
   lucide.createIcons();
+  if(window.ticketsChart){
+    window.ticketsChart.options.plugins.legend.labels.color = '#374151';
+    window.ticketsChart.options.plugins.legend.labels.font  = { size: 12 };
+    window.ticketsChart.update();
+  }
 }
 
 function applyDarkTheme(){
@@ -68,6 +73,11 @@ function applyDarkTheme(){
   localStorage.setItem('datecsa-theme', 'dark');
   updateThemeToggleUI(false);
   lucide.createIcons();
+  if(window.ticketsChart){
+    window.ticketsChart.options.plugins.legend.labels.color = '#e0e0e0';
+    window.ticketsChart.options.plugins.legend.labels.font  = { size: 12 };
+    window.ticketsChart.update();
+  }
 }
 
 function updateThemeToggleUI(isLight){
@@ -202,7 +212,7 @@ function renderChart(abiertos, progreso, cerrados){
   if(!canvas) return;
   const total = abiertos + progreso + cerrados;
   if(ticketsChart){ ticketsChart.destroy(); ticketsChart = null; }
-  ticketsChart = new Chart(canvas, {
+  ticketsChart = window.ticketsChart = new Chart(canvas, {
     type: 'doughnut',
     data: {
       labels: ['Abiertos', 'En Progreso', 'Cerrados'],
@@ -220,8 +230,15 @@ function renderChart(abiertos, progreso, cerrados){
     },
     options:{
       cutout:'68%',
-      plugins:{legend:{display:false},tooltip:{enabled:total>0}},
-      animation:{duration:600}
+      plugins:{
+        legend:{
+          display:false,
+          labels:{ color: document.body.classList.contains('light-theme') ? '#374151' : '#e0e0e0' }
+        },
+        tooltip:{enabled:total>0}
+      },
+      animation:{duration:600},
+      backgroundColor:'transparent'
     }
   });
   const legend = document.getElementById('chart-legend');

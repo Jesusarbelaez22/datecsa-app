@@ -1912,3 +1912,72 @@ body.light-theme #page-dashboard [style*="display:flex"][style*="gap"] span,
 body.light-theme #page-dashboard [style*="display:flex"][style*="gap"] div {
   color: #374151 !important;
 }
+
+/* ── RESUMEN DE TICKETS - TEMA CLARO ── */
+
+body.light-theme #tickets-resumen-container,
+body.light-theme [style*="background:#161616"][style*="border-radius"],
+body.light-theme #page-dashboard > div > div[style*="background"] {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+body.light-theme canvas {
+  background: transparent !important;
+}
+
+body.light-theme #page-dashboard [style*="background:#161616"] {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-dashboard [style*="background:#1a1a1a"] {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-dashboard [style*="background:#0d0d0d"] {
+  background: #F4F5F7 !important;
+}
+
+body.light-theme #page-dashboard [style*="background:#111"] {
+  background: #F9FAFB !important;
+  border-color: #E5E7EB !important;
+}
+
+body.light-theme #page-dashboard [style*="background:#161616"] *,
+body.light-theme #page-dashboard [style*="background:#1a1a1a"] *,
+body.light-theme #page-dashboard [style*="background:#111"] * {
+  color: #374151 !important;
+}
+
+body.light-theme #page-dashboard [style*="border-radius:50%"][style*="background:#"],
+body.light-theme #page-dashboard [style*="border-radius: 50%"][style*="background:#"] {
+  background: inherit !important;
+  color: inherit !important;
+}
+
+body.light-theme #page-dashboard [style*="display:flex"][style*="align-items:center"] span {
+  color: #374151 !important;
+}
+
+body.light-theme #page-dashboard [style*="font-weight:700"],
+body.light-theme #page-dashboard [style*="font-weight: 700"] {
+  color: #111827 !important;
+}
+
+body.light-theme #page-dashboard hr,
+body.light-theme #page-dashboard [style*="border-top"] {
+  border-color: #E5E7EB !important;
+}
+
+/* ── LEYENDA DEL GRÁFICO DONA ── */
+body.light-theme .chart-legend-item {
+  color: #374151 !important;
+}
+
+body.light-theme .chart-legend-val {
+  color: #111827 !important;
+}
