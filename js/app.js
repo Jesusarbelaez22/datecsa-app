@@ -403,19 +403,22 @@ async function renderTickets(){
     tbody.innerHTML = filtered.map(t=>{
       const usuario = t.usuario||'–';
       const partes = usuario.match(/^(.+?)\s+([\w.\-]+@[\w.\-]+)$/);
-      const usuarioCorto = partes ? partes[1] : usuario.split('@')[0];
+      const usuarioHtml = partes
+        ? `<div style="font-weight:500;color:var(--text-primary)">${partes[1]}</div>
+           <div style="font-size:11px;color:var(--text-secondary)">${partes[2]}</div>`
+        : usuario;
       return `<tr>
-        <td><span class="badge ${badgeLlegada(t.llegada)}">${t.llegada||'–'}</span></td>
+        <td style="white-space:nowrap"><span class="badge ${badgeLlegada(t.llegada)}">${t.llegada||'–'}</span></td>
         <td style="white-space:nowrap;font-size:12px">${fmtDate(t.fecha_inicial)}</td>
-        <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${usuarioCorto}</td>
-        <td style="font-size:12px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.ubicacion||'–'}</td>
+        <td style="font-size:12px">${usuarioHtml}</td>
+        <td style="font-size:12px;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.ubicacion||'–'}</td>
         <td style="font-size:12px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><strong>${t.tipo_solicitud||'–'}</strong></td>
-        <td style="font-size:12px;white-space:nowrap">${t.helpdesk||'–'}</td>
+        <td style="font-size:12px;white-space:nowrap;font-weight:600">${t.helpdesk||'–'}</td>
         <td><span class="badge ${badgeEstado(t.estado)}">${t.estado||'–'}</span></td>
         <td style="white-space:nowrap">
           <div class="action-btns">
             <button class="btn-view" onclick="verTicket(${t.id})"><i data-lucide="eye"></i> Ver</button>
-            <button class="btn-edit" onclick="editTicket(${t.id})"><i data-lucide="pencil"></i> Editar</button>
+            <button class="btn-edit" onclick="editTicket(${t.id})"><i data-lucide="pencil"></i></button>
             <button class="btn-danger" onclick="deleteTicket(${t.id})"><i data-lucide="trash-2"></i></button>
           </div>
         </td>

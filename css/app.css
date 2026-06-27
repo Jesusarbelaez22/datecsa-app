@@ -4487,3 +4487,42 @@ body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] * {
 body.light-theme #cliente-mapa-box [style*="border-bottom"] {
   border-color: #E5E7EB !important;
 }
+
+/* ── LÍNEA SUPERIOR EN ENCABEZADO CASOS Y SOLICITUDES ── */
+body.light-theme #page-tickets table thead tr {
+  border-top: 2px solid #9CA3AF !important;
+}
+body.light-theme #page-tickets table thead th {
+  border-top: 2px solid #9CA3AF !important;
+  border-bottom: 2px solid #9CA3AF !important;
+  border-right: 1px solid #9CA3AF !important;
+}
+body.light-theme #page-tickets table thead th:last-child {
+  border-right: none !important;
+}
+#page-tickets table thead th {
+  border-top: 2px solid #2a2a2a;
+}
+
+/* ── TABLA CASOS SIN SCROLL HORIZONTAL ── */
+#page-tickets .table-wrap {
+  overflow-x: hidden !important;
+}
+#page-tickets table {
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: unset !important;
+}
+#page-tickets table th,
+#page-tickets table td {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+@media (max-width: 768px) {
+  #page-tickets .table-wrap {
+    overflow-x: auto !important;
+  }
+  #page-tickets table {
+    min-width: 600px !important;
+  }
+}
