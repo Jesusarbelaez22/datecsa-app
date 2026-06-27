@@ -2676,3 +2676,33 @@ body.light-theme #usuarios-resultado-destacado [style*="letter-spacing:2px"] {
   font-size: 16px !important;
   letter-spacing: 2px !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - SEPARADORES COLUMNAS USUARIOS
+   ═══════════════════════════════════════ */
+
+/* Línea separadora vertical entre columnas - encabezados */
+body.light-theme #usuarios-table-container table th {
+  border-right: 1px solid #E5E7EB !important;
+}
+body.light-theme #usuarios-table-container table th:last-child {
+  border-right: none !important;
+}
+
+/* Línea separadora vertical entre columnas - filas de datos */
+body.light-theme #usuarios-table-container table td {
+  border-right: 1px solid #F0F0F0 !important;
+}
+body.light-theme #usuarios-table-container table td:last-child {
+  border-right: none !important;
+}
+
+/* Línea horizontal entre filas */
+body.light-theme #usuarios-table-container table tbody tr {
+  border-bottom: 1px solid #F3F4F6 !important;
+}
+
+/* Borde exterior de la tabla */
+body.light-theme #usuarios-table-container table {
+  border: 1px solid #E5E7EB !important;
+}
