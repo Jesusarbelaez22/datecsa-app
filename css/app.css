@@ -5097,3 +5097,91 @@ body.light-theme .informe-btn-todo {
 }
 body.light-theme .informe-btn-todo:hover { background: #8B0000 !important; opacity: 1 !important; }
 body.light-theme .informe-btn-todo [data-lucide] { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - QUITAR RECUADROS EN CARDS INFORMES
+   ═══════════════════════════════════════ */
+
+body.light-theme .informe-card-title,
+body.light-theme .informe-card-desc,
+body.light-theme .informe-card *:not(button):not(input):not([data-lucide]) {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+body.light-theme .informe-card input[readonly],
+body.light-theme .informe-card input[type="text"][readonly],
+body.light-theme #page-informes input[readonly] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  color: inherit !important;
+  cursor: default !important;
+  padding: 0 !important;
+}
+body.light-theme #page-informes div[style*="border"],
+body.light-theme #page-informes span[style*="border"] {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Excepción: card principal */
+body.light-theme .informe-card {
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* Excepción: inputs de fecha */
+body.light-theme .informe-fechas input[type="date"],
+body.light-theme #page-informes input[type="date"] {
+  border: 1px solid #D1D5DB !important;
+  background: #F9FAFB !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Excepción: botones */
+body.light-theme .informe-btn-excel,
+body.light-theme .informe-btn-pdf,
+body.light-theme .informe-btn-todo {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Excepción: ícono */
+body.light-theme .informe-card-icon {
+  border: 1px solid #FECACA !important;
+  background: #FEF2F2 !important;
+  box-shadow: none !important;
+}
+
+/* Título */
+body.light-theme .informe-card-title {
+  color: #111827 !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Descripción */
+body.light-theme .informe-card-desc {
+  color: #6B7280 !important;
+  font-size: 0.875rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
