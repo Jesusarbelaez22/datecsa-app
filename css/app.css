@@ -3413,3 +3413,123 @@ body.light-theme #modal-ver-orden button[onclick*="copiarParaCorreo"]:hover {
   background: #E5E7EB !important;
   color: #111827 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - MEJORA CONTRASTE MODALES DETALLE
+   ═══════════════════════════════════════ */
+
+/* ── BORDE GENERAL DEL MODAL ── */
+body.light-theme #modal-ver-ticket .modal,
+body.light-theme #modal-ver-entrada .modal,
+body.light-theme #modal-ver-instalado .modal,
+body.light-theme #modal-ver-orden .modal,
+body.light-theme #modal-ver-notif .modal {
+  border: 1px solid #D1D5DB !important;
+}
+
+/* ── SEPARADORES ENTRE FILAS ── */
+body.light-theme #ver-ticket-content > div,
+body.light-theme #ver-entrada-content > div,
+body.light-theme #ver-instalado-content > div,
+body.light-theme #ver-orden-content > div,
+body.light-theme #ver-notif-content > div {
+  border-bottom: 1px solid #9CA3AF !important;
+}
+body.light-theme #ver-ticket-content > div:last-child,
+body.light-theme #ver-entrada-content > div:last-child,
+body.light-theme #ver-instalado-content > div:last-child,
+body.light-theme #ver-orden-content > div:last-child,
+body.light-theme #ver-notif-content > div:last-child {
+  border-bottom: none !important;
+}
+
+/* ── ETIQUETAS (lado izquierdo) ── */
+body.light-theme #ver-ticket-content span[style*="color"],
+body.light-theme #ver-entrada-content span[style*="color"],
+body.light-theme #ver-instalado-content span[style*="color"],
+body.light-theme #ver-orden-content span[style*="color"],
+body.light-theme #ver-notif-content span[style*="color"] {
+  color: #374151 !important;
+}
+body.light-theme #ver-ticket-content [style*="text-transform:uppercase"],
+body.light-theme #ver-entrada-content [style*="text-transform:uppercase"],
+body.light-theme #ver-instalado-content [style*="text-transform:uppercase"],
+body.light-theme #ver-orden-content [style*="text-transform:uppercase"],
+body.light-theme #ver-notif-content [style*="text-transform:uppercase"] {
+  color: #374151 !important;
+}
+
+/* ── VALORES (lado derecho) ── */
+body.light-theme #ver-ticket-content > div span:last-child,
+body.light-theme #ver-entrada-content > div span:last-child,
+body.light-theme #ver-instalado-content > div span:last-child,
+body.light-theme #ver-orden-content > div span:last-child,
+body.light-theme #ver-notif-content > div span:last-child {
+  color: #111827 !important;
+  font-weight: 500 !important;
+}
+body.light-theme #ver-ticket-content span,
+body.light-theme #ver-entrada-content span,
+body.light-theme #ver-instalado-content span,
+body.light-theme #ver-orden-content span,
+body.light-theme #ver-notif-content span {
+  color: #111827 !important;
+}
+
+/* Excepción: etiquetas pequeñas en gris */
+body.light-theme #ver-ticket-content span[style*="font-size:11px"],
+body.light-theme #ver-entrada-content span[style*="font-size:11px"],
+body.light-theme #ver-instalado-content span[style*="font-size:11px"],
+body.light-theme #ver-orden-content span[style*="font-size:11px"],
+body.light-theme #ver-notif-content span[style*="font-size:11px"],
+body.light-theme #ver-ticket-content span[style*="font-size:10px"],
+body.light-theme #ver-entrada-content span[style*="font-size:10px"],
+body.light-theme #ver-instalado-content span[style*="font-size:10px"],
+body.light-theme #ver-orden-content span[style*="font-size:10px"],
+body.light-theme #ver-notif-content span[style*="font-size:10px"] {
+  color: #374151 !important;
+}
+
+/* ── CAJA DE OBSERVACIONES ── */
+body.light-theme #ver-ticket-content [style*="white-space:pre-wrap"],
+body.light-theme #ver-entrada-content [style*="white-space:pre-wrap"],
+body.light-theme #ver-instalado-content [style*="white-space:pre-wrap"],
+body.light-theme #ver-orden-content [style*="white-space:pre-wrap"],
+body.light-theme #ver-notif-content [style*="white-space:pre-wrap"] {
+  background: #F3F4F6 !important;
+  border: 1px solid #9CA3AF !important;
+  color: #111827 !important;
+}
+body.light-theme #ver-ticket-content [style*="padding:14px 0"],
+body.light-theme #ver-entrada-content [style*="padding:14px 0"],
+body.light-theme #ver-instalado-content [style*="padding:14px 0"],
+body.light-theme #ver-orden-content [style*="padding:14px 0"],
+body.light-theme #ver-notif-content [style*="padding:14px 0"] {
+  border-bottom: none !important;
+}
+
+/* ── LÍNEA SEPARADORA FOOTER ── */
+body.light-theme #modal-ver-ticket .modal-footer,
+body.light-theme #modal-ver-entrada .modal-footer,
+body.light-theme #modal-ver-instalado .modal-footer,
+body.light-theme #modal-ver-orden .modal-footer,
+body.light-theme #modal-ver-notif .modal-footer {
+  border-top: 1px solid #9CA3AF !important;
+}
+
+/* ── VALORES CON COLORES ESPECIALES ── */
+body.light-theme #ver-orden-content [style*="color:#ffcc44"],
+body.light-theme #ver-notif-content [style*="color:#ffcc44"] {
+  color: #92400E !important;
+  font-weight: 700 !important;
+}
+body.light-theme #ver-orden-content [style*="font-style:italic"],
+body.light-theme #ver-notif-content [style*="font-style:italic"] {
+  color: #6B7280 !important;
+  font-weight: 400 !important;
+}
+body.light-theme #ver-orden-content [style*="background:rgba(200,140,0"] {
+  background: #FEF3C7 !important;
+  border-color: #9CA3AF !important;
+  color: #92400E !important;
+}
