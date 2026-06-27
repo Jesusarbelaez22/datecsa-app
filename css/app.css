@@ -4573,3 +4573,173 @@ body.light-theme #notif-container table thead tr {
   border-top: 2px solid #2a2a2a;
   border-bottom: 2px solid #2a2a2a;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - INFORMES CARDS COMPLETO
+   ═══════════════════════════════════════ */
+
+/* ── PÁGINA GENERAL ── */
+body.light-theme #page-informes {
+  background: var(--bg-body) !important;
+}
+
+/* ── TÍTULO PRINCIPAL ── */
+body.light-theme #page-informes h1,
+body.light-theme #page-informes h2,
+body.light-theme #page-informes h3,
+body.light-theme #page-informes .section-title {
+  color: #111827 !important;
+}
+body.light-theme #page-informes > p,
+body.light-theme #page-informes [style*="color:#666"],
+body.light-theme #page-informes [style*="color:#777"],
+body.light-theme #page-informes [style*="color:#888"],
+body.light-theme #page-informes [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+/* ── TODAS LAS CARDS DE INFORMES ── */
+body.light-theme #page-informes .card,
+body.light-theme #page-informes [class*="card"],
+body.light-theme #page-informes > div > div,
+body.light-theme #page-informes [style*="background:#161616"],
+body.light-theme #page-informes [style*="background:#1a1a1a"],
+body.light-theme #page-informes [style*="background:#111111"],
+body.light-theme #page-informes [style*="background:#111"],
+body.light-theme #page-informes [style*="background:#0d0d0d"],
+body.light-theme #page-informes [style*="background: #161616"],
+body.light-theme #page-informes [style*="background: #1a1a1a"],
+body.light-theme #page-informes [style*="background: #111"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* ── BORDE IZQUIERDO DE ACENTO MANTENER ── */
+body.light-theme #page-informes [style*="border-left:4px solid"],
+body.light-theme #page-informes [style*="border-left: 4px solid"] {
+  border-left: 4px solid #b40000 !important;
+}
+
+/* ── TÍTULO DE CADA CARD ── */
+body.light-theme #page-informes .card-title,
+body.light-theme #page-informes [style*="font-weight:600"],
+body.light-theme #page-informes [style*="font-weight: 600"] {
+  color: #111827 !important;
+}
+
+/* ── DESCRIPCIÓN DE CADA CARD ── */
+body.light-theme #page-informes .card-sub,
+body.light-theme #page-informes [style*="font-size:12px"],
+body.light-theme #page-informes [style*="font-size:11px"],
+body.light-theme #page-informes [style*="font-size:13px"] {
+  color: #6B7280 !important;
+}
+
+/* ── TODOS LOS TEXTOS DENTRO DE LAS CARDS ── */
+body.light-theme #page-informes .card *,
+body.light-theme #page-informes [style*="background:#161616"] *,
+body.light-theme #page-informes [style*="background:#1a1a1a"] *,
+body.light-theme #page-informes [style*="background:#111"] * {
+  color: #374151 !important;
+}
+
+/* ── TEXTOS BLANCOS → OSCUROS ── */
+body.light-theme #page-informes [style*="color:#fff"],
+body.light-theme #page-informes [style*="color: #fff"],
+body.light-theme #page-informes [style*="color:#ffffff"],
+body.light-theme #page-informes [style*="color:white"] {
+  color: #111827 !important;
+}
+body.light-theme #page-informes [style*="color:#ccc"],
+body.light-theme #page-informes [style*="color:#ddd"],
+body.light-theme #page-informes [style*="color:#aaa"],
+body.light-theme #page-informes [style*="color:#e0e0e0"] {
+  color: #374151 !important;
+}
+
+/* ── LABELS DESDE / HASTA ── */
+body.light-theme #page-informes label {
+  color: #374151 !important;
+  font-weight: 500 !important;
+}
+
+/* ── INPUTS DE FECHA ── */
+body.light-theme #page-informes input[type="date"] {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+}
+body.light-theme #page-informes input[type="date"]:focus {
+  border-color: #b40000 !important;
+  box-shadow: 0 0 0 3px rgba(180,0,0,0.08) !important;
+  outline: none !important;
+}
+
+/* ── TEXTO ITALIC / SECUNDARIO ── */
+body.light-theme #page-informes [style*="font-style:italic"],
+body.light-theme #page-informes [style*="color:#777"] {
+  color: #6B7280 !important;
+}
+
+/* ── ÍCONOS ── */
+body.light-theme #page-informes [data-lucide],
+body.light-theme #page-informes i[data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+body.light-theme #page-informes .btn-primary [data-lucide],
+body.light-theme #page-informes .btn-primary i {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+/* ── BOTÓN EXPORTAR EXCEL ── */
+body.light-theme #page-informes .btn-primary {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+body.light-theme #page-informes .btn-primary:hover {
+  opacity: .88 !important;
+}
+
+/* ── BOTÓN EXPORTAR PDF ── */
+body.light-theme #page-informes .btn-secondary {
+  background: #F3F4F6 !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+}
+body.light-theme #page-informes .btn-secondary:hover {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+  border-color: #9CA3AF !important;
+}
+
+/* ── BOTÓN "EXPORTAR TODO EN EXCEL" ── */
+body.light-theme #page-informes > div:last-child,
+body.light-theme #page-informes [onclick*="exportarTodoCSV"] {
+  color: #374151 !important;
+}
+body.light-theme #page-informes button[onclick*="exportarTodoCSV"] {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* ── HOVER EN CARDS ── */
+body.light-theme #page-informes .card:hover,
+body.light-theme #page-informes [style*="background:#161616"]:hover,
+body.light-theme #page-informes [style*="background:#1a1a1a"]:hover {
+  border-color: #b40000 !important;
+  box-shadow: 0 4px 16px rgba(180,0,0,0.10) !important;
+}
+
+/* ── GRID DE CARDS ── */
+body.light-theme #page-informes .grid,
+body.light-theme #page-informes [style*="display:grid"] {
+  gap: 16px !important;
+}
