@@ -2475,3 +2475,204 @@ body.light-theme #dash-tickets-container > div:hover {
 body.light-theme #mobile-menu-btn {
   border: 1px solid #E0E0E0 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - TABLA DE USUARIOS
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR GENERAL DE LA TABLA ── */
+body.light-theme #usuarios-table-container {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  border: 1px solid #E5E7EB !important;
+  overflow: hidden !important;
+}
+body.light-theme #usuarios-table-container table {
+  background: #FFFFFF !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+/* ── BARRA SUPERIOR "1699 usuarios en total" ── */
+body.light-theme .table-toolbar,
+body.light-theme #page-usuarios .table-toolbar {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  padding: 12px 20px !important;
+}
+body.light-theme #usuarios-count {
+  color: #6B7280 !important;
+  font-size: 13px !important;
+}
+
+/* ── ENCABEZADOS ── */
+body.light-theme #usuarios-table-container table thead tr {
+  background: #F3F4F6 !important;
+}
+body.light-theme #usuarios-table-container table th {
+  background: #F3F4F6 !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: .5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 20px !important;
+  border-bottom: 2px solid #E5E7EB !important;
+  white-space: nowrap !important;
+}
+
+/* ── FILAS DE DATOS ── */
+body.light-theme #usuarios-table-container table tbody tr {
+  background: #FFFFFF !important;
+  transition: background .15s !important;
+}
+body.light-theme #usuarios-table-container table tbody tr:hover {
+  background: #F9FAFB !important;
+}
+body.light-theme #usuarios-table-container table td {
+  padding: 12px 20px !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+  vertical-align: middle !important;
+}
+body.light-theme #usuarios-table-container table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Nombre de usuario */
+body.light-theme #usuarios-table-container td:nth-child(1) {
+  color: #111827 !important;
+  font-weight: 500 !important;
+  font-size: 13.5px !important;
+}
+/* Usuario (login) */
+body.light-theme #usuarios-table-container td:nth-child(2) {
+  color: #6B7280 !important;
+  font-size: 13px !important;
+}
+/* Código PIN */
+body.light-theme #usuarios-table-container td:nth-child(3) span,
+body.light-theme #usuarios-table-container td:nth-child(3) {
+  color: #111827 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: 1px !important;
+}
+
+/* ── BOTÓN EDITAR ── */
+body.light-theme #usuarios-table-container .btn-edit {
+  background: #EFF6FF !important;
+  color: #1D4ED8 !important;
+  border: 1px solid #BFDBFE !important;
+}
+body.light-theme #usuarios-table-container .btn-edit:hover {
+  background: #DBEAFE !important;
+  border-color: #93C5FD !important;
+}
+body.light-theme #usuarios-table-container .btn-edit [data-lucide],
+body.light-theme #usuarios-table-container .btn-edit i {
+  color: #1D4ED8 !important;
+  stroke: #1D4ED8 !important;
+}
+
+/* ── BOTÓN ELIMINAR ── */
+body.light-theme #usuarios-table-container .btn-danger {
+  background: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border: 1px solid #FECACA !important;
+}
+body.light-theme #usuarios-table-container .btn-danger:hover {
+  background: #FEE2E2 !important;
+  border-color: #FCA5A5 !important;
+}
+body.light-theme #usuarios-table-container .btn-danger [data-lucide],
+body.light-theme #usuarios-table-container .btn-danger i {
+  color: #DC2626 !important;
+  stroke: #DC2626 !important;
+}
+
+/* ── PAGINACIÓN ── */
+body.light-theme #usuarios-table-container div[style*="border-top"],
+body.light-theme #usuarios-table-container div[style*="justify-content:center"] {
+  background: #F9FAFB !important;
+  border-top: 1px solid #E5E7EB !important;
+  padding: 12px 20px !important;
+}
+body.light-theme #usuarios-table-container div[style*="justify-content:center"] span {
+  color: #6B7280 !important;
+  font-size: 12px !important;
+}
+body.light-theme #usuarios-table-container .btn-secondary {
+  background: #F3F4F6 !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+  font-size: 12px !important;
+}
+body.light-theme #usuarios-table-container .btn-secondary:hover {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+}
+body.light-theme #usuarios-table-container .btn-secondary:disabled,
+body.light-theme #usuarios-table-container .btn-secondary[disabled] {
+  opacity: .4 !important;
+  cursor: not-allowed !important;
+}
+
+/* ── CUADRO BUSCADOR ── */
+body.light-theme #page-usuarios > div:first-of-type {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+  border-radius: 10px !important;
+}
+body.light-theme #usuarios-search {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+  border-radius: 8px !important;
+}
+body.light-theme #usuarios-search::placeholder {
+  color: #9CA3AF !important;
+}
+body.light-theme #usuarios-search:focus {
+  border-color: #b40000 !important;
+  box-shadow: 0 0 0 3px rgba(180,0,0,0.08) !important;
+  outline: none !important;
+}
+
+/* Label del buscador */
+body.light-theme #page-usuarios > div:first-of-type > div:first-child {
+  color: #6B7280 !important;
+  font-size: 12px !important;
+}
+
+/* Resultado destacado */
+body.light-theme #usuarios-resultado-destacado {
+  background: #FAFAFA !important;
+  border: 1px solid rgba(180,0,0,0.3) !important;
+  border-radius: 8px !important;
+}
+body.light-theme #usuarios-resultado-destacado > div:not(:last-child) {
+  border-bottom: 1px solid #F3F4F6 !important;
+}
+
+/* Nombre en resultado */
+body.light-theme #usuarios-resultado-destacado [style*="font-weight:500"] {
+  color: #111827 !important;
+}
+/* Usuario en resultado */
+body.light-theme #usuarios-resultado-destacado [style*="font-size:11px"] {
+  color: #6B7280 !important;
+}
+
+/* Badge código PIN en resultado destacado */
+body.light-theme #usuarios-resultado-destacado [style*="letter-spacing:2px"] {
+  background: rgba(180,0,0,0.08) !important;
+  color: #b40000 !important;
+  border: 1px solid rgba(180,0,0,0.2) !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 2px !important;
+}
