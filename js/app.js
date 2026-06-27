@@ -2272,13 +2272,13 @@ async function renderUsuarios(){
     const totalPages = Math.ceil(total / _usuariosPerPage);
     const paginacion = totalPages > 1 ? `
       <div style="display:flex;justify-content:center;align-items:center;
-                  gap:10px;padding:14px;border-top:1px solid #1e1e1e">
+                  gap:10px;padding:14px;border-top:1px solid var(--border-color)">
         <button class="btn-secondary"
                 onclick="_usuariosPage=${_usuariosPage-1};renderUsuarios()"
                 ${_usuariosPage<=1?'disabled style="opacity:.4"':''}>
           ← Anterior
         </button>
-        <span style="font-size:12px;color:#666">
+        <span style="font-size:12px;color:var(--text-secondary)">
           Página ${_usuariosPage} de ${totalPages}
         </span>
         <button class="btn-secondary"
@@ -2299,10 +2299,10 @@ async function renderUsuarios(){
         <tbody>
           ${all.map(u => `<tr>
             <td style="font-size:13px">${u.nombre||'–'}</td>
-            <td style="font-size:12px;color:#888">${u.usuario||'–'}</td>
+            <td style="font-size:12px;color:var(--text-secondary)">${u.usuario||'–'}</td>
             <td>
               <span style="font-size:14px;font-weight:700;
-                           color:#fff;letter-spacing:1px">
+                           color:var(--text-primary);letter-spacing:1px">
                 ${u.codigo||'–'}
               </span>
             </td>
@@ -2340,16 +2340,16 @@ async function buscarUsuarios(texto){
     if(data && data.length){
       dest.style.display = 'block';
       dest.innerHTML = `
-        <div style="font-size:11px;color:#666;margin-bottom:10px;
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px;
                     text-transform:uppercase;letter-spacing:.5px">
           Coincidencias rápidas
         </div>
         ${data.map(u => `
           <div style="display:flex;align-items:center;justify-content:space-between;
-                      padding:8px 0;border-bottom:1px solid #1e1e1e">
+                      padding:8px 0;border-bottom:1px solid var(--border-color)">
             <div>
-              <div style="font-size:13px;font-weight:500;color:#fff">${u.nombre}</div>
-              <div style="font-size:11px;color:#666">${u.usuario}</div>
+              <div style="font-size:13px;font-weight:500;color:var(--text-primary)">${u.nombre}</div>
+              <div style="font-size:11px;color:var(--text-secondary)">${u.usuario}</div>
             </div>
             <div style="font-size:18px;font-weight:700;color:#fff;
                         background:rgba(180,0,0,0.15);border:1px solid rgba(180,0,0,0.3);
@@ -2359,7 +2359,7 @@ async function buscarUsuarios(texto){
           </div>`).join('')}`;
     } else {
       dest.style.display = 'block';
-      dest.innerHTML = `<div style="color:#666;font-size:13px;text-align:center">
+      dest.innerHTML = `<div style="color:var(--text-secondary);font-size:13px;text-align:center">
         Sin resultados para "${_usuariosBusqueda}"</div>`;
     }
   } else {

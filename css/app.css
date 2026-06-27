@@ -2233,3 +2233,56 @@ body.light-theme #cliente-mapa-box [style*="color:#777"] {
 body.light-theme #cliente-mapa-box [style*="border-bottom"] {
   border-color: #F3F4F6 !important;
 }
+
+/* ── SECCIÓN USUARIOS - TEMA CLARO ── */
+
+/* Botón secundario: estado deshabilitado */
+body.light-theme .btn-secondary:disabled,
+body.light-theme .btn-secondary[disabled] {
+  background: #F9FAFB !important;
+  color: #D1D5DB !important;
+  border-color: #E5E7EB !important;
+  opacity: .5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Input de búsqueda */
+body.light-theme #usuarios-search {
+  background: #F9FAFB !important;
+  border-color: #D1D5DB !important;
+  color: #111827 !important;
+}
+body.light-theme #usuarios-search::placeholder {
+  color: #9CA3AF !important;
+}
+
+/* Resultado destacado de coincidencias */
+body.light-theme #usuarios-resultado-destacado {
+  background: #F9FAFB !important;
+}
+
+/* Badge código PIN en coincidencias rápidas - mantener rojo */
+body.light-theme #usuarios-resultado-destacado [style*="background:rgba(180,0,0"] {
+  background: rgba(180,0,0,0.12) !important;
+  color: #b40000 !important;
+  border-color: rgba(180,0,0,0.3) !important;
+}
+
+/* Contador de registros */
+body.light-theme #usuarios-count {
+  color: #6B7280 !important;
+}
+
+/* Paginación */
+body.light-theme #usuarios-table-container div[style*="border-top"] {
+  border-top-color: #E5E7EB !important;
+}
+
+/* Tabla de usuarios */
+body.light-theme #usuarios-table-container table th {
+  background: #F9FAFB !important;
+  color: #374151 !important;
+}
+body.light-theme #usuarios-table-container table td {
+  color: #111827 !important;
+}
