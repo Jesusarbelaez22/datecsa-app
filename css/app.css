@@ -5185,3 +5185,96 @@ body.light-theme .informe-card-desc {
   border: none !important;
   box-shadow: none !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - FIX DEFINITIVO RECUADROS INFORMES
+   (neutraliza [class*="card"] de pass anterior)
+   ═══════════════════════════════════════ */
+
+body.light-theme #page-informes .informe-card-title,
+body.light-theme #page-informes .informe-card-desc,
+body.light-theme #page-informes .informe-card-header,
+body.light-theme #page-informes .informe-card-header > div {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+body.light-theme #page-informes .informe-card > *:not(.informe-btns):not(.informe-fechas),
+body.light-theme #page-informes .informe-card > *:not(.informe-btns):not(.informe-fechas) * {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Restaurar: card principal */
+body.light-theme #page-informes .informe-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* Restaurar: ícono */
+body.light-theme #page-informes .informe-card-icon {
+  background: #FEF2F2 !important;
+  border: 1px solid #FECACA !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+/* Restaurar: lucide dentro del ícono */
+body.light-theme #page-informes .informe-card-icon [data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Restaurar: inputs de fecha */
+body.light-theme #page-informes .informe-fechas input[type="date"],
+body.light-theme #page-informes input[type="date"] {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+}
+
+/* Restaurar: botón excel */
+body.light-theme #page-informes .informe-btn-excel {
+  background: #b40000 !important;
+  border: none !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+body.light-theme #page-informes .informe-btn-excel [data-lucide] {
+  color: #FFFFFF !important; stroke: #FFFFFF !important;
+  background: transparent !important; border: none !important;
+}
+
+/* Restaurar: botón pdf */
+body.light-theme #page-informes .informe-btn-pdf {
+  background: #1F2937 !important;
+  border: none !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+body.light-theme #page-informes .informe-btn-pdf [data-lucide] {
+  color: #FFFFFF !important; stroke: #FFFFFF !important;
+  background: transparent !important; border: none !important;
+}
+
+/* Texto */
+body.light-theme #page-informes .informe-card-title {
+  color: #111827 !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+}
+body.light-theme #page-informes .informe-card-desc {
+  color: #6B7280 !important;
+  font-size: 0.875rem !important;
+}
