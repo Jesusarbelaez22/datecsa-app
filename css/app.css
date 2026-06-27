@@ -2683,7 +2683,7 @@ body.light-theme #usuarios-resultado-destacado [style*="letter-spacing:2px"] {
 
 /* Línea separadora vertical entre columnas - encabezados */
 body.light-theme #usuarios-table-container table th {
-  border-right: 1px solid #E5E7EB !important;
+  border-right: 1px solid #C9CDD4 !important;
 }
 body.light-theme #usuarios-table-container table th:last-child {
   border-right: none !important;
@@ -2691,7 +2691,7 @@ body.light-theme #usuarios-table-container table th:last-child {
 
 /* Línea separadora vertical entre columnas - filas de datos */
 body.light-theme #usuarios-table-container table td {
-  border-right: 1px solid #F0F0F0 !important;
+  border-right: 1px solid #D1D5DB !important;
 }
 body.light-theme #usuarios-table-container table td:last-child {
   border-right: none !important;
@@ -2699,10 +2699,10 @@ body.light-theme #usuarios-table-container table td:last-child {
 
 /* Línea horizontal entre filas */
 body.light-theme #usuarios-table-container table tbody tr {
-  border-bottom: 1px solid #F3F4F6 !important;
+  border-bottom: 1px solid #D1D5DB !important;
 }
 
 /* Borde exterior de la tabla */
 body.light-theme #usuarios-table-container table {
-  border: 1px solid #E5E7EB !important;
+  border: 1px solid #C9CDD4 !important;
 }
