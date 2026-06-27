@@ -2886,3 +2886,308 @@ body.light-theme #page-tickets input[type="date"] {
   border: 1px solid #D1D5DB !important;
   color: #111827 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - ESTILOS COMPARTIDOS TABLAS
+   Registro de Llegada, Toner Instalados,
+   Órdenes de Servicio, Notificaciones KFS
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR GENERAL ── */
+body.light-theme #page-entradas .table-wrap,
+body.light-theme #page-instalados .table-wrap,
+body.light-theme #page-ordenes .table-wrap,
+body.light-theme #page-notificaciones .table-wrap {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  border: 1.5px solid #9CA3AF !important;
+  overflow: hidden !important;
+}
+
+/* ── BARRA SUPERIOR CON CONTADOR ── */
+body.light-theme #page-entradas .table-toolbar,
+body.light-theme #page-instalados .table-toolbar,
+body.light-theme #page-ordenes .table-toolbar,
+body.light-theme #page-notificaciones .table-toolbar {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #9CA3AF !important;
+  padding: 12px 20px !important;
+}
+body.light-theme #entradas-count,
+body.light-theme #instalados-count,
+body.light-theme #ordenes-count,
+body.light-theme #notif-count {
+  color: #6B7280 !important;
+  font-size: 13px !important;
+}
+
+/* ── ENCABEZADOS ── */
+body.light-theme #page-entradas table th,
+body.light-theme #page-instalados table th,
+body.light-theme #page-ordenes table th,
+body.light-theme #page-notificaciones table th {
+  background: #F3F4F6 !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: .5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 16px !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 2px solid #9CA3AF !important;
+  white-space: nowrap !important;
+}
+body.light-theme #page-entradas table th:last-child,
+body.light-theme #page-instalados table th:last-child,
+body.light-theme #page-ordenes table th:last-child,
+body.light-theme #page-notificaciones table th:last-child {
+  border-right: none !important;
+}
+
+/* ── FILAS DE DATOS ── */
+body.light-theme #page-entradas table tbody tr,
+body.light-theme #page-instalados table tbody tr,
+body.light-theme #page-ordenes table tbody tr,
+body.light-theme #page-notificaciones table tbody tr {
+  background: #FFFFFF !important;
+  transition: background .15s !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+body.light-theme #page-entradas table tbody tr:hover,
+body.light-theme #page-instalados table tbody tr:hover,
+body.light-theme #page-ordenes table tbody tr:hover,
+body.light-theme #page-notificaciones table tbody tr:hover {
+  background: #F9FAFB !important;
+}
+body.light-theme #page-entradas table tbody tr:last-child,
+body.light-theme #page-instalados table tbody tr:last-child,
+body.light-theme #page-ordenes table tbody tr:last-child,
+body.light-theme #page-notificaciones table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+/* ── CELDAS ── */
+body.light-theme #page-entradas table td,
+body.light-theme #page-instalados table td,
+body.light-theme #page-ordenes table td,
+body.light-theme #page-notificaciones table td {
+  padding: 12px 16px !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+  color: #111827 !important;
+  vertical-align: middle !important;
+  font-size: 12.5px !important;
+}
+body.light-theme #page-entradas table td:last-child,
+body.light-theme #page-instalados table td:last-child,
+body.light-theme #page-ordenes table td:last-child,
+body.light-theme #page-notificaciones table td:last-child {
+  border-right: none !important;
+}
+
+/* ── TEXTOS EN CELDAS ── */
+body.light-theme #page-entradas table td strong,
+body.light-theme #page-instalados table td strong,
+body.light-theme #page-ordenes table td strong,
+body.light-theme #page-notificaciones table td strong {
+  color: #111827 !important;
+  font-weight: 600 !important;
+}
+body.light-theme #page-entradas table td [style*="color:#888"],
+body.light-theme #page-entradas table td [style*="color:#777"],
+body.light-theme #page-entradas table td [style*="color:#666"],
+body.light-theme #page-instalados table td [style*="color:#888"],
+body.light-theme #page-instalados table td [style*="color:#777"],
+body.light-theme #page-instalados table td [style*="color:#666"],
+body.light-theme #page-ordenes table td [style*="color:#888"],
+body.light-theme #page-ordenes table td [style*="color:#777"],
+body.light-theme #page-ordenes table td [style*="color:#666"],
+body.light-theme #page-notificaciones table td [style*="color:#888"],
+body.light-theme #page-notificaciones table td [style*="color:#777"],
+body.light-theme #page-notificaciones table td [style*="color:#666"] {
+  color: #6B7280 !important;
+}
+body.light-theme #page-ordenes td [style*="color:#ffcc44"],
+body.light-theme #page-notificaciones td [style*="color:#ffcc44"] {
+  color: #B45309 !important;
+}
+body.light-theme #page-ordenes td [style*="font-style:italic"],
+body.light-theme #page-notificaciones td [style*="font-style:italic"] {
+  color: #9CA3AF !important;
+}
+
+/* ── BADGES ── */
+body.light-theme #page-entradas .badge-open,
+body.light-theme #page-instalados .badge-open,
+body.light-theme #page-ordenes .badge-open,
+body.light-theme #page-notificaciones .badge-open {
+  background: #DBEAFE !important;
+  color: #1E40AF !important;
+  border-color: #BFDBFE !important;
+}
+body.light-theme #page-entradas .badge-progress,
+body.light-theme #page-instalados .badge-progress,
+body.light-theme #page-ordenes .badge-progress,
+body.light-theme #page-notificaciones .badge-progress {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+  border-color: #FDE68A !important;
+}
+body.light-theme #page-entradas .badge-closed,
+body.light-theme #page-instalados .badge-closed,
+body.light-theme #page-ordenes .badge-closed,
+body.light-theme #page-notificaciones .badge-closed {
+  background: #D1FAE5 !important;
+  color: #065F46 !important;
+  border-color: #A7F3D0 !important;
+}
+body.light-theme #page-entradas .badge-critical,
+body.light-theme #page-instalados .badge-critical,
+body.light-theme #page-ordenes .badge-critical,
+body.light-theme #page-notificaciones .badge-critical {
+  background: #FEE2E2 !important;
+  color: #991B1B !important;
+  border-color: #FECACA !important;
+}
+body.light-theme #page-entradas .badge-low,
+body.light-theme #page-instalados .badge-low,
+body.light-theme #page-ordenes .badge-low,
+body.light-theme #page-notificaciones .badge-low {
+  background: #F3F4F6 !important;
+  color: #374151 !important;
+  border-color: #E5E7EB !important;
+}
+body.light-theme #page-ordenes .badge-incidente {
+  font-size: 11px !important;
+  white-space: normal !important;
+}
+body.light-theme #page-notificaciones .notif-dot {
+  background: #b40000 !important;
+}
+body.light-theme #page-notificaciones .notif-dot.read {
+  background: #D1D5DB !important;
+}
+
+/* ── BOTONES DE ACCIÓN ── */
+body.light-theme #page-entradas .btn-view,
+body.light-theme #page-instalados .btn-view,
+body.light-theme #page-ordenes .btn-view,
+body.light-theme #page-notificaciones .btn-view {
+  background: #ECFDF5 !important;
+  color: #065F46 !important;
+  border: 1px solid #A7F3D0 !important;
+}
+body.light-theme #page-entradas .btn-view:hover,
+body.light-theme #page-instalados .btn-view:hover,
+body.light-theme #page-ordenes .btn-view:hover,
+body.light-theme #page-notificaciones .btn-view:hover {
+  background: #D1FAE5 !important;
+}
+body.light-theme #page-entradas .btn-edit,
+body.light-theme #page-instalados .btn-edit,
+body.light-theme #page-ordenes .btn-edit,
+body.light-theme #page-notificaciones .btn-edit {
+  background: #EFF6FF !important;
+  color: #1D4ED8 !important;
+  border: 1px solid #BFDBFE !important;
+}
+body.light-theme #page-entradas .btn-edit:hover,
+body.light-theme #page-instalados .btn-edit:hover,
+body.light-theme #page-ordenes .btn-edit:hover,
+body.light-theme #page-notificaciones .btn-edit:hover {
+  background: #DBEAFE !important;
+}
+body.light-theme #page-entradas .btn-danger,
+body.light-theme #page-instalados .btn-danger,
+body.light-theme #page-ordenes .btn-danger,
+body.light-theme #page-notificaciones .btn-danger {
+  background: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border: 1px solid #FECACA !important;
+}
+body.light-theme #page-entradas .btn-danger:hover,
+body.light-theme #page-instalados .btn-danger:hover,
+body.light-theme #page-ordenes .btn-danger:hover,
+body.light-theme #page-notificaciones .btn-danger:hover {
+  background: #FEE2E2 !important;
+}
+
+/* ── TABLA EN CONTENEDOR DINÁMICO (ordenes y notif) ── */
+body.light-theme #ordenes-table-container,
+body.light-theme #notif-container {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  border: 1.5px solid #9CA3AF !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+body.light-theme #ordenes-table-container table,
+body.light-theme #notif-container table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+body.light-theme #ordenes-table-container table th,
+body.light-theme #notif-container table th {
+  background: #F3F4F6 !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: .5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 16px !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 2px solid #9CA3AF !important;
+}
+body.light-theme #ordenes-table-container table th:last-child,
+body.light-theme #notif-container table th:last-child {
+  border-right: none !important;
+}
+body.light-theme #ordenes-table-container table td,
+body.light-theme #notif-container table td {
+  padding: 12px 16px !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+  color: #111827 !important;
+  vertical-align: middle !important;
+  font-size: 12.5px !important;
+  background: #FFFFFF !important;
+}
+body.light-theme #ordenes-table-container table td:last-child,
+body.light-theme #notif-container table td:last-child {
+  border-right: none !important;
+}
+body.light-theme #ordenes-table-container table tr:hover td,
+body.light-theme #notif-container table tr:hover td {
+  background: #F9FAFB !important;
+}
+body.light-theme #ordenes-table-container table tr:last-child td,
+body.light-theme #notif-container table tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* ── BARRA EXPORTAR / FILTROS ── */
+body.light-theme #page-entradas .report-bar,
+body.light-theme #page-instalados .report-bar,
+body.light-theme #page-ordenes .report-bar,
+body.light-theme #page-entradas [style*="background:#161616"],
+body.light-theme #page-instalados [style*="background:#161616"],
+body.light-theme #page-ordenes [style*="background:#161616"] {
+  background: #F9FAFB !important;
+  border: 1px solid #E5E7EB !important;
+}
+body.light-theme #page-entradas .report-bar label,
+body.light-theme #page-instalados .report-bar label,
+body.light-theme #page-ordenes .report-bar label,
+body.light-theme #page-entradas .report-bar span,
+body.light-theme #page-instalados .report-bar span,
+body.light-theme #page-ordenes .report-bar span {
+  color: #374151 !important;
+}
+body.light-theme #page-entradas input[type="date"],
+body.light-theme #page-instalados input[type="date"],
+body.light-theme #page-ordenes input[type="date"] {
+  background: #FFFFFF !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+}
