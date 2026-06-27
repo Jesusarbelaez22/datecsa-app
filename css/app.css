@@ -4125,3 +4125,128 @@ body.light-theme #page-toners table tfoot td:last-child {
 body.light-theme #page-toners table {
   border: 1.5px solid #9CA3AF !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - INICIO DASHBOARD
+   Stats Cards, Resumen Tickets, Actividad
+   ═══════════════════════════════════════ */
+
+/* ── 5 CARDS DE ESTADÍSTICAS ── */
+body.light-theme #page-dashboard .stat-card {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:hover {
+  border-color: #6B7280 !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+  transform: translateY(-2px) !important;
+}
+body.light-theme #page-dashboard .stat-card[style*="border-left"] {
+  border-left-width: 3px !important;
+}
+body.light-theme #page-dashboard .stat-label {
+  color: #6B7280 !important;
+}
+
+/* ── CONTENEDOR RESUMEN DE TICKETS ── */
+body.light-theme #resumen-tickets-box {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  padding: 20px !important;
+}
+body.light-theme #resumen-tickets-box * {
+  color: #374151 !important;
+}
+body.light-theme #resumen-tickets-box strong,
+body.light-theme #resumen-tickets-box [style*="font-weight:700"],
+body.light-theme #resumen-tickets-box [style*="font-weight: 700"] {
+  color: #111827 !important;
+}
+body.light-theme #resumen-tickets-box [style*="border-bottom"],
+body.light-theme #resumen-tickets-box [style*="border-top"] {
+  border-color: #E5E7EB !important;
+}
+
+/* ── FILAS DE ACTIVIDAD RECIENTE ── */
+body.light-theme #dash-tickets-container > div {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 10px !important;
+  background: #FFFFFF !important;
+  margin-bottom: 8px !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+  transition: all .2s ease !important;
+}
+body.light-theme #dash-tickets-container > div:hover {
+  border-color: #6B7280 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10) !important;
+  transform: translateX(3px) !important;
+}
+
+/* Borde izquierdo de estado en actividad reciente */
+body.light-theme #dash-tickets-container > div[style*="border-left:3px solid #0066cc"] {
+  border-left: 3px solid #0066cc !important;
+}
+body.light-theme #dash-tickets-container > div[style*="border-left:3px solid #cc8800"] {
+  border-left: 3px solid #cc8800 !important;
+}
+body.light-theme #dash-tickets-container > div[style*="border-left:3px solid #00a854"] {
+  border-left: 3px solid #00a854 !important;
+}
+
+/* Textos en actividad reciente */
+body.light-theme #dash-tickets-container [style*="font-weight:600"],
+body.light-theme #dash-tickets-container [style*="font-weight: 600"] {
+  color: #111827 !important;
+}
+body.light-theme #dash-tickets-container [style*="font-size:12px"],
+body.light-theme #dash-tickets-container [style*="font-size:11px"],
+body.light-theme #dash-tickets-container [style*="color:#777"],
+body.light-theme #dash-tickets-container [style*="color:#666"],
+body.light-theme #dash-tickets-container [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+body.light-theme #dash-tickets-container [style*="font-size:13px"],
+body.light-theme #dash-tickets-container [style*="font-size:14px"] {
+  color: #374151 !important;
+}
+body.light-theme #dash-tickets-container [style*="font-weight:600"][style*="color:#ccc"],
+body.light-theme #dash-tickets-container [style*="color:#ccc"] {
+  color: #111827 !important;
+}
+body.light-theme #dash-tickets-container [style*="color:#666;font-size:11px"] {
+  color: #9CA3AF !important;
+}
+body.light-theme #dash-tickets-container > div + div {
+  border-top: 1.5px solid #9CA3AF !important;
+}
+
+/* ── SEPARADORES DE SECCIÓN DEL DASHBOARD ── */
+body.light-theme #page-dashboard [style*="height:1px"][style*="background:#1e1e1e"],
+body.light-theme #page-dashboard [style*="flex:1;height:1px"] {
+  background: #D1D5DB !important;
+}
+
+/* ── BOTÓN "VER TODOS" ── */
+body.light-theme #dash-ver-todos {
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+  background: transparent !important;
+  border-radius: 6px !important;
+}
+body.light-theme #dash-ver-todos:hover {
+  border-color: #b40000 !important;
+  color: #b40000 !important;
+  background: #FEF2F2 !important;
+}
+
+/* ── SALUDO Y FECHA ── */
+body.light-theme #dash-saludo {
+  color: #111827 !important;
+}
+body.light-theme #dash-fecha {
+  color: #6B7280 !important;
+}
