@@ -3552,3 +3552,129 @@ body.light-theme #evidencia-placeholder div:first-child {
 body.light-theme #evidencia-placeholder div:last-child {
   color: #9CA3AF !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - SECCIÓN INFORMES
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR GENERAL ── */
+body.light-theme #page-informes {
+  background: var(--bg-body) !important;
+}
+
+/* ── TÍTULO Y SUBTÍTULO ── */
+body.light-theme #page-informes h2,
+body.light-theme #page-informes h3,
+body.light-theme #page-informes .section-title {
+  color: #111827 !important;
+}
+body.light-theme #page-informes p,
+body.light-theme #page-informes [style*="color:#666"],
+body.light-theme #page-informes [style*="color:#777"],
+body.light-theme #page-informes [style*="color:#888"] {
+  color: #6B7280 !important;
+}
+
+/* ── 6 CARDS DE INFORMES ── */
+body.light-theme #page-informes .card,
+body.light-theme #page-informes [style*="background:#161616"],
+body.light-theme #page-informes [style*="background:#1a1a1a"],
+body.light-theme #page-informes [style*="background:#111"],
+body.light-theme #page-informes [style*="background:#0d0d0d"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+body.light-theme #page-informes .card:hover,
+body.light-theme #page-informes [style*="background:#161616"]:hover,
+body.light-theme #page-informes [style*="background:#1a1a1a"]:hover {
+  border-color: #b40000 !important;
+  box-shadow: 0 4px 16px rgba(180,0,0,0.1) !important;
+}
+
+/* ── TEXTOS DENTRO DE LAS CARDS ── */
+body.light-theme #page-informes .card-title,
+body.light-theme #page-informes [style*="font-size:14px"][style*="font-weight:600"],
+body.light-theme #page-informes [style*="font-weight:600"] {
+  color: #111827 !important;
+}
+body.light-theme #page-informes .card-sub,
+body.light-theme #page-informes [style*="font-size:12px"],
+body.light-theme #page-informes [style*="font-size:11px"] {
+  color: #6B7280 !important;
+}
+body.light-theme #page-informes [style*="color:#777"],
+body.light-theme #page-informes [style*="color:#666"],
+body.light-theme #page-informes [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+body.light-theme #page-informes label {
+  color: #374151 !important;
+}
+
+/* ── INPUTS DE FECHA ── */
+body.light-theme #page-informes input[type="date"] {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+}
+body.light-theme #page-informes input[type="date"]:focus {
+  border-color: #b40000 !important;
+  outline: none !important;
+}
+
+/* ── ÍCONOS EN LAS CARDS ── */
+body.light-theme #page-informes [data-lucide],
+body.light-theme #page-informes i[data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+
+/* ── BORDE IZQUIERDO DE ACENTO ── */
+body.light-theme #page-informes .card[style*="border-left"],
+body.light-theme #page-informes [style*="border-left:4px solid"],
+body.light-theme #page-informes [style*="border-left: 4px solid"] {
+  border-left: 4px solid #b40000 !important;
+}
+
+/* ── BOTONES DENTRO DE LAS CARDS ── */
+body.light-theme #page-informes .btn-primary {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+body.light-theme #page-informes .btn-primary:hover {
+  opacity: .88 !important;
+}
+body.light-theme #page-informes .btn-secondary {
+  background: #F3F4F6 !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+}
+body.light-theme #page-informes .btn-secondary:hover {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+  border-color: #9CA3AF !important;
+}
+
+/* ── BOTÓN "EXPORTAR TODO EN EXCEL" ── */
+body.light-theme #page-informes > div:last-child .btn-primary,
+body.light-theme #page-informes [onclick*="exportarTodoCSV"] {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+}
+
+/* ── SEPARADOR BORDE IZQUIERDO ACENTO ── */
+body.light-theme #page-informes .card::before,
+body.light-theme #page-informes [style*="background:#161616"]::before {
+  background: #b40000 !important;
+}
+
+/* ── GRID DE CARDS ── */
+body.light-theme #page-informes .grid,
+body.light-theme #page-informes [style*="display:grid"] {
+  gap: 16px !important;
+}
