@@ -975,96 +975,120 @@
       <div class="informes-grid">
 
         <!-- Casos y Solicitudes -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="ticket"></i></div>
-          <div class="inf-card-title">Casos y Solicitudes</div>
-          <div class="inf-card-desc">Exporta todos los casos y solicitudes registrados</div>
-          <div class="inf-date-row">
-            <label>Desde</label><input type="date" id="inf-tickets-from"/>
-            <label>Hasta</label><input type="date" id="inf-tickets-to"/>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="ticket"></i></div>
+            <div>
+              <div class="informe-card-title">Casos y Solicitudes</div>
+              <div class="informe-card-desc">Exporta todos los casos y solicitudes registrados</div>
+            </div>
           </div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('tickets','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('tickets','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+          <div class="informe-fechas">
+            <div><label>Desde</label><input type="date" id="inf-tickets-from"/></div>
+            <div><label>Hasta</label><input type="date" id="inf-tickets-to"/></div>
+          </div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('tickets','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('tickets','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
         <!-- Toner Disponibles -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="printer"></i></div>
-          <div class="inf-card-title">Toner Disponibles</div>
-          <div class="inf-card-desc">Exporta el resumen de toner disponibles (TK-3182, TK-3162, TK-3432, TK-3462)</div>
-          <div class="inf-no-date">Resumen calculado automáticamente</div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('toners','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('toners','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="printer"></i></div>
+            <div>
+              <div class="informe-card-title">Toner Disponibles</div>
+              <div class="informe-card-desc">Exporta el resumen de toner disponibles (TK-3182, TK-3162, TK-3432, TK-3462)</div>
+            </div>
+          </div>
+          <div class="informe-auto-text">Resumen calculado automáticamente</div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('toners','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('toners','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
         <!-- Registro de Llegada de Toner -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="package"></i></div>
-          <div class="inf-card-title">Registro de Llegada de Toner</div>
-          <div class="inf-card-desc">Exporta los registros de llegada de toner por rango de fechas</div>
-          <div class="inf-date-row">
-            <label>Desde</label><input type="date" id="inf-llegada-from"/>
-            <label>Hasta</label><input type="date" id="inf-llegada-to"/>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="package"></i></div>
+            <div>
+              <div class="informe-card-title">Registro de Llegada de Toner</div>
+              <div class="informe-card-desc">Exporta los registros de llegada de toner por rango de fechas</div>
+            </div>
           </div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('entradas','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('entradas','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+          <div class="informe-fechas">
+            <div><label>Desde</label><input type="date" id="inf-llegada-from"/></div>
+            <div><label>Hasta</label><input type="date" id="inf-llegada-to"/></div>
+          </div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('entradas','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('entradas','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
         <!-- Toner Instalados -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="check-circle"></i></div>
-          <div class="inf-card-title">Toner Instalados</div>
-          <div class="inf-card-desc">Exporta el historial de instalaciones de toner por rango de fechas</div>
-          <div class="inf-date-row">
-            <label>Desde</label><input type="date" id="inf-instalados-from"/>
-            <label>Hasta</label><input type="date" id="inf-instalados-to"/>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="check-circle"></i></div>
+            <div>
+              <div class="informe-card-title">Toner Instalados</div>
+              <div class="informe-card-desc">Exporta el historial de instalaciones de toner por rango de fechas</div>
+            </div>
           </div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('instalados','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('instalados','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+          <div class="informe-fechas">
+            <div><label>Desde</label><input type="date" id="inf-instalados-from"/></div>
+            <div><label>Hasta</label><input type="date" id="inf-instalados-to"/></div>
+          </div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('instalados','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('instalados','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
         <!-- Órdenes de Servicio -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="clipboard-list"></i></div>
-          <div class="inf-card-title">Órdenes de Servicio</div>
-          <div class="inf-card-desc">Exporta las órdenes de servicio registradas por rango de fechas</div>
-          <div class="inf-date-row">
-            <label>Desde</label><input type="date" id="inf-ordenes-from"/>
-            <label>Hasta</label><input type="date" id="inf-ordenes-to"/>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="clipboard-list"></i></div>
+            <div>
+              <div class="informe-card-title">Órdenes de Servicio</div>
+              <div class="informe-card-desc">Exporta las órdenes de servicio registradas por rango de fechas</div>
+            </div>
           </div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('ordenes','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('ordenes','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+          <div class="informe-fechas">
+            <div><label>Desde</label><input type="date" id="inf-ordenes-from"/></div>
+            <div><label>Hasta</label><input type="date" id="inf-ordenes-to"/></div>
+          </div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('ordenes','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('ordenes','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
         <!-- Notificaciones KFS -->
-        <div class="inf-card">
-          <div class="inf-card-icon"><i data-lucide="bell"></i></div>
-          <div class="inf-card-title">Notificaciones KFS</div>
-          <div class="inf-card-desc">Exporta el registro de notificaciones KFS por rango de fechas</div>
-          <div class="inf-date-row">
-            <label>Desde</label><input type="date" id="inf-notif-from"/>
-            <label>Hasta</label><input type="date" id="inf-notif-to"/>
+        <div class="informe-card">
+          <div class="informe-card-header">
+            <div class="informe-card-icon"><i data-lucide="bell"></i></div>
+            <div>
+              <div class="informe-card-title">Notificaciones KFS</div>
+              <div class="informe-card-desc">Exporta el registro de notificaciones KFS por rango de fechas</div>
+            </div>
           </div>
-          <div class="inf-btn-row">
-            <button class="inf-btn-excel" onclick="exportInforme('notif','csv')"><i data-lucide="bar-chart-2"></i> Exportar Excel</button>
-            <button class="inf-btn-pdf"   onclick="exportInforme('notif','pdf')"><i data-lucide="file-text"></i> Exportar PDF</button>
+          <div class="informe-fechas">
+            <div><label>Desde</label><input type="date" id="inf-notif-from"/></div>
+            <div><label>Hasta</label><input type="date" id="inf-notif-to"/></div>
+          </div>
+          <div class="informe-btns">
+            <button class="informe-btn-excel" onclick="exportInforme('notif','csv')"><i data-lucide="table-2"></i> Exportar Excel</button>
+            <button class="informe-btn-pdf"   onclick="exportInforme('notif','pdf')"><i data-lucide="file-text"></i> PDF</button>
           </div>
         </div>
 
       </div>
 
       <div style="margin-top:28px;text-align:center">
-        <button class="inf-all-btn" onclick="exportarTodoCSV()"><i data-lucide="package"></i> Exportar TODO en Excel</button>
+        <button class="informe-btn-todo" onclick="exportarTodoCSV()"><i data-lucide="package"></i> Exportar TODO en Excel</button>
       </div>
 
     </div>
