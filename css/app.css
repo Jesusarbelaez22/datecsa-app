@@ -4410,3 +4410,80 @@ body.light-theme #page-cliente hr {
   background: #D1D5DB !important;
   border-color: #D1D5DB !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - CLIENTE AJUSTES FINALES
+   ═══════════════════════════════════════ */
+
+/* ── ETIQUETAS INFORMACIÓN DEL CONTRATO ── */
+body.light-theme #cliente-contrato-box [style*="font-size:11px"],
+body.light-theme #cliente-contrato-box [style*="font-size:10px"],
+body.light-theme #cliente-contrato-box [style*="text-transform:uppercase"],
+body.light-theme #cliente-contrato-box [style*="letter-spacing"] {
+  color: #374151 !important;
+}
+body.light-theme #cliente-contrato-box span {
+  color: #374151 !important;
+}
+body.light-theme #cliente-contrato-box [style*="font-size:15px"],
+body.light-theme #cliente-contrato-box [style*="font-size:14px"],
+body.light-theme #cliente-contrato-box [style*="font-weight:600"],
+body.light-theme #cliente-contrato-box [style*="font-weight:700"],
+body.light-theme #cliente-contrato-box strong {
+  color: #111827 !important;
+}
+body.light-theme #cliente-contrato-box a {
+  color: #b40000 !important;
+}
+
+/* ── FILAS/CARDS DEL MAPA DE SEDES ── */
+body.light-theme #cliente-mapa-box > div[style*="display:flex"],
+body.light-theme #cliente-mapa-box > div[style*="padding"],
+body.light-theme #cliente-mapa-box > div {
+  background: #FFFFFF !important;
+  border: 1px solid #9CA3AF !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
+  margin-bottom: 8px !important;
+}
+body.light-theme #cliente-mapa-box > div:last-child {
+  margin-bottom: 0 !important;
+}
+body.light-theme #cliente-mapa-box > div:hover {
+  border-color: #b40000 !important;
+  box-shadow: 0 3px 10px rgba(180,0,0,0.10) !important;
+}
+body.light-theme #cliente-mapa-box [style*="font-weight:600"],
+body.light-theme #cliente-mapa-box [style*="font-weight:bold"],
+body.light-theme #cliente-mapa-box [style*="font-weight:700"],
+body.light-theme #cliente-mapa-box strong {
+  color: #111827 !important;
+  font-weight: 600 !important;
+}
+body.light-theme #cliente-mapa-box [style*="font-size:12px"],
+body.light-theme #cliente-mapa-box [style*="color:#666"],
+body.light-theme #cliente-mapa-box [style*="color:#777"],
+body.light-theme #cliente-mapa-box [style*="color:#888"] {
+  color: #4B5563 !important;
+}
+body.light-theme #cliente-mapa-box [style*="font-weight:700"][style*="color:#b40000"],
+body.light-theme #cliente-mapa-box [style*="color:#b40000"] {
+  color: #b40000 !important;
+  font-weight: 700 !important;
+}
+body.light-theme #cliente-mapa-box [style*="background:#b40000"],
+body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] {
+  background: #b40000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 50% !important;
+  margin-bottom: 0 !important;
+}
+body.light-theme #cliente-mapa-box [style*="background:#b40000"] *,
+body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] * {
+  color: #FFFFFF !important;
+}
+body.light-theme #cliente-mapa-box [style*="border-bottom"] {
+  border-color: #E5E7EB !important;
+}
