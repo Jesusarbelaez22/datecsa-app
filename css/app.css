@@ -3191,3 +3191,225 @@ body.light-theme #page-ordenes input[type="date"] {
   border: 1px solid #D1D5DB !important;
   color: #111827 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - MODALES DE DETALLE VER
+   Caso, Entrada, Instalación, Orden, Notif
+   ═══════════════════════════════════════ */
+
+/* ── OVERLAY ── */
+body.light-theme .modal-overlay {
+  background: rgba(0,0,0,0.4) !important;
+}
+
+/* ── MODAL BASE ── */
+body.light-theme .modal {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  color: #111827 !important;
+}
+
+/* ── TÍTULO DEL MODAL ── */
+body.light-theme .modal-title {
+  color: #111827 !important;
+  font-weight: 600 !important;
+}
+
+/* ── BOTÓN CERRAR ── */
+body.light-theme .modal-close {
+  color: #6B7280 !important;
+}
+body.light-theme .modal-close:hover {
+  color: #111827 !important;
+}
+
+/* ── HEADER Y FOOTER ── */
+body.light-theme .modal-header {
+  border-bottom: 1px solid #E5E7EB !important;
+}
+body.light-theme .modal-footer {
+  border-top: 1px solid #E5E7EB !important;
+}
+
+/* ── CONTENIDO DE VER DETALLE ── */
+body.light-theme #ver-ticket-content > div,
+body.light-theme #ver-entrada-content > div,
+body.light-theme #ver-instalado-content > div,
+body.light-theme #ver-orden-content > div,
+body.light-theme #ver-notif-content > div {
+  border-bottom-color: #E5E7EB !important;
+}
+
+/* ── ETIQUETAS (lado izquierdo) ── */
+body.light-theme #ver-ticket-content span:first-child,
+body.light-theme #ver-entrada-content span:first-child,
+body.light-theme #ver-instalado-content span:first-child,
+body.light-theme #ver-orden-content span:first-child,
+body.light-theme #ver-notif-content span:first-child {
+  color: #6B7280 !important;
+}
+body.light-theme #ver-ticket-content [style*="color:#666"],
+body.light-theme #ver-entrada-content [style*="color:#666"],
+body.light-theme #ver-instalado-content [style*="color:#666"],
+body.light-theme #ver-orden-content [style*="color:#666"],
+body.light-theme #ver-notif-content [style*="color:#666"],
+body.light-theme #ver-ticket-content [style*="color:#777"],
+body.light-theme #ver-entrada-content [style*="color:#777"],
+body.light-theme #ver-instalado-content [style*="color:#777"],
+body.light-theme #ver-orden-content [style*="color:#777"],
+body.light-theme #ver-notif-content [style*="color:#777"],
+body.light-theme #ver-ticket-content [style*="color:#555"],
+body.light-theme #ver-entrada-content [style*="color:#555"],
+body.light-theme #ver-instalado-content [style*="color:#555"],
+body.light-theme #ver-orden-content [style*="color:#555"],
+body.light-theme #ver-notif-content [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+/* ── VALORES (lado derecho) ── */
+body.light-theme #ver-ticket-content [style*="color:#ccc"],
+body.light-theme #ver-entrada-content [style*="color:#ccc"],
+body.light-theme #ver-instalado-content [style*="color:#ccc"],
+body.light-theme #ver-orden-content [style*="color:#ccc"],
+body.light-theme #ver-notif-content [style*="color:#ccc"],
+body.light-theme #ver-ticket-content [style*="color:#ddd"],
+body.light-theme #ver-entrada-content [style*="color:#ddd"],
+body.light-theme #ver-instalado-content [style*="color:#ddd"],
+body.light-theme #ver-orden-content [style*="color:#ddd"],
+body.light-theme #ver-notif-content [style*="color:#ddd"],
+body.light-theme #ver-ticket-content [style*="color:#aaa"],
+body.light-theme #ver-entrada-content [style*="color:#aaa"],
+body.light-theme #ver-instalado-content [style*="color:#aaa"],
+body.light-theme #ver-orden-content [style*="color:#aaa"],
+body.light-theme #ver-notif-content [style*="color:#aaa"],
+body.light-theme #ver-ticket-content [style*="color:#e0e0e0"],
+body.light-theme #ver-entrada-content [style*="color:#e0e0e0"],
+body.light-theme #ver-instalado-content [style*="color:#e0e0e0"],
+body.light-theme #ver-orden-content [style*="color:#e0e0e0"],
+body.light-theme #ver-notif-content [style*="color:#e0e0e0"] {
+  color: #374151 !important;
+}
+
+/* ── VALORES DESTACADOS (color:#fff en oscuro) ── */
+body.light-theme #ver-ticket-content [style*="color:#fff"],
+body.light-theme #ver-entrada-content [style*="color:#fff"],
+body.light-theme #ver-instalado-content [style*="color:#fff"],
+body.light-theme #ver-orden-content [style*="color:#fff"],
+body.light-theme #ver-notif-content [style*="color:#fff"] {
+  color: #111827 !important;
+}
+
+/* ── VALORES EN NEGRITA ── */
+body.light-theme #ver-ticket-content [style*="font-weight:600"],
+body.light-theme #ver-entrada-content [style*="font-weight:600"],
+body.light-theme #ver-instalado-content [style*="font-weight:600"],
+body.light-theme #ver-orden-content [style*="font-weight:600"],
+body.light-theme #ver-notif-content [style*="font-weight:600"],
+body.light-theme #ver-ticket-content [style*="font-weight:700"],
+body.light-theme #ver-entrada-content [style*="font-weight:700"],
+body.light-theme #ver-instalado-content [style*="font-weight:700"],
+body.light-theme #ver-orden-content [style*="font-weight:700"],
+body.light-theme #ver-notif-content [style*="font-weight:700"] {
+  color: #111827 !important;
+}
+
+/* ── CAJA DE OBSERVACIONES / TRABAJO REALIZADO ── */
+body.light-theme #ver-ticket-content [style*="background:#111"],
+body.light-theme #ver-entrada-content [style*="background:#111"],
+body.light-theme #ver-instalado-content [style*="background:#111"],
+body.light-theme #ver-orden-content [style*="background:#111"],
+body.light-theme #ver-notif-content [style*="background:#111"] {
+  background: #F9FAFB !important;
+  border: 1px solid #E5E7EB !important;
+  color: #374151 !important;
+}
+
+/* Etiqueta de observaciones */
+body.light-theme #ver-ticket-content [style*="text-transform:uppercase"],
+body.light-theme #ver-entrada-content [style*="text-transform:uppercase"],
+body.light-theme #ver-instalado-content [style*="text-transform:uppercase"],
+body.light-theme #ver-orden-content [style*="text-transform:uppercase"],
+body.light-theme #ver-notif-content [style*="text-transform:uppercase"] {
+  color: #6B7280 !important;
+}
+
+/* ── BADGES EN MODALES DE DETALLE ── */
+body.light-theme #ver-ticket-content .badge-open,
+body.light-theme #ver-orden-content .badge-open {
+  background: #DBEAFE !important;
+  color: #1E40AF !important;
+  border-color: #BFDBFE !important;
+}
+body.light-theme #ver-ticket-content .badge-progress,
+body.light-theme #ver-orden-content .badge-progress {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+  border-color: #FDE68A !important;
+}
+body.light-theme #ver-ticket-content .badge-closed,
+body.light-theme #ver-orden-content .badge-closed {
+  background: #D1FAE5 !important;
+  color: #065F46 !important;
+  border-color: #A7F3D0 !important;
+}
+body.light-theme #ver-ticket-content .badge-critical,
+body.light-theme #ver-orden-content .badge-critical {
+  background: #FEE2E2 !important;
+  color: #991B1B !important;
+  border-color: #FECACA !important;
+}
+body.light-theme #ver-ticket-content .badge-low,
+body.light-theme #ver-orden-content .badge-low {
+  background: #F3F4F6 !important;
+  color: #374151 !important;
+  border-color: #E5E7EB !important;
+}
+
+/* O.S en amarillo oscuro */
+body.light-theme #ver-orden-content [style*="color:#ffcc44"],
+body.light-theme #ver-notif-content [style*="color:#ffcc44"] {
+  color: #B45309 !important;
+}
+
+/* Pendiente en cursiva */
+body.light-theme #ver-orden-content [style*="font-style:italic"],
+body.light-theme #ver-notif-content [style*="font-style:italic"] {
+  color: #9CA3AF !important;
+}
+
+/* ── AVISO PENDIENTE OS ── */
+body.light-theme #ver-orden-content [style*="background:rgba(200,140,0"] {
+  background: #FEF3C7 !important;
+  border-color: #FDE68A !important;
+  color: #92400E !important;
+}
+
+/* ── BOTONES EN FOOTER DEL MODAL ── */
+body.light-theme #modal-ver-ticket .btn-primary,
+body.light-theme #modal-ver-entrada .btn-primary,
+body.light-theme #modal-ver-instalado .btn-primary,
+body.light-theme #modal-ver-orden .btn-primary,
+body.light-theme #modal-ver-notif .btn-primary {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+}
+body.light-theme #modal-ver-ticket .btn-secondary,
+body.light-theme #modal-ver-entrada .btn-secondary,
+body.light-theme #modal-ver-instalado .btn-secondary,
+body.light-theme #modal-ver-orden .btn-secondary,
+body.light-theme #modal-ver-notif .btn-secondary {
+  background: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+}
+
+/* Botón copiar correo en orden */
+body.light-theme #modal-ver-orden button[onclick*="copiarParaCorreo"] {
+  background: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+}
+body.light-theme #modal-ver-orden button[onclick*="copiarParaCorreo"]:hover {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+}
