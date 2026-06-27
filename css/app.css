@@ -32,8 +32,9 @@ body.light-theme {
   --bg-input:       #F9FAFB;
   --bg-table-head:  #F9FAFB;
   --bg-hover:       #F9FAFB;
-  --border-color:   #E5E7EB;
-  --border-input:   #D1D5DB;
+  --border-color:   #EBEBEB;
+  --border-input:   #E0E0E0;
+  --border-subtle:  #F0F0F0;
   --text-primary:   #111827;
   --text-secondary: #6B7280;
   --text-muted:     #9CA3AF;
@@ -2285,4 +2286,192 @@ body.light-theme #usuarios-table-container table th {
 }
 body.light-theme #usuarios-table-container table td {
   color: #111827 !important;
+}
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - BORDES SUAVES GLOBALES
+   ═══════════════════════════════════════ */
+
+/* ── STAT CARDS ── */
+body.light-theme .stat-card {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06),
+              0 0 0 1px rgba(0,0,0,0.03) !important;
+}
+body.light-theme .stat-card:hover {
+  border: 1px solid #D5D5D5 !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10),
+              0 0 0 1px rgba(0,0,0,0.04) !important;
+}
+
+/* ── TABLE WRAP ── */
+body.light-theme .table-wrap {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05),
+              0 0 0 1px rgba(0,0,0,0.02) !important;
+}
+
+/* ── MODALES ── */
+body.light-theme .modal {
+  border: 1px solid #E5E5E5 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12),
+              0 0 0 1px rgba(0,0,0,0.04) !important;
+}
+
+/* ── SIDEBAR ── */
+body.light-theme #sidebar {
+  border-right: 1px solid #EBEBEB !important;
+  box-shadow: 1px 0 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── TOPBAR ── */
+body.light-theme .topbar {
+  border-bottom: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CARDS GENÉRICAS CON BACKGROUND ── */
+body.light-theme #page-dashboard [style*="background:#161616"],
+body.light-theme #page-dashboard [style*="background:#1a1a1a"],
+body.light-theme #page-dashboard [style*="background:#111"],
+body.light-theme #page-usuarios [style*="background:#161616"],
+body.light-theme #page-usuarios [style*="background:#111"],
+body.light-theme #page-toners [style*="background:#1a1a1a"],
+body.light-theme #page-cliente [style*="background:#161616"],
+body.light-theme #page-cliente [style*="background:#1a1a1a"],
+body.light-theme #page-tickets [style*="background:#161616"],
+body.light-theme #page-entradas [style*="background:#161616"],
+body.light-theme #page-instalados [style*="background:#161616"],
+body.light-theme #page-ordenes [style*="background:#161616"],
+body.light-theme #page-notificaciones [style*="background:#161616"],
+body.light-theme #page-informes [style*="background:#161616"],
+body.light-theme #page-configuracion [style*="background:#161616"],
+body.light-theme #page-cierre [style*="background:#161616"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CUADRO BUSCADOR USUARIOS ── */
+body.light-theme #page-usuarios > div {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CARDS DE SEDES EN CLIENTE ── */
+body.light-theme .cliente-sede-card {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+body.light-theme .cliente-sede-card:hover {
+  border: 1px solid #b40000 !important;
+  box-shadow: 0 4px 16px rgba(180,0,0,0.08) !important;
+}
+
+/* ── INFORMACIÓN DEL CONTRATO ── */
+body.light-theme #cliente-contrato-box {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── MAPA DE SEDES ── */
+body.light-theme #cliente-mapa-box {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── MINI CARDS DE TONER DISPONIBLES ── */
+body.light-theme #page-toners [style*="flex:1"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── TABLA TONER DISPONIBLES ── */
+body.light-theme #page-toners [style*="background:#1a1a1a"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CARDS DE INFORMES ── */
+body.light-theme #page-informes .card,
+body.light-theme #page-informes [style*="background"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CARDS DE CONFIGURACIÓN ── */
+body.light-theme #page-configuracion [style*="background:#161616"],
+body.light-theme #page-configuracion [style*="background:#1a1a1a"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── CARDS CIERRE FACTURACIÓN ── */
+body.light-theme #page-cierre [style*="background:#161616"],
+body.light-theme #page-cierre [style*="background:#1a1a1a"] {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── PAGINACIÓN USUARIOS ── */
+body.light-theme #usuarios-table-container div[style*="border-top"] {
+  border-top: 1px solid #EBEBEB !important;
+}
+
+/* ── INPUTS Y SELECTS ── */
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea {
+  border: 1px solid #E0E0E0 !important;
+}
+body.light-theme input:focus,
+body.light-theme select:focus,
+body.light-theme textarea:focus {
+  border: 1px solid #b40000 !important;
+  box-shadow: 0 0 0 3px rgba(180,0,0,0.08) !important;
+}
+
+/* ── TABLE TOOLBAR ── */
+body.light-theme .table-toolbar {
+  border-bottom: 1px solid #EBEBEB !important;
+}
+
+/* ── SEPARADORES INTERNOS ── */
+body.light-theme .modal-header {
+  border-bottom: 1px solid #F0F0F0 !important;
+}
+body.light-theme .modal-footer {
+  border-top: 1px solid #F0F0F0 !important;
+}
+
+/* ── CONFIRM BOX ── */
+body.light-theme .confirm-box {
+  border: 1px solid #E5E5E5 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+}
+
+/* ── TOAST ── */
+body.light-theme .toast {
+  border: 1px solid #E5E5E5 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* ── RESUMEN TICKETS BOX ── */
+body.light-theme #resumen-tickets-box {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* ── ACTIVIDAD RECIENTE CARDS ── */
+body.light-theme #dash-tickets-container > div {
+  border: 1px solid #EBEBEB !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+}
+body.light-theme #dash-tickets-container > div:hover {
+  border: 1px solid #D5D5D5 !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08) !important;
+}
+
+/* ── MOBILE MENU BTN ── */
+body.light-theme #mobile-menu-btn {
+  border: 1px solid #E0E0E0 !important;
 }
