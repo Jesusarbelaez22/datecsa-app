@@ -4250,3 +4250,163 @@ body.light-theme #dash-saludo {
 body.light-theme #dash-fecha {
   color: #6B7280 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - SECCIÓN CLIENTE
+   Sedes, Contrato, Mapa
+   ═══════════════════════════════════════ */
+
+/* ── CARDS DE DISTRIBUCIÓN POR SEDES ── */
+body.light-theme .cliente-sede-card {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  transition: all .2s ease !important;
+}
+body.light-theme .cliente-sede-card:hover {
+  border-color: #b40000 !important;
+  box-shadow: 0 6px 20px rgba(180,0,0,0.10) !important;
+  transform: translateY(-2px) !important;
+}
+body.light-theme .cliente-sede-card [style*="color:#fff"],
+body.light-theme .cliente-sede-card [style*="color: #fff"],
+body.light-theme .cliente-sede-card [style*="color:white"],
+body.light-theme .cliente-sede-card [style*="color:#ffffff"],
+body.light-theme .cliente-sede-card [style*="color: #ffffff"] {
+  color: #111827 !important;
+}
+body.light-theme .cliente-sede-card [style*="font-weight:bold"],
+body.light-theme .cliente-sede-card [style*="font-weight: bold"],
+body.light-theme .cliente-sede-card [style*="font-weight:600"],
+body.light-theme .cliente-sede-card [style*="font-weight: 600"],
+body.light-theme .cliente-sede-card [style*="font-weight:700"],
+body.light-theme .cliente-sede-card [style*="font-weight: 700"] {
+  color: #111827 !important;
+}
+body.light-theme .cliente-sede-card [style*="font-size:15px"],
+body.light-theme .cliente-sede-card [style*="font-size:16px"],
+body.light-theme .cliente-sede-card [style*="font-size:14px"] {
+  color: #111827 !important;
+}
+body.light-theme .cliente-sede-card [style*="color:#b40000"],
+body.light-theme .cliente-sede-card [style*="color:var(--color-accent)"] {
+  color: #b40000 !important;
+}
+body.light-theme .cliente-sede-card [style*="color:#666"],
+body.light-theme .cliente-sede-card [style*="color:#777"],
+body.light-theme .cliente-sede-card [style*="color:#888"],
+body.light-theme .cliente-sede-card [style*="color:#999"] {
+  color: #6B7280 !important;
+}
+body.light-theme .cliente-sede-card [style*="color:#555"],
+body.light-theme .cliente-sede-card [style*="color:#444"] {
+  color: #9CA3AF !important;
+}
+body.light-theme .cliente-sede-card [data-lucide],
+body.light-theme .cliente-sede-card i[data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+body.light-theme .cliente-sede-card[style*="border-left"],
+body.light-theme .cliente-sede-card [style*="border-left:3px solid #b40000"] {
+  border-left: 3px solid #b40000 !important;
+}
+body.light-theme .cliente-sede-card * {
+  color: #374151;
+}
+body.light-theme .cliente-sede-card [style*="color:#b40000"] {
+  color: #b40000 !important;
+}
+
+/* ── INFORMACIÓN DEL CONTRATO ── */
+body.light-theme #cliente-contrato-box {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #cliente-contrato-box * {
+  color: #374151 !important;
+}
+body.light-theme #cliente-contrato-box [style*="font-size:11px"],
+body.light-theme #cliente-contrato-box [style*="text-transform:uppercase"],
+body.light-theme #cliente-contrato-box span[style*="color:#666"] {
+  color: #9CA3AF !important;
+}
+body.light-theme #cliente-contrato-box [style*="font-size:15px"],
+body.light-theme #cliente-contrato-box [style*="font-weight:600"],
+body.light-theme #cliente-contrato-box strong {
+  color: #111827 !important;
+}
+body.light-theme #cliente-contrato-box a {
+  color: #b40000 !important;
+}
+body.light-theme #cliente-contrato-box [style*="color:#fff"],
+body.light-theme #cliente-contrato-box [style*="color: #fff"] {
+  color: #111827 !important;
+}
+body.light-theme #cliente-contrato-box [style*="border-bottom"],
+body.light-theme #cliente-contrato-box [style*="border-right"] {
+  border-color: #E5E7EB !important;
+}
+
+/* ── MAPA DE SEDES ── */
+body.light-theme #cliente-mapa-box {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #cliente-mapa-box > div,
+body.light-theme #cliente-mapa-box [style*="display:flex"] {
+  background: transparent !important;
+}
+body.light-theme #cliente-mapa-box [style*="border-bottom"] {
+  border-color: #E5E7EB !important;
+}
+body.light-theme #cliente-mapa-box * {
+  color: #374151 !important;
+}
+body.light-theme #cliente-mapa-box [style*="background:#b40000"],
+body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] {
+  background: #b40000 !important;
+  color: #FFFFFF !important;
+}
+body.light-theme #cliente-mapa-box [style*="background:#b40000"] *,
+body.light-theme #cliente-mapa-box [style*="background:var(--color-accent)"] * {
+  color: #FFFFFF !important;
+}
+body.light-theme #cliente-mapa-box [style*="font-weight:600"],
+body.light-theme #cliente-mapa-box [style*="font-weight:bold"],
+body.light-theme #cliente-mapa-box strong {
+  color: #111827 !important;
+}
+body.light-theme #cliente-mapa-box [style*="font-size:12px"],
+body.light-theme #cliente-mapa-box [style*="color:#666"],
+body.light-theme #cliente-mapa-box [style*="color:#777"] {
+  color: #6B7280 !important;
+}
+body.light-theme #cliente-mapa-box [style*="color:#b40000"] {
+  color: #b40000 !important;
+}
+
+/* ── TÍTULO DE SECCIÓN ── */
+body.light-theme #page-cliente .section-title,
+body.light-theme #page-cliente h2,
+body.light-theme #page-cliente h3 {
+  color: #111827 !important;
+}
+body.light-theme #page-cliente [style*="color:#555"],
+body.light-theme #page-cliente [style*="color:#666"],
+body.light-theme #page-cliente [style*="color:#777"] {
+  color: #6B7280 !important;
+}
+
+/* ── SEPARADORES DE SECCIÓN ── */
+body.light-theme #page-cliente [style*="height:1px"],
+body.light-theme #page-cliente [style*="flex:1;height:1px"],
+body.light-theme #page-cliente hr {
+  background: #D1D5DB !important;
+  border-color: #D1D5DB !important;
+}
