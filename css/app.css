@@ -3678,3 +3678,237 @@ body.light-theme #page-informes .grid,
 body.light-theme #page-informes [style*="display:grid"] {
   gap: 16px !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - CIERRE FACTURACIÓN
+   ═══════════════════════════════════════ */
+
+body.light-theme #page-cierre {
+  background: var(--bg-body) !important;
+}
+
+/* ── TÍTULOS Y SUBTÍTULOS ── */
+body.light-theme #page-cierre h1,
+body.light-theme #page-cierre h2,
+body.light-theme #page-cierre h3,
+body.light-theme #page-cierre .section-title {
+  color: #111827 !important;
+}
+body.light-theme #page-cierre p,
+body.light-theme #page-cierre [style*="color:#666"],
+body.light-theme #page-cierre [style*="color:#777"],
+body.light-theme #page-cierre [style*="color:#888"],
+body.light-theme #page-cierre [style*="color:#aaa"] {
+  color: #6B7280 !important;
+}
+
+/* ── CUADROS DE SECCIONES ── */
+body.light-theme #page-cierre [style*="background:#161616"],
+body.light-theme #page-cierre [style*="background:#1a1a1a"],
+body.light-theme #page-cierre [style*="background:#111"],
+body.light-theme #page-cierre [style*="background:#0d0d0d"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* ── TARJETAS DE PASOS ── */
+body.light-theme #page-cierre [style*="border:1px solid #222"],
+body.light-theme #page-cierre [style*="border:1px solid #2a2a2a"],
+body.light-theme #page-cierre [style*="border-left:3px solid"] {
+  background: #FFFFFF !important;
+  border-color: #9CA3AF !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-cierre [style*="border-left:3px solid #b40000"] {
+  border-left: 3px solid #b40000 !important;
+}
+
+/* ── NÚMERO DEL PASO (círculo rojo) ── */
+body.light-theme #page-cierre [style*="background:#b40000"],
+body.light-theme #page-cierre [style*="background:linear-gradient(135deg,#b40000"] {
+  background: #b40000 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── TEXTOS DE LOS PASOS ── */
+body.light-theme #page-cierre [style*="color:#fff"],
+body.light-theme #page-cierre [style*="color: #fff"],
+body.light-theme #page-cierre strong {
+  color: #111827 !important;
+}
+body.light-theme #page-cierre li {
+  color: #374151 !important;
+}
+body.light-theme #page-cierre ul,
+body.light-theme #page-cierre ol {
+  color: #374151 !important;
+}
+
+/* ── ALERTAS ⚠ IMPORTANTE ── */
+body.light-theme #page-cierre [style*="background:rgba(180,0,0"] {
+  background: #FEF2F2 !important;
+  border: 1px solid #FECACA !important;
+  color: #991B1B !important;
+}
+body.light-theme #page-cierre [style*="color:#ff9999"] {
+  color: #991B1B !important;
+}
+
+/* ── CORREOS DESTACADOS ── */
+body.light-theme #page-cierre [style*="background:rgba(0,100,255"] {
+  background: #EFF6FF !important;
+  border: 1px solid #BFDBFE !important;
+  color: #1D4ED8 !important;
+}
+body.light-theme #page-cierre [style*="color:#88aaff"] {
+  color: #1D4ED8 !important;
+}
+
+/* ── SEPARADORES ── */
+body.light-theme #page-cierre [style*="height:1px"],
+body.light-theme #page-cierre [style*="border-top"],
+body.light-theme #page-cierre hr {
+  background: #E5E7EB !important;
+  border-color: #E5E7EB !important;
+}
+
+/* ── ÍCONOS ── */
+body.light-theme #page-cierre [data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - CONFIGURACIÓN
+   ═══════════════════════════════════════ */
+
+body.light-theme #page-configuracion {
+  background: var(--bg-body) !important;
+}
+
+/* ── TÍTULOS ── */
+body.light-theme #page-configuracion h2,
+body.light-theme #page-configuracion h3,
+body.light-theme #page-configuracion .section-title,
+body.light-theme #page-configuracion [style*="font-weight:600"] {
+  color: #111827 !important;
+}
+body.light-theme #page-configuracion p,
+body.light-theme #page-configuracion [style*="color:#666"],
+body.light-theme #page-configuracion [style*="color:#777"],
+body.light-theme #page-configuracion [style*="color:#888"],
+body.light-theme #page-configuracion [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+
+/* ── CUADROS DE SECCIONES ── */
+body.light-theme #page-configuracion [style*="background:#161616"],
+body.light-theme #page-configuracion [style*="background:#1a1a1a"],
+body.light-theme #page-configuracion [style*="background:#111"],
+body.light-theme #page-configuracion [style*="background:#0d0d0d"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* ── TARJETAS DE TEMAS ── */
+body.light-theme #page-configuracion [style*="border-radius:10px"],
+body.light-theme #page-configuracion [style*="border-radius: 10px"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-configuracion [style*="border:2px solid"] {
+  border: 2px solid #b40000 !important;
+}
+
+/* ── LABELS DE CAMPOS ── */
+body.light-theme #page-configuracion label {
+  color: #374151 !important;
+  font-weight: 500 !important;
+}
+
+/* ── INPUTS Y SELECTS ── */
+body.light-theme #page-configuracion input,
+body.light-theme #page-configuracion select,
+body.light-theme #page-configuracion textarea {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+}
+body.light-theme #page-configuracion input:focus,
+body.light-theme #page-configuracion select:focus,
+body.light-theme #page-configuracion textarea:focus {
+  border-color: #b40000 !important;
+  box-shadow: 0 0 0 3px rgba(180,0,0,0.08) !important;
+}
+body.light-theme #page-configuracion input::placeholder {
+  color: #9CA3AF !important;
+}
+
+/* ── STAT CARDS EN DATOS DEL SISTEMA ── */
+body.light-theme #page-configuracion .stat-card,
+body.light-theme #page-configuracion [style*="background:#161616"][style*="border"] {
+  background: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-configuracion .stat-num {
+  color: inherit !important;
+}
+body.light-theme #page-configuracion .stat-label {
+  color: #6B7280 !important;
+}
+
+/* ── ZONA DE PELIGRO ── */
+body.light-theme #page-configuracion [style*="border-top:1px solid #2a2a2a"],
+body.light-theme #page-configuracion [style*="border-top: 1px solid #2a2a2a"] {
+  border-top: 1px solid #9CA3AF !important;
+}
+body.light-theme #page-configuracion [style*="color:#555;font-size:12px"],
+body.light-theme #page-configuracion [style*="color:#555"] {
+  color: #6B7280 !important;
+}
+body.light-theme #btn-limpiar {
+  color: #DC2626 !important;
+  border-color: rgba(220,38,38,0.4) !important;
+}
+body.light-theme #btn-limpiar:hover {
+  background: rgba(220,38,38,0.08) !important;
+  border-color: #DC2626 !important;
+}
+
+/* ── BOTONES DE CONFIGURACIÓN ── */
+body.light-theme #page-configuracion .btn-primary {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+}
+body.light-theme #page-configuracion .btn-secondary {
+  background: #F3F4F6 !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+}
+body.light-theme #page-configuracion .btn-secondary:hover {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+}
+
+/* ── ÍCONOS ── */
+body.light-theme #page-configuracion [data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+
+/* ── SEPARADORES INTERNOS ── */
+body.light-theme #page-configuracion [style*="border-left:4px solid #b40000"],
+body.light-theme #page-configuracion [style*="border-left: 4px solid #b40000"] {
+  border-left: 4px solid #b40000 !important;
+}
+body.light-theme #page-configuracion [style*="height:1px"],
+body.light-theme #page-configuracion hr {
+  background: #E5E7EB !important;
+  border-color: #E5E7EB !important;
+}
