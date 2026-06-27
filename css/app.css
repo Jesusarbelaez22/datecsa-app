@@ -3533,3 +3533,22 @@ body.light-theme #ver-orden-content [style*="background:rgba(200,140,0"] {
   border-color: #9CA3AF !important;
   color: #92400E !important;
 }
+
+/* ── DROPZONE EVIDENCIA - TEMA CLARO ── */
+body.light-theme #evidencia-dropzone {
+  background: #F9FAFB !important;
+  border: 2px dashed #D1D5DB !important;
+}
+body.light-theme #evidencia-dropzone:hover {
+  border-color: #b40000 !important;
+  background: #FEF2F2 !important;
+}
+body.light-theme #evidencia-placeholder {
+  color: #6B7280 !important;
+}
+body.light-theme #evidencia-placeholder div:first-child {
+  color: #9CA3AF !important;
+}
+body.light-theme #evidencia-placeholder div:last-child {
+  color: #9CA3AF !important;
+}
