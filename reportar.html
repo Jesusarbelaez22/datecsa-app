@@ -187,8 +187,7 @@ const SUPABASE_URL = 'https://znvbjrrkndmytjwikzno.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudmJqcnJrbmRteXRqd2lrem5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTA0MzMsImV4cCI6MjA5NzM2NjQzM30.YjnYkuMTdo3S7yIX-zjmy-FCNEMaw1NZaQNoPYEvzbg';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-emailjs.init('PENDIENTE_PUBLIC_KEY');
-// Reemplazar 'PENDIENTE_PUBLIC_KEY' con la Public Key de EmailJS
+emailjs.init('xy-lJfTdcCS52yetO');
 
 let evidenciaBase64 = null;
 
@@ -278,7 +277,7 @@ document.getElementById('reportForm').addEventListener('submit', async function(
 
     // Enviar correo de confirmación al solicitante
     try{
-      await emailjs.send('PENDIENTE_SERVICE_ID', 'PENDIENTE_TEMPLATE_ID', {
+      await emailjs.send('service_sht8v5l', 'template_jzws0m5', {
         to_email: correoSolicitante,
         to_name: nombre,
         codigo_caso: 'CASO-' + (data[0]?.id || '???'),
@@ -287,9 +286,10 @@ document.getElementById('reportForm').addEventListener('submit', async function(
         fecha: obj.fecha_inicial,
         tiempo_estimado: 'mínimo 48 horas hábiles'
       });
+      console.log('Correo de confirmación enviado correctamente');
     }catch(emailErr){
       console.error('Error enviando correo:', emailErr);
-      // No bloquear el flujo si falla el correo, el caso ya se guardó
+      // No bloquear el flujo si falla el correo, el caso ya se guardó en Supabase
     }
 
     document.getElementById('formCard').style.display = 'none';
