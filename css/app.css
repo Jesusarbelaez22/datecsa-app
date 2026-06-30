@@ -6441,3 +6441,77 @@ body.light-theme #page-usuarios > div:first-child:not(.section-header) {
   flex-wrap: wrap !important;
   gap: 12px !important;
 }
+
+/* ═══════════════════════════════════════
+   USUARIOS - LIMPIAR TODAS LAS CAJAS
+   Solo la tabla final mantiene caja
+   ═══════════════════════════════════════ */
+
+/* Quitar caja de TODO dentro de page-usuarios excepto la tabla */
+#page-usuarios > *:not(#usuarios-table-container) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#page-usuarios > * > *:not(#usuarios-table-container) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Header título + botón */
+#page-usuarios .section-header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 20px 0 !important;
+}
+
+/* Buscador completo */
+#page-usuarios > div:has(#usuarios-search) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 20px 0 !important;
+}
+
+/* Inputs del buscador SÍ mantienen su propio estilo de input */
+#page-usuarios #usuarios-search {
+  background: var(--bg-input) !important;
+  border: 1px solid var(--border-input) !important;
+}
+
+body.light-theme #page-usuarios #usuarios-search {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+}
+
+/* Resultado destacado - borde sutil solo si tiene contenido */
+#page-usuarios #usuarios-resultado-destacado {
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--border-color) !important;
+  box-shadow: none !important;
+  padding-top: 12px !important;
+}
+
+body.light-theme #page-usuarios #usuarios-resultado-destacado {
+  border-top: 1px solid #E5E7EB !important;
+}
+
+/* La tabla SIGUE teniendo su caja normal */
+#usuarios-table-container {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  overflow: hidden !important;
+}
+
+body.light-theme #usuarios-table-container {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
