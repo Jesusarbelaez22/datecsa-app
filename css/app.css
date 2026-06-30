@@ -6532,3 +6532,28 @@ body.light-theme #page-usuarios .btn-primary i {
   color: #FFFFFF !important;
   stroke: #FFFFFF !important;
 }
+
+/* ═══════════════════════════════════════
+   BOTÓN AGREGAR USUARIO - ROJO EN AMBOS TEMAS
+   ═══════════════════════════════════════ */
+
+#page-usuarios .btn-primary,
+body.light-theme #page-usuarios .btn-primary {
+  background: linear-gradient(135deg, #b40000, #8a0000) !important;
+  background-color: #b40000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+#page-usuarios .btn-primary:hover,
+body.light-theme #page-usuarios .btn-primary:hover {
+  opacity: .88 !important;
+}
+
+#page-usuarios .btn-primary *,
+body.light-theme #page-usuarios .btn-primary *,
+#page-usuarios .btn-primary [data-lucide],
+body.light-theme #page-usuarios .btn-primary [data-lucide] {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
