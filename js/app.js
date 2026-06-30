@@ -704,8 +704,8 @@ async function renderToners(){
       <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
 
         <!-- Total Llegada -->
-        <div style="flex:1;min-width:120px;background:#161616;
-                    border:1px solid #222;border-left:3px solid #3B82F6;
+        <div style="flex:1;min-width:120px;background:var(--bg-card);
+                    border:1px solid var(--border-color);border-left:3px solid #3B82F6;
                     border-radius:10px;padding:12px 16px;transition:all .2s">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <div style="width:28px;height:28px;border-radius:6px;
@@ -723,8 +723,8 @@ async function renderToners(){
         </div>
 
         <!-- Total Instalados -->
-        <div style="flex:1;min-width:120px;background:#161616;
-                    border:1px solid #222;border-left:3px solid #F59E0B;
+        <div style="flex:1;min-width:120px;background:var(--bg-card);
+                    border:1px solid var(--border-color);border-left:3px solid #F59E0B;
                     border-radius:10px;padding:12px 16px;transition:all .2s">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <div style="width:28px;height:28px;border-radius:6px;
@@ -742,8 +742,8 @@ async function renderToners(){
         </div>
 
         <!-- Disponibles -->
-        <div style="flex:1;min-width:120px;background:#161616;
-                    border:1px solid #222;
+        <div style="flex:1;min-width:120px;background:var(--bg-card);
+                    border:1px solid var(--border-color);
                     border-left:3px solid ${totalDisp <= 10 ? '#EF4444' : '#10B981'};
                     border-radius:10px;padding:12px 16px;transition:all .2s">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
@@ -768,12 +768,12 @@ async function renderToners(){
       </div>
 
       <!-- TABLA PRINCIPAL -->
-      <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);
+      <div style="background:var(--bg-card);border:1px solid var(--border-color);
                   border-radius:16px;overflow:hidden;
                   box-shadow:0 8px 32px rgba(0,0,0,0.4)">
         <table style="width:100%;border-collapse:collapse">
           <thead>
-            <tr style="background:#111111">
+            <tr style="background:var(--bg-table-head)">
               <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;
                          color:#666;letter-spacing:1px;text-transform:uppercase;
                          border-bottom:1px solid rgba(255,255,255,0.06)">TONER</th>

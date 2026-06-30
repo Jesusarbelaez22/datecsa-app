@@ -5409,3 +5409,205 @@ body.light-theme #page-configuracion [style*="background:rgba(180,0,0"] {
   background: #FEF2F2 !important;
   border-color: #FECACA !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - UNIFICAR LOS 7 MÓDULOS
+   Usuarios, Tickets, Toners, Entradas,
+   Instalados, Ordenes, Notificaciones
+   ═══════════════════════════════════════ */
+
+/* Contenedor .table-wrap - el principal de cada módulo */
+body.light-theme #page-usuarios .table-wrap,
+body.light-theme #page-tickets .table-wrap,
+body.light-theme #page-toners .table-wrap,
+body.light-theme #page-entradas .table-wrap,
+body.light-theme #page-instalados .table-wrap,
+body.light-theme #page-ordenes .table-wrap,
+body.light-theme #page-notificaciones .table-wrap,
+body.light-theme #usuarios-table-container,
+body.light-theme #ordenes-table-container,
+body.light-theme #notif-container,
+body.light-theme #toners-table-container {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* Cualquier div hijo directo con fondo oscuro inline */
+body.light-theme #page-usuarios [style*="background"],
+body.light-theme #page-tickets [style*="background"],
+body.light-theme #page-toners [style*="background"],
+body.light-theme #page-entradas [style*="background"],
+body.light-theme #page-instalados [style*="background"],
+body.light-theme #page-ordenes [style*="background"],
+body.light-theme #page-notificaciones [style*="background"] {
+  background-color: #FFFFFF !important;
+}
+
+/* Excepciones que SÍ deben mantener su color de fondo */
+body.light-theme [style*="background:#b40000"],
+body.light-theme [style*="background: #b40000"],
+body.light-theme [style*="background:linear-gradient"],
+body.light-theme [style*="background:rgba"],
+body.light-theme .btn-primary,
+body.light-theme .stat-icon,
+body.light-theme .stat-icon-circle,
+body.light-theme .badge,
+body.light-theme [class*="badge-"] {
+  background-color: revert !important;
+}
+
+/* Restaurar específicamente badges con su color real */
+body.light-theme .badge-open { background-color: #DBEAFE !important; }
+body.light-theme .badge-progress { background-color: #FEF3C7 !important; }
+body.light-theme .badge-closed { background-color: #D1FAE5 !important; }
+body.light-theme .badge-critical { background-color: #FEE2E2 !important; }
+body.light-theme .badge-low { background-color: #F3F4F6 !important; }
+
+/* ── BARRA SUPERIOR (toolbar con contador) en los 7 módulos ── */
+body.light-theme #page-usuarios .table-toolbar,
+body.light-theme #page-tickets .table-toolbar,
+body.light-theme #page-toners .table-toolbar,
+body.light-theme #page-entradas .table-toolbar,
+body.light-theme #page-instalados .table-toolbar,
+body.light-theme #page-ordenes .table-toolbar,
+body.light-theme #page-notificaciones .table-toolbar {
+  background-color: #F9FAFB !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+
+/* ── TABLAS - encabezados ── */
+body.light-theme #page-usuarios table th,
+body.light-theme #page-tickets table th,
+body.light-theme #page-toners table th,
+body.light-theme #page-entradas table th,
+body.light-theme #page-instalados table th,
+body.light-theme #page-ordenes table th,
+body.light-theme #page-notificaciones table th,
+body.light-theme #usuarios-table-container table th,
+body.light-theme #ordenes-table-container table th,
+body.light-theme #notif-container table th {
+  background-color: #F3F4F6 !important;
+  color: #374151 !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 2px solid #9CA3AF !important;
+}
+
+/* ── TABLAS - filas ── */
+body.light-theme #page-usuarios table tbody tr,
+body.light-theme #page-tickets table tbody tr,
+body.light-theme #page-toners table tbody tr,
+body.light-theme #page-entradas table tbody tr,
+body.light-theme #page-instalados table tbody tr,
+body.light-theme #page-ordenes table tbody tr,
+body.light-theme #page-notificaciones table tbody tr,
+body.light-theme #usuarios-table-container table tbody tr,
+body.light-theme #ordenes-table-container table tr,
+body.light-theme #notif-container table tr {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+
+body.light-theme #page-usuarios table tbody tr:hover,
+body.light-theme #page-tickets table tbody tr:hover,
+body.light-theme #page-toners table tbody tr:hover,
+body.light-theme #page-entradas table tbody tr:hover,
+body.light-theme #page-instalados table tbody tr:hover,
+body.light-theme #page-ordenes table tbody tr:hover,
+body.light-theme #page-notificaciones table tbody tr:hover,
+body.light-theme #ordenes-table-container table tr:hover,
+body.light-theme #notif-container table tr:hover {
+  background-color: #F9FAFB !important;
+}
+
+/* ── TABLAS - celdas ── */
+body.light-theme #page-usuarios table td,
+body.light-theme #page-tickets table td,
+body.light-theme #page-toners table td,
+body.light-theme #page-entradas table td,
+body.light-theme #page-instalados table td,
+body.light-theme #page-ordenes table td,
+body.light-theme #page-notificaciones table td,
+body.light-theme #ordenes-table-container table td,
+body.light-theme #notif-container table td {
+  background-color: #FFFFFF !important;
+  color: #111827 !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+
+/* ── TEXTOS SECUNDARIOS EN CELDAS ── */
+body.light-theme #page-usuarios table td [style*="color:#888"],
+body.light-theme #page-tickets table td [style*="color:#888"],
+body.light-theme #page-toners table td [style*="color:#888"],
+body.light-theme #page-entradas table td [style*="color:#888"],
+body.light-theme #page-instalados table td [style*="color:#888"],
+body.light-theme #page-ordenes table td [style*="color:#888"],
+body.light-theme #page-notificaciones table td [style*="color:#888"],
+body.light-theme #page-usuarios table td [style*="color:#666"],
+body.light-theme #page-tickets table td [style*="color:#666"],
+body.light-theme #page-toners table td [style*="color:#666"],
+body.light-theme #page-entradas table td [style*="color:#666"],
+body.light-theme #page-instalados table td [style*="color:#666"],
+body.light-theme #page-ordenes table td [style*="color:#666"],
+body.light-theme #page-notificaciones table td [style*="color:#666"] {
+  color: #6B7280 !important;
+}
+
+/* ── BOTÓN "+ Agregar/Nuevo/Registrar" ── */
+body.light-theme #page-usuarios .btn-primary,
+body.light-theme #page-tickets .btn-primary,
+body.light-theme #page-toners .btn-primary,
+body.light-theme #page-entradas .btn-primary,
+body.light-theme #page-instalados .btn-primary,
+body.light-theme #page-ordenes .btn-primary,
+body.light-theme #page-notificaciones .btn-primary {
+  background: linear-gradient(135deg,#b40000,#8a0000) !important;
+  color: #FFFFFF !important;
+}
+
+/* ── BUSCADOR / FILTROS ── */
+body.light-theme #page-usuarios .search-input,
+body.light-theme #page-tickets .search-input,
+body.light-theme #page-entradas .search-input,
+body.light-theme #usuarios-search {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #111827 !important;
+}
+
+body.light-theme select.filter-select {
+  background: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+}
+
+/* ── BOTONES DE ACCIÓN UNIFICADOS ── */
+body.light-theme .btn-view {
+  background: #ECFDF5 !important;
+  color: #065F46 !important;
+  border: 1px solid #A7F3D0 !important;
+}
+
+body.light-theme .btn-edit {
+  background: #EFF6FF !important;
+  color: #1D4ED8 !important;
+  border: 1px solid #BFDBFE !important;
+}
+
+body.light-theme .btn-danger {
+  background: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border: 1px solid #FECACA !important;
+}
+
+/* ── CONTADORES "X registros" ── */
+body.light-theme #usuarios-count,
+body.light-theme #tickets-count,
+body.light-theme #entradas-count,
+body.light-theme #instalados-count,
+body.light-theme #ordenes-count,
+body.light-theme #notif-count {
+  color: #6B7280 !important;
+}
