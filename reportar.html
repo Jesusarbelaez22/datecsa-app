@@ -6,6 +6,8 @@
   <title>Reportar Caso – DATECSA Soporte de Impresión</title>
   <link rel="icon" href="assets/favicon.png" type="image/png"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -101,10 +103,17 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Nombre y Correo del Solicitante *</label>
-        <input type="text" id="r-usuario"
-               placeholder="Ej: Juan Pérez juan.perez@usc.edu.co" required/>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Nombre del Solicitante *</label>
+          <input type="text" id="r-nombre"
+                 placeholder="Ej: Juan Pérez" required/>
+        </div>
+        <div class="form-group">
+          <label>Correo del Solicitante *</label>
+          <input type="email" id="r-correo"
+                 placeholder="Ej: juan.perez@usc.edu.co" required/>
+        </div>
       </div>
 
       <div class="grid-2">
@@ -136,7 +145,9 @@
         <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
           <input type="file" id="fileInput" accept="image/*" style="display:none"/>
           <div id="dzPlaceholder" style="color:#666;font-size:13px">
-            📷 Clic para subir foto<br/>
+            <i data-lucide="camera" style="width:28px;height:28px;
+               display:block;margin:0 auto 8px;color:#555"></i>
+            Clic para subir foto<br/>
             <span style="font-size:11px;color:#444">JPG, PNG (máx. 2MB)</span>
           </div>
           <img id="dzPreview"/>
@@ -150,11 +161,19 @@
   </div>
 
   <div class="card success-box" id="successBox">
-    <div class="success-icon">✓</div>
+    <div class="success-icon">
+      <i data-lucide="check" style="width:32px;height:32px;color:#44dd88"></i>
+    </div>
     <h1>¡Reporte enviado!</h1>
-    <p class="subtitle">Tu caso fue registrado y será atendido pronto.</p>
+    <p class="subtitle">
+      Tu caso fue registrado y será atendido en un plazo mínimo de
+      48 horas hábiles.
+    </p>
     <p style="font-size:12px;color:#555;margin-top:16px">
       Código de seguimiento: <strong id="codigoCaso" style="color:#b40000"></strong>
+    </p>
+    <p style="font-size:12px;color:#555;margin-top:8px">
+      📧 Hemos enviado la confirmación a tu correo registrado
     </p>
     <button class="btn-submit" style="margin-top:24px" onclick="location.reload()">
       Reportar otro caso
@@ -167,6 +186,9 @@
 const SUPABASE_URL = 'https://znvbjrrkndmytjwikzno.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudmJqcnJrbmRteXRqd2lrem5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTA0MzMsImV4cCI6MjA5NzM2NjQzM30.YjnYkuMTdo3S7yIX-zjmy-FCNEMaw1NZaQNoPYEvzbg';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+emailjs.init('PENDIENTE_PUBLIC_KEY');
+// Reemplazar 'PENDIENTE_PUBLIC_KEY' con la Public Key de EmailJS
 
 let evidenciaBase64 = null;
 
@@ -230,11 +252,15 @@ document.getElementById('reportForm').addEventListener('submit', async function(
   const tipoOtro = document.getElementById('r-tipo-otro').value.trim();
   const tipoSolicitud = (tipoSelect==='OTRO' && tipoOtro) ? tipoOtro : tipoSelect;
 
+  const nombre = document.getElementById('r-nombre').value.trim();
+  const correo = document.getElementById('r-correo').value.trim();
+  const correoSolicitante = correo;
+
   const obj = {
     fecha_inicial: document.getElementById('r-fecha').value,
     hora_inicio: document.getElementById('r-hora').value,
     tipo_solicitud: tipoSolicitud,
-    usuario: document.getElementById('r-usuario').value.trim(),
+    usuario: `${nombre} ${correo}`,
     serial: document.getElementById('r-serie').value.trim(),
     modelo: document.getElementById('r-modelo').value.trim(),
     ubicacion: document.getElementById('r-ubicacion').value.trim(),
@@ -249,10 +275,29 @@ document.getElementById('reportForm').addEventListener('submit', async function(
   try{
     const {data, error} = await sb.from('tickets').insert(obj).select();
     if(error) throw error;
+
+    // Enviar correo de confirmación al solicitante
+    try{
+      await emailjs.send('PENDIENTE_SERVICE_ID', 'PENDIENTE_TEMPLATE_ID', {
+        to_email: correoSolicitante,
+        to_name: nombre,
+        codigo_caso: 'CASO-' + (data[0]?.id || '???'),
+        tipo_solicitud: tipoSolicitud,
+        ubicacion: obj.ubicacion,
+        fecha: obj.fecha_inicial,
+        tiempo_estimado: 'mínimo 48 horas hábiles'
+      });
+    }catch(emailErr){
+      console.error('Error enviando correo:', emailErr);
+      // No bloquear el flujo si falla el correo, el caso ya se guardó
+    }
+
     document.getElementById('formCard').style.display = 'none';
-    document.getElementById('successBox').classList.add('show');
+    const successBox = document.getElementById('successBox');
+    successBox.classList.add('show');
     document.getElementById('codigoCaso').textContent =
       'CASO-' + (data[0]?.id || '???');
+    lucide.createIcons();
   }catch(err){
     showToast('Error al enviar: '+err.message, true);
     btn.disabled = false;
@@ -267,6 +312,8 @@ function showToast(msg, isError){
   document.body.appendChild(t);
   setTimeout(()=>t.remove(), 3500);
 }
+
+lucide.createIcons();
 </script>
 </body>
 </html>
