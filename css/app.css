@@ -6617,3 +6617,148 @@ body.light-theme #page-usuarios button.btn-primary [data-lucide] {
   color: #FFFFFF !important;
   stroke: #FFFFFF !important;
 }
+
+/* ═══════════════════════════════════════
+   CARDS DE ESTADÍSTICAS – TEMA CLARO
+   ═══════════════════════════════════════ */
+
+/* ── TICKETS ABIERTOS - azul ── */
+body.light-theme #page-dashboard .stat-card:nth-child(1) {
+  border-left: 4px solid #3B82F6 !important;
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), #FFFFFF) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(1) .stat-num {
+  color: #3B82F6 !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(1) .stat-icon-circle {
+  background: rgba(59,130,246,0.12) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(1) [data-lucide] {
+  color: #3B82F6 !important;
+  stroke: #3B82F6 !important;
+}
+
+/* ── EN PROGRESO - amarillo ── */
+body.light-theme #page-dashboard .stat-card:nth-child(2) {
+  border-left: 4px solid #F59E0B !important;
+  background: linear-gradient(135deg, rgba(245,158,11,0.06), #FFFFFF) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(2) .stat-num {
+  color: #F59E0B !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(2) .stat-icon-circle {
+  background: rgba(245,158,11,0.12) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(2) [data-lucide] {
+  color: #F59E0B !important;
+  stroke: #F59E0B !important;
+}
+
+/* ── TICKETS CERRADOS - verde ── */
+body.light-theme #page-dashboard .stat-card:nth-child(3) {
+  border-left: 4px solid #10B981 !important;
+  background: linear-gradient(135deg, rgba(16,185,129,0.06), #FFFFFF) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(3) .stat-num {
+  color: #10B981 !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(3) .stat-icon-circle {
+  background: rgba(16,185,129,0.12) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(3) [data-lucide] {
+  color: #10B981 !important;
+  stroke: #10B981 !important;
+}
+
+/* ── ÓRDENES DE SERVICIO - morado ── */
+body.light-theme #page-dashboard .stat-card:nth-child(4) {
+  border-left: 4px solid #8B5CF6 !important;
+  background: linear-gradient(135deg, rgba(139,92,246,0.06), #FFFFFF) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(4) .stat-num {
+  color: #8B5CF6 !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(4) .stat-icon-circle {
+  background: rgba(139,92,246,0.12) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(4) [data-lucide] {
+  color: #8B5CF6 !important;
+  stroke: #8B5CF6 !important;
+}
+
+/* ── NOTIF KFS PENDIENTES - naranja ── */
+body.light-theme #page-dashboard .stat-card:nth-child(5) {
+  border-left: 4px solid #F97316 !important;
+  background: linear-gradient(135deg, rgba(249,115,22,0.06), #FFFFFF) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(5) .stat-num {
+  color: #F97316 !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(5) .stat-icon-circle {
+  background: rgba(249,115,22,0.12) !important;
+}
+body.light-theme #page-dashboard .stat-card:nth-child(5) [data-lucide] {
+  color: #F97316 !important;
+  stroke: #F97316 !important;
+}
+
+/* ── HOVER mantiene el mismo acento ── */
+body.light-theme #page-dashboard .stat-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+}
+
+/* ═══════════════════════════════════════
+   LEYENDA GRÁFICO DONA – BULLETS TEMA CLARO
+   ═══════════════════════════════════════ */
+
+/* Fallback genérico (spans con hex inline — cubre casos futuros) */
+body.light-theme #resumen-tickets-box
+  span[style*="border-radius:50%"][style*="background:#0066cc"],
+body.light-theme #resumen-tickets-box
+  span[style*="background:#3B82F6"] {
+  background-color: #3B82F6 !important;
+  width: 10px !important; height: 10px !important;
+  border-radius: 50% !important; display: inline-block !important;
+}
+body.light-theme #resumen-tickets-box
+  span[style*="background:#cc8800"],
+body.light-theme #resumen-tickets-box
+  span[style*="background:#F59E0B"] {
+  background-color: #F59E0B !important;
+  width: 10px !important; height: 10px !important;
+  border-radius: 50% !important; display: inline-block !important;
+}
+body.light-theme #resumen-tickets-box
+  span[style*="background:#00a854"],
+body.light-theme #resumen-tickets-box
+  span[style*="background:#10B981"] {
+  background-color: #10B981 !important;
+  width: 10px !important; height: 10px !important;
+  border-radius: 50% !important; display: inline-block !important;
+}
+body.light-theme #resumen-tickets-box [style*="width:10px"][style*="border-radius:50%"],
+body.light-theme #resumen-tickets-box [style*="width:12px"][style*="border-radius:50%"] {
+  opacity: 1 !important;
+}
+
+/* Fix preciso: la leyenda real usa #chart-legend > .chart-legend-dot con rgba inline */
+body.light-theme #chart-legend .chart-legend-item:nth-child(1) .chart-legend-dot {
+  background: #3B82F6 !important;
+}
+body.light-theme #chart-legend .chart-legend-item:nth-child(2) .chart-legend-dot {
+  background: #F59E0B !important;
+}
+body.light-theme #chart-legend .chart-legend-item:nth-child(3) .chart-legend-dot {
+  background: #10B981 !important;
+}
