@@ -6515,3 +6515,20 @@ body.light-theme #usuarios-table-container {
   border: 1px solid #E5E7EB !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
 }
+
+/* ── BOTÓN "AGREGAR USUARIO" ROJO EN TEMA CLARO ── */
+body.light-theme #page-usuarios .btn-primary {
+  background: linear-gradient(135deg, #b40000, #8a0000) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+body.light-theme #page-usuarios .btn-primary:hover {
+  opacity: .88 !important;
+}
+
+body.light-theme #page-usuarios .btn-primary [data-lucide],
+body.light-theme #page-usuarios .btn-primary i {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
