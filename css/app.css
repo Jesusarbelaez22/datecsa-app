@@ -5681,3 +5681,73 @@ body.light-theme #page-notificaciones .table-toolbar {
 body.light-theme #notif-count {
   color: #6B7280 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - ÓRDENES DE SERVICIO
+   Igualar estilo a "Resumen de Tickets"
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR PRINCIPAL ── */
+body.light-theme #ordenes-table-container {
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  overflow: hidden !important;
+}
+
+/* Quitar cualquier borde grueso adicional en wrapper exterior */
+body.light-theme #page-ordenes .table-wrap,
+body.light-theme #page-ordenes > div[style*="border"] {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Quitar bordes oscuros heredados en este módulo específico */
+body.light-theme #ordenes-table-container table {
+  border: none !important;
+}
+
+/* ── ENCABEZADO DE TABLA ── */
+body.light-theme #ordenes-table-container table th {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  border-right: none !important;
+  color: #374151 !important;
+}
+
+/* ── FILAS DE LA TABLA ── */
+body.light-theme #ordenes-table-container table tr {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+}
+
+body.light-theme #ordenes-table-container table tr:hover {
+  background: #F9FAFB !important;
+}
+
+body.light-theme #ordenes-table-container table tr:last-child {
+  border-bottom: none !important;
+}
+
+body.light-theme #ordenes-table-container table td {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+body.light-theme #ordenes-table-container table td:last-child {
+  border-right: none !important;
+}
+
+/* ── BARRA SUPERIOR CON CONTADOR ── */
+body.light-theme #page-ordenes .table-toolbar {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+body.light-theme #ordenes-count {
+  color: #6B7280 !important;
+}
