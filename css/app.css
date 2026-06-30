@@ -6557,3 +6557,41 @@ body.light-theme #page-usuarios .btn-primary [data-lucide] {
   color: #FFFFFF !important;
   stroke: #FFFFFF !important;
 }
+
+/* ═══════════════════════════════════════
+   FIX DEFINITIVO - BOTÓN AGREGAR USUARIO
+   Independiente de cualquier herencia del contenedor
+   ═══════════════════════════════════════ */
+
+body.light-theme #page-usuarios button.btn-primary {
+  background: #b40000 !important;
+  background-color: #b40000 !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  box-shadow: 0 2px 6px rgba(180,0,0,0.25) !important;
+}
+
+body.light-theme #page-usuarios button.btn-primary:hover {
+  background: #8B0000 !important;
+  background-color: #8B0000 !important;
+  opacity: 1 !important;
+}
+
+body.light-theme #page-usuarios button.btn-primary svg,
+body.light-theme #page-usuarios button.btn-primary i,
+body.light-theme #page-usuarios button.btn-primary [data-lucide],
+body.light-theme #page-usuarios button.btn-primary * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+  fill: none !important;
+}
+
+/* Anular cualquier 'transparent' o 'inherit' heredado del padre */
+body.light-theme #page-usuarios .section-header button {
+  background-color: #b40000 !important;
+  color: #FFFFFF !important;
+}
