@@ -6762,3 +6762,126 @@ body.light-theme #chart-legend .chart-legend-item:nth-child(2) .chart-legend-dot
 body.light-theme #chart-legend .chart-legend-item:nth-child(3) .chart-legend-dot {
   background: #10B981 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - TONER DISPONIBLES
+   Mismos badges con fondo de color que tema oscuro
+   ═══════════════════════════════════════ */
+
+/* ── MINI CARDS DE RESUMEN ── */
+
+/* Total Llegada - azul */
+body.light-theme #page-toners [style*="border-left:3px solid #3B82F6"] {
+  border-left: 4px solid #3B82F6 !important;
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), #FFFFFF) !important;
+}
+
+/* Total Instalados - amarillo/naranja */
+body.light-theme #page-toners [style*="border-left:3px solid #F59E0B"] {
+  border-left: 4px solid #F59E0B !important;
+  background: linear-gradient(135deg, rgba(245,158,11,0.06), #FFFFFF) !important;
+}
+
+/* Disponibles - verde o rojo según stock */
+body.light-theme #page-toners [style*="border-left:3px solid #10B981"] {
+  border-left: 4px solid #10B981 !important;
+  background: linear-gradient(135deg, rgba(16,185,129,0.06), #FFFFFF) !important;
+}
+
+body.light-theme #page-toners [style*="border-left:3px solid #EF4444"] {
+  border-left: 4px solid #EF4444 !important;
+  background: linear-gradient(135deg, rgba(239,68,68,0.06), #FFFFFF) !important;
+}
+
+/* ── NOMBRE DE TONER (TK-3182, etc.) - badge oscuro con texto blanco ── */
+body.light-theme #page-toners table
+  [style*="background:#222"] {
+  background: #1F2937 !important;
+  color: #FFFFFF !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+}
+
+/* ── BADGE COLUMNA LLEGADA - azul ── */
+body.light-theme #page-toners table
+  [style*="background:rgba(59,130,246,0.1)"],
+body.light-theme #page-toners table
+  [style*="background: rgba(59,130,246,0.1)"] {
+  background: rgba(59,130,246,0.12) !important;
+  color: #1D4ED8 !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+}
+
+/* ── BADGE COLUMNA INSTALADOS - amarillo/naranja ── */
+body.light-theme #page-toners table
+  [style*="background:rgba(245,158,11,0.1)"],
+body.light-theme #page-toners table
+  [style*="background: rgba(245,158,11,0.1)"] {
+  background: rgba(245,158,11,0.12) !important;
+  color: #B45309 !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+}
+
+/* ── BADGE COLUMNA DISPONIBLES - verde ── */
+body.light-theme #page-toners table
+  [style*="background:rgba(16,185,129,0.1)"],
+body.light-theme #page-toners table
+  [style*="background: rgba(16,185,129,0.1)"] {
+  background: rgba(16,185,129,0.12) !important;
+  color: #047857 !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+}
+
+/* ── BADGE COLUMNA DISPONIBLES - rojo (stock bajo) ── */
+body.light-theme #page-toners table
+  [style*="background:rgba(239,68,68,0.1)"],
+body.light-theme #page-toners table
+  [style*="background: rgba(239,68,68,0.1)"] {
+  background: rgba(239,68,68,0.12) !important;
+  color: #B91C1C !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+}
+
+/* ── BADGE STOCK BAJO en nombre del toner ── */
+body.light-theme #page-toners table
+  [style*="background:rgba(239,68,68,0.15)"] {
+  background: rgba(239,68,68,0.12) !important;
+  color: #B91C1C !important;
+  border: 1px solid rgba(239,68,68,0.3) !important;
+}
+
+/* ── FILA TOTAL ── */
+body.light-theme #page-toners table tfoot td {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+/* TOTAL label en rojo corporativo */
+body.light-theme #page-toners table tfoot
+  [style*="color:var(--color-accent)"],
+body.light-theme #page-toners table tfoot
+  [style*="color:#b40000"] {
+  color: #b40000 !important;
+}
+
+/* Ícono sigma en TOTAL */
+body.light-theme #page-toners table tfoot [data-lucide] {
+  color: #b40000 !important;
+  stroke: #b40000 !important;
+}
+
+/* Números del total sin badge, solo negro bold */
+body.light-theme #page-toners table tfoot td:not(:first-child) {
+  color: #111827 !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+}
