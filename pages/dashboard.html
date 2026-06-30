@@ -923,6 +923,30 @@
         </div>
       </div>
 
+      <!-- E: DOCUMENTACIÓN DEL SISTEMA -->
+      <div class="config-section">
+        <h2 class="config-section-title">Documentación del Sistema</h2>
+        <p class="config-section-sub">Documentación técnica completa del sistema DATECSA</p>
+        <div style="background:var(--bg-card);border:1px solid var(--border-color);
+                    border-radius:12px;padding:24px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <div style="width:3px;height:20px;background:#b40000;border-radius:2px"></div>
+            <h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin:0">
+              Documentación Técnica
+            </h3>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
+            Descarga la documentación técnica completa del sistema DATECSA
+            en formato PDF.
+          </p>
+          <button class="btn-primary" onclick="descargarDocumentacion()"
+                  style="display:inline-flex;align-items:center;gap:8px">
+            <i data-lucide="download"></i>
+            Descargar Documentación PDF
+          </button>
+        </div>
+      </div>
+
       <!-- D: DATOS DEL SISTEMA -->
       <div class="config-section">
         <h2 class="config-section-title">Datos del Sistema</h2>
@@ -1516,6 +1540,7 @@
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/config.js"></script>
 <script src="../js/app.js"></script>

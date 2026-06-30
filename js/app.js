@@ -2509,3 +2509,324 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('topbar-user').textContent=sessionStorage.getItem('dtcUser')||'Admin';
   navigate('dashboard');
 });
+
+// ─── DESCARGA DOCUMENTACIÓN PDF ───
+async function descargarDocumentacion(){
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const lineH = 6;
+    let y = 0;
+
+    function newPage(){
+      doc.addPage();
+      y = 20;
+      doc.setFillColor(180, 0, 0);
+      doc.rect(0, 0, W, 12, 'F');
+      doc.setFontSize(8);
+      doc.setTextColor(255, 255, 255);
+      doc.text('DATECSA – Documentación Técnica del Sistema', margin, 8);
+      doc.text('CONFIDENCIAL', W - margin, 8, { align: 'right' });
+      y = 22;
+    }
+
+    function checkY(needed = 20){
+      if(y + needed > H - 20) newPage();
+    }
+
+    function titulo(texto, size = 16, color = [180, 0, 0]){
+      checkY(14);
+      doc.setFontSize(size);
+      doc.setTextColor(...color);
+      doc.setFont('helvetica', 'bold');
+      doc.text(texto, margin, y);
+      y += lineH + 2;
+    }
+
+    function subtitulo(texto){
+      checkY(10);
+      doc.setFontSize(11);
+      doc.setTextColor(30, 30, 30);
+      doc.setFont('helvetica', 'bold');
+      doc.text(texto, margin, y);
+      y += lineH;
+    }
+
+    function parrafo(texto, indent = 0){
+      checkY(8);
+      doc.setFontSize(9.5);
+      doc.setTextColor(60, 60, 60);
+      doc.setFont('helvetica', 'normal');
+      const lines = doc.splitTextToSize(texto, W - margin * 2 - indent);
+      lines.forEach(line => {
+        checkY(6);
+        doc.text(line, margin + indent, y);
+        y += lineH - 1;
+      });
+      y += 1;
+    }
+
+    function separador(color = [220, 220, 220]){
+      checkY(6);
+      doc.setDrawColor(...color);
+      doc.setLineWidth(0.3);
+      doc.line(margin, y, W - margin, y);
+      y += 4;
+    }
+
+    function tabla(headers, rows, colWidths){
+      checkY(12);
+      const totalW = colWidths.reduce((a, b) => a + b, 0);
+      const startX = margin;
+      doc.setFillColor(240, 240, 240);
+      doc.rect(startX, y - 4, totalW, 7, 'F');
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(50, 50, 50);
+      let x = startX;
+      headers.forEach((h, i) => {
+        doc.text(h, x + 2, y);
+        x += colWidths[i];
+      });
+      y += 4;
+      separador([200, 200, 200]);
+      rows.forEach((row, ri) => {
+        checkY(7);
+        if(ri % 2 === 0){
+          doc.setFillColor(250, 250, 250);
+          doc.rect(startX, y - 4, totalW, 6, 'F');
+        }
+        doc.setFontSize(8.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(60, 60, 60);
+        x = startX;
+        row.forEach((cell, i) => {
+          const cellText = doc.splitTextToSize(String(cell), colWidths[i] - 3);
+          doc.text(cellText[0], x + 2, y);
+          x += colWidths[i];
+        });
+        y += 5.5;
+      });
+      y += 4;
+    }
+
+    // ── PORTADA ──
+    doc.setFillColor(180, 0, 0);
+    doc.rect(0, 0, W, 80, 'F');
+    doc.setFillColor(140, 0, 0);
+    doc.rect(0, 60, W, 20, 'F');
+    doc.setFontSize(28);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text('DATECSA', W / 2, 35, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(255, 200, 200);
+    doc.text('Más que Tecnología', W / 2, 44, { align: 'center' });
+    doc.setFontSize(13);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text('Sistema de Gestión de Servicios de Impresión', W / 2, 62, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(255, 220, 220);
+    doc.text('Universidad Santiago de Cali', W / 2, 70, { align: 'center' });
+
+    y = 100;
+    const infoItems = [
+      ['Versión:', '1.0.0'],
+      ['Fecha:', new Date().toLocaleDateString('es-CO', {year:'numeric',month:'long',day:'numeric'})],
+      ['URL Sistema:', 'https://datecsa-app.vercel.app'],
+      ['Portal Público:', 'https://datecsa-app.vercel.app/reportar.html'],
+      ['Repositorio:', 'github.com/Jesusarbelaez22/datecsa-app'],
+      ['Desarrollador:', 'Jesús Arbelaez'],
+      ['Cliente:', 'Universidad Santiago de Cali'],
+    ];
+    infoItems.forEach(([label, value]) => {
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(180, 0, 0);
+      doc.text(label, margin, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(50, 50, 50);
+      doc.text(value, margin + 35, y);
+      y += 8;
+    });
+
+    // ── SECCIÓN 1 ──
+    newPage();
+    titulo('1. DESCRIPCIÓN GENERAL');
+    separador([180, 0, 0]);
+    parrafo('Sistema web de gestión de soporte técnico para el contrato de impresión entre DATECSA y la Universidad Santiago de Cali (USC). Permite registrar, hacer seguimiento y gestionar todos los casos, toners, órdenes de servicio y notificaciones del parque de impresoras de la universidad.');
+    y += 4;
+
+    // ── SECCIÓN 2 ──
+    titulo('2. TECNOLOGÍAS UTILIZADAS');
+    separador([180, 0, 0]);
+    subtitulo('Frontend');
+    tabla(
+      ['Tecnología', 'Uso'],
+      [
+        ['HTML5', 'Estructura de la aplicación'],
+        ['CSS3', 'Estilos y temas (oscuro/claro)'],
+        ['JavaScript ES2022 (Vanilla)', 'Lógica de la aplicación'],
+        ['Lucide Icons', 'Íconos SVG de la interfaz'],
+        ['Chart.js', 'Gráfico de estadísticas en el dashboard'],
+      ],
+      [60, 110]
+    );
+    subtitulo('Backend / Base de Datos');
+    tabla(
+      ['Tecnología', 'Detalle'],
+      [
+        ['Supabase', 'Backend-as-a-Service (BaaS)'],
+        ['PostgreSQL', 'Motor de base de datos (provisto por Supabase)'],
+        ['Supabase REST API', 'Comunicación cliente-servidor via HTTP'],
+      ],
+      [60, 110]
+    );
+    subtitulo('Hosting y Servicios');
+    tabla(
+      ['Servicio', 'Uso'],
+      [
+        ['Vercel', 'Hosting del frontend con CDN global'],
+        ['GitHub', 'Control de versiones y despliegue continuo (CI/CD)'],
+        ['EmailJS', 'Envío de correos de confirmación desde el portal'],
+        ['Power Automate', 'Automatización KFS → Supabase'],
+      ],
+      [60, 110]
+    );
+
+    // ── SECCIÓN 3 ──
+    newPage();
+    titulo('3. BASE DE DATOS');
+    separador([180, 0, 0]);
+    parrafo('Proveedor: Supabase (PostgreSQL)');
+    parrafo('URL: https://znvbjrrkndmytjwikzno.supabase.co');
+    parrafo('Plan actual: Free Tier (500MB almacenamiento, 2GB transferencia/mes)');
+    y += 4;
+    subtitulo('Tablas del Sistema');
+    tabla(
+      ['Tabla', 'Descripción'],
+      [
+        ['tickets', 'Casos y solicitudes de soporte'],
+        ['inventario_equipos', 'Catálogo maestro de equipos (130 impresoras)'],
+        ['entradas_toner', 'Registro de llegada de toners'],
+        ['toners_instalados', 'Registro de instalaciones de toner'],
+        ['ordenes', 'Órdenes de servicio técnico'],
+        ['notificaciones', 'Alertas KFS de toner bajo'],
+        ['usuarios', 'Base de datos de 1,699 usuarios USC con PIN'],
+      ],
+      [65, 105]
+    );
+
+    // ── SECCIÓN 4 ──
+    titulo('4. MÓDULOS DEL SISTEMA');
+    separador([180, 0, 0]);
+    tabla(
+      ['Módulo', 'Descripción'],
+      [
+        ['Inicio (Dashboard)', 'Estadísticas, gráfico de dona y actividad reciente'],
+        ['Cliente', 'Información de la USC, sedes y contrato'],
+        ['Casos y Solicitudes', 'Gestión completa de tickets de soporte'],
+        ['Toner Disponibles', 'Inventario automático (llegada - instalados)'],
+        ['Registro de Llegada', 'Entrada de toners al inventario'],
+        ['Toner Instalados', 'Registro de instalaciones de toner'],
+        ['Órdenes de Servicio', 'Gestión de OS con proveedor técnico'],
+        ['Notificaciones KFS', 'Alertas automáticas de toner bajo'],
+        ['Usuarios', 'Base de datos de 1,699 usuarios con códigos PIN'],
+        ['Informes', 'Exportación a CSV/PDF por rango de fechas'],
+        ['Cierre Facturación', 'Guía de cierre mensual'],
+        ['Configuración', 'Temas, seguridad y datos del sistema'],
+      ],
+      [55, 115]
+    );
+
+    // ── SECCIÓN 5 ──
+    newPage();
+    titulo('5. SEDES USC ATENDIDAS');
+    separador([180, 0, 0]);
+    tabla(
+      ['Sede', 'Dirección', 'Equipos'],
+      [
+        ['Pampalinda', 'Calle 5 # 62-00', '99 imp + 5 scanners'],
+        ['Centro', 'Carrera 8 # 8-17, Barrio Santa Rosa', '7 imp'],
+        ['Palmira', 'Carrera 29 # 38-47, Barrio Alfonso López', '20 imp'],
+        ['Clínica Veterinaria', 'Cl. 18 #35-53, Cristóbal Colón', '3 imp'],
+        ['Restaurante San Carlo', 'Cra. 4 #4-63, Barrio El Peñón', '1 imp'],
+      ],
+      [50, 90, 30]
+    );
+    parrafo('Total: 130 impresoras + 5 scanners en 5 sedes.');
+
+    // ── SECCIÓN 6 ──
+    y += 4;
+    titulo('6. ESCALABILIDAD A NIVEL NACIONAL');
+    separador([180, 0, 0]);
+    parrafo('La aplicación fue diseñada con tecnologías web estándar que permiten escalarla a nivel nacional con ajustes mínimos:');
+    y += 2;
+    [
+      '✅ 100% web: Accesible desde cualquier ciudad de Colombia con conexión a internet.',
+      '✅ CDN Global: Vercel despliega en servidores cercanos al usuario para máxima velocidad.',
+      '✅ Multi-usuario: Múltiples técnicos pueden trabajar simultáneamente en tiempo real.',
+      '✅ Sin instalación: Solo se necesita un navegador web (Chrome, Edge, Firefox).',
+      '⚙️  Multi-cliente: Para manejar múltiples contratos se requiere agregar autenticación por roles.',
+      '⚙️  Plan de pago: Para uso empresarial intensivo se recomienda Supabase Pro ($25 USD/mes).',
+      '⚙️  Dominio propio: Se puede migrar a sistema.datecsa.com.co con costo de ~$15-30 USD/año.',
+    ].forEach(p => { parrafo(p, 4); y += 1; });
+    y += 4;
+    subtitulo('Capacidad estimada con plan actual (gratuito):');
+    tabla(
+      ['Métrica', 'Capacidad'],
+      [
+        ['Usuarios simultáneos', 'Hasta 50 sin degradación de rendimiento'],
+        ['Registros en base de datos', 'Hasta 100,000 sin impacto notable'],
+        ['Almacenamiento', '500 MB (actualmente ~50 MB en uso)'],
+        ['Correos automáticos (EmailJS)', '200/mes (plan gratuito)'],
+        ['Costo mensual actual', '$0 USD'],
+      ],
+      [80, 90]
+    );
+
+    // ── SECCIÓN 7 ──
+    newPage();
+    titulo('7. EQUIPO');
+    separador([180, 0, 0]);
+    tabla(
+      ['Rol', 'Nombre'],
+      [
+        ['Desarrollador / Helpdesk 1', 'Jesús Arbelaez'],
+        ['Helpdesk 2', 'Jhon Camacho'],
+        ['Cliente', 'Universidad Santiago de Cali'],
+        ['Proveedor', 'DATECSA S.A.'],
+      ],
+      [80, 90]
+    );
+
+    // ── PIE ──
+    y = H - 30;
+    separador([180, 0, 0]);
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.setFont('helvetica', 'normal');
+    doc.text('DATECSA S.A. – Documento confidencial. Todos los derechos reservados.', margin, y);
+    doc.text(`Generado el ${new Date().toLocaleDateString('es-CO')}`, W - margin, y, { align: 'right' });
+
+    const totalPages = doc.internal.getNumberOfPages();
+    for(let i = 1; i <= totalPages; i++){
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Página ${i} de ${totalPages}`, W - margin, H - 8, { align: 'right' });
+    }
+
+    doc.save(`DATECSA_Documentacion_Tecnica_${new Date().toISOString().split('T')[0]}.pdf`);
+    showToast('✓ Documentación descargada correctamente');
+  } catch(e){
+    console.error('Error generando PDF:', e);
+    showToast('Error al generar el PDF: ' + e.message, true);
+  }
+}
