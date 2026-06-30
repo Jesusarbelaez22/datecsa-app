@@ -6407,3 +6407,37 @@ body.light-theme #page-usuarios .table-toolbar {
 body.light-theme #usuarios-count {
   color: #6B7280 !important;
 }
+
+/* ── FIX HEADER USUARIOS - quitar caja, igual a Casos ── */
+body.light-theme #page-usuarios .section-header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 16px 0 !important;
+  border-radius: 0 !important;
+}
+
+body.light-theme #page-usuarios .section-header .section-title {
+  color: #111827 !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Si existe un div contenedor extra distinto a .section-header */
+body.light-theme #page-usuarios > div:first-child:not(.section-header) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 16px 0 !important;
+}
+
+/* Asegurar layout flex igual que Casos y Solicitudes */
+.section-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+}
