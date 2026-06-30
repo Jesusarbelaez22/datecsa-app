@@ -6447,15 +6447,15 @@ body.light-theme #page-usuarios > div:first-child:not(.section-header) {
    Solo la tabla final mantiene caja
    ═══════════════════════════════════════ */
 
-/* Quitar caja de TODO dentro de page-usuarios excepto la tabla */
-#page-usuarios > *:not(#usuarios-table-container) {
+/* Quitar caja de TODO dentro de page-usuarios excepto la tabla y botones */
+#page-usuarios > *:not(#usuarios-table-container):not(.btn-primary):not(button) {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
 }
 
-#page-usuarios > * > *:not(#usuarios-table-container) {
+#page-usuarios > * > *:not(#usuarios-table-container):not(.btn-primary):not(button) {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -6594,4 +6594,26 @@ body.light-theme #page-usuarios button.btn-primary * {
 body.light-theme #page-usuarios .section-header button {
   background-color: #b40000 !important;
   color: #FFFFFF !important;
+}
+
+/* ── RESPALDO FINAL: BOTÓN AGREGAR USUARIO ROJO ── */
+body.light-theme #page-usuarios button.btn-primary {
+  background-color: #b40000 !important;
+  background: #b40000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  box-shadow: 0 2px 6px rgba(180,0,0,0.25) !important;
+}
+
+body.light-theme #page-usuarios button.btn-primary:hover {
+  background-color: #8B0000 !important;
+}
+
+body.light-theme #page-usuarios button.btn-primary *,
+body.light-theme #page-usuarios button.btn-primary [data-lucide] {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
 }
