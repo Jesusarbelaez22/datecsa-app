@@ -5920,3 +5920,82 @@ body.light-theme #page-ordenes .table-toolbar {
 body.light-theme #ordenes-count {
   color: #6B7280 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - TONER INSTALADOS
+   Mismo estilo que Notificaciones KFS y Órdenes
+   CON líneas separadoras en filas y columnas
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR PRINCIPAL ── */
+body.light-theme #page-instalados .table-wrap {
+  border: 1.5px solid #9CA3AF !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  overflow: hidden !important;
+}
+
+/* Quitar cualquier borde grueso adicional en wrapper exterior */
+body.light-theme #page-instalados > div[style*="border"]:not(.table-wrap) {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* ── ENCABEZADO DE TABLA con líneas ── */
+body.light-theme #page-instalados table thead tr {
+  border-top: 2px solid #9CA3AF !important;
+}
+
+body.light-theme #page-instalados table th {
+  background: #F3F4F6 !important;
+  border-bottom: 2px solid #9CA3AF !important;
+  border-right: 1px solid #9CA3AF !important;
+  color: #374151 !important;
+}
+
+body.light-theme #page-instalados table th:last-child {
+  border-right: none !important;
+}
+
+/* ── FILAS DE LA TABLA con líneas ── */
+body.light-theme #page-instalados table tbody tr {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+
+body.light-theme #page-instalados table tbody tr:hover {
+  background: #F9FAFB !important;
+}
+
+body.light-theme #page-instalados table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+/* ── CELDAS con líneas verticales ── */
+body.light-theme #page-instalados table td {
+  background: #FFFFFF !important;
+  border-right: 1px solid #9CA3AF !important;
+  border-bottom: 1px solid #9CA3AF !important;
+  color: #111827 !important;
+}
+
+body.light-theme #page-instalados table td:last-child {
+  border-right: none !important;
+}
+
+/* ── Borde exterior de la tabla ── */
+body.light-theme #page-instalados table {
+  border: 1.5px solid #9CA3AF !important;
+}
+
+/* ── BARRA SUPERIOR CON CONTADOR ── */
+body.light-theme #page-instalados .table-toolbar {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #9CA3AF !important;
+}
+
+body.light-theme #instalados-count {
+  color: #6B7280 !important;
+}
