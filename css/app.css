@@ -6237,3 +6237,93 @@ body.light-theme #page-tickets .table-toolbar {
 body.light-theme #tickets-count {
   color: #6B7280 !important;
 }
+
+/* ═══════════════════════════════════════
+   TEMA CLARO - USUARIOS
+   Igual exacto a los demás módulos
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR PRINCIPAL ── */
+body.light-theme #usuarios-table-container {
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  overflow: hidden !important;
+}
+
+/* Quitar bordes oscuros heredados de la tabla interna */
+body.light-theme #usuarios-table-container table {
+  border: none !important;
+}
+
+/* ── ENCABEZADO DE TABLA ── */
+body.light-theme #usuarios-table-container table th {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  border-right: none !important;
+  border-top: none !important;
+  color: #374151 !important;
+}
+
+body.light-theme #usuarios-table-container table th:last-child {
+  border-right: none !important;
+}
+
+/* ── FILAS DE LA TABLA ── */
+body.light-theme #usuarios-table-container table tbody tr {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+}
+
+body.light-theme #usuarios-table-container table tbody tr:hover {
+  background: #F9FAFB !important;
+}
+
+body.light-theme #usuarios-table-container table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+/* ── CELDAS ── */
+body.light-theme #usuarios-table-container table td {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+body.light-theme #usuarios-table-container table td:last-child {
+  border-right: none !important;
+}
+
+/* ── BARRA SUPERIOR CON CONTADOR ── */
+body.light-theme #page-usuarios .table-toolbar {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+body.light-theme #usuarios-count {
+  color: #6B7280 !important;
+}
+
+/* ── CUADRO DE BÚSQUEDA - mismo estilo suave ── */
+body.light-theme #page-usuarios > div:first-of-type {
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+/* ── SECTION HEADER - sin caja ── */
+.section-header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 16px 0 !important;
+}
+
+body.light-theme .section-header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
