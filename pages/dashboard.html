@@ -931,6 +931,7 @@
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color)">
           <button class="btn-secondary" onclick="exportBackup()"><i data-lucide="download"></i> Exportar todo (backup)</button>
           <button class="btn-secondary" onclick="document.getElementById('backup-import-input').click()"><i data-lucide="upload"></i> Importar backup</button>
+          <button class="btn-secondary" onclick="navigator.clipboard.writeText(window.location.origin+'/reportar.html').then(()=>showToast('Link de reporte público copiado'))"><i data-lucide="link"></i> Copiar link reporte público</button>
           <input type="file" id="backup-import-input" accept=".json" style="display:none" onchange="importBackup(this)"/>
         </div>
         <div style="margin-top:20px;padding:18px 20px;border:1px solid rgba(180,0,0,0.35);border-radius:10px;background:rgba(180,0,0,0.06)">

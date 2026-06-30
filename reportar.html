@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reportar Caso – DATECSA Soporte de Impresión</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:#0d0d0d;color:#e0e0e0;
+         min-height:100vh;display:flex;align-items:center;justify-content:center;
+         padding:20px;}
+    .container{width:100%;max-width:560px;}
+    .logo-wrap{text-align:center;margin-bottom:24px;}
+    .logo-wrap img{width:200px;}
+    .card{background:#161616;border:1px solid #2a2a2a;border-radius:16px;
+          padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+    h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;text-align:center;}
+    .subtitle{font-size:13px;color:#777;text-align:center;margin-bottom:28px;}
+    .form-group{margin-bottom:18px;}
+    label{display:block;font-size:11px;font-weight:600;color:#888;
+          text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+    input,select,textarea{width:100%;background:#111;border:1px solid #2a2a2a;
+          color:#e0e0e0;padding:11px 14px;border-radius:8px;font-size:14px;
+          font-family:'Inter',sans-serif;}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:#b40000;
+          box-shadow:0 0 0 3px rgba(180,0,0,0.1);}
+    textarea{resize:vertical;min-height:80px;}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .hint{font-size:11px;color:#555;margin-top:4px;}
+    .dropzone{border:2px dashed #2a2a2a;border-radius:8px;padding:20px;
+          text-align:center;cursor:pointer;background:#111;transition:all .2s;}
+    .dropzone:hover{border-color:#b40000;}
+    .dropzone img{max-width:100%;max-height:160px;border-radius:6px;display:none;}
+    .btn-submit{width:100%;background:linear-gradient(135deg,#b40000,#8a0000);
+          color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;
+          font-weight:600;cursor:pointer;margin-top:8px;transition:opacity .15s;}
+    .btn-submit:hover{opacity:.9;}
+    .btn-submit:disabled{opacity:.5;cursor:not-allowed;}
+    .success-box{display:none;text-align:center;padding:40px 20px;}
+    .success-box.show{display:block;}
+    .success-icon{width:64px;height:64px;background:rgba(0,160,80,0.15);
+          border-radius:50%;display:flex;align-items:center;justify-content:center;
+          margin:0 auto 16px;font-size:32px;}
+    .otro-wrap{display:none;margin-top:8px;}
+    .toast{position:fixed;bottom:24px;right:24px;background:#1e1e1e;
+          border:1px solid #2a2a2a;border-radius:8px;padding:12px 18px;
+          font-size:13px;z-index:9999;animation:slideIn .3s ease;}
+    .toast.error{border-color:rgba(180,0,0,0.4);background:rgba(30,0,0,.95);color:#ff6666;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo-wrap">
+    <img src="assets/logo.png" alt="DATECSA"/>
+  </div>
+
+  <div class="card" id="formCard">
+    <h1>Reportar un Caso</h1>
+    <p class="subtitle">Soporte de Impresión – Universidad Santiago de Cali</p>
+
+    <form id="reportForm">
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Fecha *</label>
+          <input type="date" id="r-fecha" required/>
+        </div>
+        <div class="form-group">
+          <label>Hora Inicio</label>
+          <input type="time" id="r-hora"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de Solicitud *</label>
+        <select id="r-tipo" required>
+          <option value="">-- Seleccionar --</option>
+          <option>CONFIGURACION E INSTALACION</option>
+          <option>CAMBIO DE TONER</option>
+          <option>CREACION DE USUARIO</option>
+          <option>CODIGO DE IMPRESION</option>
+          <option>MANCHAS EN IMPRESION</option>
+          <option>RAYAS EN IMPRESION</option>
+          <option>ATASCO</option>
+          <option>RUIDO</option>
+          <option>INSTALACION POR RED</option>
+          <option>ATASCO CONTINUO</option>
+          <option>LIMPIEZA Y MANTENIMIENTO</option>
+          <option>PROBLEMAS DE RED</option>
+          <option>CAMBIO DE CILINDRO</option>
+          <option>CAMBIO UNIDAD FUSORA</option>
+          <option>SENSOR SUELTO</option>
+          <option value="OTRO">OTRO</option>
+        </select>
+        <div class="otro-wrap" id="tipoOtroWrap">
+          <input type="text" id="r-tipo-otro" placeholder="Describe el tipo de problema..."/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nombre y Correo del Solicitante *</label>
+        <input type="text" id="r-usuario"
+               placeholder="Ej: Juan Pérez juan.perez@usc.edu.co" required/>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label>N° Serie</label>
+          <input type="text" id="r-serie" placeholder="Si lo conoce..."/>
+          <div class="hint">Se autocompleta modelo y ubicación si existe</div>
+        </div>
+        <div class="form-group">
+          <label>Modelo Impresora</label>
+          <input type="text" id="r-modelo" placeholder="Ej: M3145idn"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Ubicación *</label>
+        <input type="text" id="r-ubicacion"
+               placeholder="Ej: PAGADURIA, BIBLIOTECA, FACULTAD DE SALUD..." required/>
+      </div>
+
+      <div class="form-group">
+        <label>Descripción del problema</label>
+        <textarea id="r-observaciones"
+                  placeholder="Cuéntanos qué está pasando..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Evidencia (foto opcional)</label>
+        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" accept="image/*" style="display:none"/>
+          <div id="dzPlaceholder" style="color:#666;font-size:13px">
+            📷 Clic para subir foto<br/>
+            <span style="font-size:11px;color:#444">JPG, PNG (máx. 2MB)</span>
+          </div>
+          <img id="dzPreview"/>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Enviar Reporte
+      </button>
+    </form>
+  </div>
+
+  <div class="card success-box" id="successBox">
+    <div class="success-icon">✓</div>
+    <h1>¡Reporte enviado!</h1>
+    <p class="subtitle">Tu caso fue registrado y será atendido pronto.</p>
+    <p style="font-size:12px;color:#555;margin-top:16px">
+      Código de seguimiento: <strong id="codigoCaso" style="color:#b40000"></strong>
+    </p>
+    <button class="btn-submit" style="margin-top:24px" onclick="location.reload()">
+      Reportar otro caso
+    </button>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = 'https://znvbjrrkndmytjwikzno.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpudmJqcnJrbmRteXRqd2lrem5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTA0MzMsImV4cCI6MjA5NzM2NjQzM30.YjnYkuMTdo3S7yIX-zjmy-FCNEMaw1NZaQNoPYEvzbg';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let evidenciaBase64 = null;
+
+document.getElementById('r-fecha').value = new Date().toISOString().split('T')[0];
+const ahora = new Date();
+document.getElementById('r-hora').value =
+  String(ahora.getHours()).padStart(2,'0')+':'+String(ahora.getMinutes()).padStart(2,'0');
+
+document.getElementById('r-tipo').addEventListener('change', function(){
+  document.getElementById('tipoOtroWrap').style.display =
+    this.value === 'OTRO' ? 'block' : 'none';
+});
+
+let acTimeout;
+document.getElementById('r-serie').addEventListener('input', function(){
+  clearTimeout(acTimeout);
+  const serie = this.value;
+  acTimeout = setTimeout(async ()=>{
+    if(!serie || serie.trim().length < 3) return;
+    try{
+      const {data} = await sb.from('inventario_equipos').select('*');
+      if(!data) return;
+      const serieClean = serie.trim().toUpperCase().replace(/\s+/g,'');
+      const match = data.find(eq=>{
+        const s = (eq.serie||'').trim().toUpperCase().replace(/\s+/g,'');
+        return s.includes(serieClean) || serieClean.includes(s);
+      });
+      if(match){
+        document.getElementById('r-modelo').value = match.modelo || '';
+        document.getElementById('r-ubicacion').value = match.ubicacion || '';
+        showToast('✓ '+match.modelo+' encontrado');
+      }
+    }catch(e){ console.error(e); }
+  }, 600);
+});
+
+document.getElementById('fileInput').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){
+    showToast('La imagen no debe superar 2MB', true);
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    evidenciaBase64 = ev.target.result;
+    document.getElementById('dzPreview').src = evidenciaBase64;
+    document.getElementById('dzPreview').style.display = 'block';
+    document.getElementById('dzPlaceholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('reportForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const tipoSelect = document.getElementById('r-tipo').value;
+  const tipoOtro = document.getElementById('r-tipo-otro').value.trim();
+  const tipoSolicitud = (tipoSelect==='OTRO' && tipoOtro) ? tipoOtro : tipoSelect;
+
+  const obj = {
+    fecha_inicial: document.getElementById('r-fecha').value,
+    hora_inicio: document.getElementById('r-hora').value,
+    tipo_solicitud: tipoSolicitud,
+    usuario: document.getElementById('r-usuario').value.trim(),
+    serial: document.getElementById('r-serie').value.trim(),
+    modelo: document.getElementById('r-modelo').value.trim(),
+    ubicacion: document.getElementById('r-ubicacion').value.trim(),
+    observaciones: document.getElementById('r-observaciones').value.trim(),
+    evidencia: evidenciaBase64,
+    llegada: 'PORTAL WEB',
+    estado: 'Abierto',
+    prioridad: 'Normal',
+    helpdesk: '',
+  };
+
+  try{
+    const {data, error} = await sb.from('tickets').insert(obj).select();
+    if(error) throw error;
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('successBox').classList.add('show');
+    document.getElementById('codigoCaso').textContent =
+      'CASO-' + (data[0]?.id || '???');
+  }catch(err){
+    showToast('Error al enviar: '+err.message, true);
+    btn.disabled = false;
+    btn.textContent = 'Enviar Reporte';
+  }
+});
+
+function showToast(msg, isError){
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
+}
+</script>
+</body>
+</html>
