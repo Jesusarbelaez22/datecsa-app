@@ -5233,6 +5233,106 @@ body.light-theme #page-informes .informe-card-icon {
   box-shadow: none !important;
 }
 
+/* ═══════════════════════════════════════
+   TEMA CLARO - USUARIOS, CASOS, LLEGADA, INSTALADOS
+   Igualar estilo a "Resumen de Tickets"
+   ═══════════════════════════════════════ */
+
+/* ── CONTENEDOR PRINCIPAL ── */
+body.light-theme #usuarios-table-container,
+body.light-theme #page-tickets .table-wrap,
+body.light-theme #page-entradas .table-wrap,
+body.light-theme #page-instalados .table-wrap {
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  overflow: hidden !important;
+}
+
+/* Quitar bordes oscuros heredados de tablas internas */
+body.light-theme #usuarios-table-container table,
+body.light-theme #page-tickets table,
+body.light-theme #page-entradas table,
+body.light-theme #page-instalados table {
+  border: none !important;
+}
+
+/* ── ENCABEZADO DE TABLA ── */
+body.light-theme #usuarios-table-container table th,
+body.light-theme #page-tickets table th,
+body.light-theme #page-entradas table th,
+body.light-theme #page-instalados table th {
+  background: #F9FAFB !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  border-right: none !important;
+  border-top: none !important;
+  color: #374151 !important;
+}
+
+/* ── FILAS DE LA TABLA ── */
+body.light-theme #usuarios-table-container table tr,
+body.light-theme #page-tickets table tbody tr,
+body.light-theme #page-entradas table tbody tr,
+body.light-theme #page-instalados table tbody tr {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+}
+
+body.light-theme #usuarios-table-container table tr:hover,
+body.light-theme #page-tickets table tbody tr:hover,
+body.light-theme #page-entradas table tbody tr:hover,
+body.light-theme #page-instalados table tbody tr:hover {
+  background: #F9FAFB !important;
+}
+
+body.light-theme #usuarios-table-container table tr:last-child,
+body.light-theme #page-tickets table tbody tr:last-child,
+body.light-theme #page-entradas table tbody tr:last-child,
+body.light-theme #page-instalados table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+/* ── CELDAS ── */
+body.light-theme #usuarios-table-container table td,
+body.light-theme #page-tickets table td,
+body.light-theme #page-entradas table td,
+body.light-theme #page-instalados table td {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+body.light-theme #usuarios-table-container table td:last-child,
+body.light-theme #page-tickets table td:last-child,
+body.light-theme #page-entradas table td:last-child,
+body.light-theme #page-instalados table td:last-child {
+  border-right: none !important;
+}
+
+/* ── BARRA SUPERIOR CON CONTADOR ── */
+body.light-theme #page-usuarios .table-toolbar,
+body.light-theme #page-tickets .table-toolbar,
+body.light-theme #page-entradas .table-toolbar,
+body.light-theme #page-instalados .table-toolbar {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+body.light-theme #usuarios-count,
+body.light-theme #tickets-count,
+body.light-theme #entradas-count,
+body.light-theme #instalados-count {
+  color: #6B7280 !important;
+}
+
+/* ── BUSCADOR DE USUARIOS - mismo estilo suave ── */
+body.light-theme #page-usuarios > div:first-of-type {
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
 /* Restaurar: lucide dentro del ícono */
 body.light-theme #page-informes .informe-card-icon [data-lucide] {
   color: #b40000 !important;
