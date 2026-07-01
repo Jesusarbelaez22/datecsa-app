@@ -3,6 +3,9 @@ if(!sessionStorage.getItem('dtcAuth')){
   window.location.href='../index.html';
 }
 
+// ─── EMAILJS ───
+emailjs.init('xy-lJfTdcCS52yetO');
+
 // ─── LOADING BAR ───
 function showLoading(){
   const b=document.getElementById('loading-bar');
@@ -640,6 +643,8 @@ async function editTicket(id){
   }
   document.getElementById('ticket-prioridad').value=data.prioridad||'Normal';
   document.getElementById('ticket-estado').value=data.estado||'Abierto';
+  const estadoAnteriorEl=document.getElementById('ticket-estado-anterior');
+  if(estadoAnteriorEl) estadoAnteriorEl.value=data.estado||'';
   document.querySelector('#modal-ticket .modal-title').textContent='Editar Ticket / Caso';
   cargarEvidenciaEnDropzone(data.evidencia || null);
   openModal('modal-ticket');
@@ -672,15 +677,76 @@ async function saveTicket(){
     prioridad:       document.getElementById('ticket-prioridad').value,
     estado:          document.getElementById('ticket-estado').value,
   };
+  const estadoAnterior=document.getElementById('ticket-estado-anterior')?.value||'';
   showLoading();
   try {
+    let ticketId=id;
     if(id){ await sb.from('tickets').update(obj).eq('id',id); }
-    else   { await sb.from('tickets').insert(obj); }
+    else   {
+      const {data}=await sb.from('tickets').insert(obj).select();
+      ticketId=data?.[0]?.id||null;
+    }
     closeModal('modal-ticket');
     await renderTickets();
     toast(id?'Ticket actualizado':'Ticket creado');
+
+    if(obj.estado==='Cerrado' && estadoAnterior!=='Cerrado' && ticketId){
+      await enviarCorreoCierre(ticketId);
+    }
   } catch(e){ toast('Error guardando ticket','error'); }
   hideLoading();
+}
+
+async function enviarCorreoCierre(ticketId){
+  try {
+    const {data, error} = await sb
+      .from('tickets')
+      .select('*')
+      .eq('id', ticketId)
+      .single();
+
+    if(error || !data){
+      console.error('[EmailCierre] Error obteniendo ticket:', error);
+      return;
+    }
+
+    // El campo usuario tiene formato "Nombre correo@dominio.com"
+    const usuarioRaw = data.usuario || '';
+    const emailMatch = usuarioRaw.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
+    const correoDestino = emailMatch ? emailMatch[0] : null;
+
+    if(!correoDestino){
+      console.log('[EmailCierre] No se encontró correo en:', usuarioRaw);
+      return;
+    }
+
+    const nombreDestino = usuarioRaw.replace(correoDestino, '').trim() || 'Solicitante';
+
+    const fechaCierre = data.fecha_final
+      ? new Date(data.fecha_final).toLocaleDateString('es-CO', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        })
+      : new Date().toLocaleDateString('es-CO', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+
+    await emailjs.send('service_sht8v5l', 'TEMPLATE_ID_CIERRE', {
+      to_email: correoDestino,
+      to_name: nombreDestino,
+      codigo_caso: 'CASO-' + data.id,
+      tipo_solicitud: data.tipo_solicitud || '–',
+      ubicacion: data.ubicacion || '–',
+      fecha_cierre: fechaCierre,
+      observaciones: data.observaciones || 'Caso resuelto satisfactoriamente.',
+      helpdesk: data.helpdesk || 'Equipo DATECSA'
+    });
+
+    console.log('[EmailCierre] Correo enviado a:', correoDestino);
+    toast('Correo de cierre enviado a ' + correoDestino);
+
+  } catch(err){
+    console.error('[EmailCierre] Error enviando correo:', err);
+  }
 }
 
 function deleteTicket(id){
