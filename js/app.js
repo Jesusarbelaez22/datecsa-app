@@ -148,6 +148,84 @@ function toggleSidebar(){
   }
 }
 
+// ─── SUPABASE REALTIME - Actualización automática ───
+function initRealtime(){
+  sb.channel('datecsa-realtime')
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'tickets'
+      },
+      (payload) => {
+        console.log('[Realtime] Nuevo ticket recibido:', payload.new);
+
+        const paginaActual = document.querySelector('.page.active')?.id;
+
+        if(paginaActual === 'page-tickets'){
+          renderTickets();
+          toast('🔔 Nuevo caso recibido desde el portal', 'success');
+        }
+
+        if(paginaActual === 'page-dashboard'){
+          renderDashboard();
+        }
+
+        actualizarContadorDashboard();
+      }
+    )
+    .on(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'tickets'
+      },
+      (payload) => {
+        console.log('[Realtime] Ticket actualizado:', payload.new);
+        const paginaActual = document.querySelector('.page.active')?.id;
+        if(paginaActual === 'page-tickets'){
+          renderTickets();
+        }
+      }
+    )
+    .subscribe((status) => {
+      console.log('[Realtime] Estado de conexión:', status);
+      const dot = document.getElementById('realtime-dot');
+      const label = document.getElementById('realtime-label');
+
+      if(status === 'SUBSCRIBED'){
+        if(dot){
+          dot.style.background = '#22c55e';
+          dot.style.boxShadow = '0 0 6px #22c55e';
+        }
+        if(label){ label.textContent = 'En vivo'; label.style.color = '#22c55e'; }
+      } else if(status === 'CHANNEL_ERROR'){
+        if(dot) dot.style.background = '#ef4444';
+        if(label){ label.textContent = 'Sin conexión'; label.style.color = '#ef4444'; }
+      } else {
+        if(dot) dot.style.background = '#f59e0b';
+        if(label){ label.textContent = 'Conectando...'; label.style.color = '#f59e0b'; }
+      }
+    });
+}
+
+// Actualiza solo el contador del dashboard sin re-renderizar todo
+async function actualizarContadorDashboard(){
+  try {
+    const {count} = await sb
+      .from('tickets')
+      .select('*', {count:'exact', head:true})
+      .eq('estado', 'Abierto');
+
+    const el = document.getElementById('dash-abiertos');
+    if(el) el.textContent = count || 0;
+  } catch(e){
+    console.error('[Realtime] Error actualizando contador:', e);
+  }
+}
+
 // ─── TOAST ───
 function toast(msg, type='success'){
   const c = document.getElementById('toast-container');
@@ -2508,6 +2586,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('topbar-user').textContent=sessionStorage.getItem('dtcUser')||'Admin';
   navigate('dashboard');
+
+  initRealtime();
 });
 
 // ─── DESCARGA DOCUMENTACIÓN PDF ───
