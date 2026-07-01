@@ -730,7 +730,7 @@ async function enviarCorreoCierre(ticketId){
           weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
-    await emailjs.send('service_sht8v5l', 'TEMPLATE_ID_CIERRE', {
+    await emailjs.send('service_sht8v5l', 'template_gmljm89', {
       to_email: correoDestino,
       to_name: nombreDestino,
       codigo_caso: 'CASO-' + data.id,
